@@ -1,5 +1,12 @@
-import org.lwjgl.glfw.GLFWErrorCallback;
+package engine;
 
+import engine.controls.KeyListener;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.system.MemoryStack;
+import java.nio.IntBuffer;
+import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -7,14 +14,8 @@ import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
-import engine.controls.KeyListener;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
-import java.nio.IntBuffer;
-import java.util.Objects;
 
-public class Window {
+public class GameWindow {
 	public static int WINDOW_HEIGHT = 720;
 	public static int WINDOW_WIDTH = 1296;
 	private long  window;
@@ -38,7 +39,7 @@ public class Window {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
 		// Create the window
-		window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Lunar Horizon", NULL, NULL);
+		window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!", NULL, NULL);
 
 		if (window == NULL){
 			throw new RuntimeException("Failed to create the GLFW window");

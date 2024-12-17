@@ -1,21 +1,15 @@
-import engine.controls.KeyListener;
-
-import static org.lwjgl.glfw.GLFW.*;
+import engine.Game;
+import engine.GameWindow;
 
 public class Main {
 	public static void main(String[] args) {
-		Window window = new Window();
-		window.create();
+		GameWindow gameWindow = new GameWindow();
+		gameWindow.create();
 
-		while (!glfwWindowShouldClose(window.getWindow())) {
-			if(KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
-				System.exit(0);
-			}
+		Game game = new Game(gameWindow.getWindow());
+		game.startGameLoop();
 
-			glfwSwapBuffers(window.getWindow());
-			glfwPollEvents();
-		}
-
-		window.destroy();
+		gameWindow.destroy();
 	}
+
 }
