@@ -14,6 +14,7 @@ public class Game {
 	public static Shader shader = new Shader("src/main/assets/shaders/Basic.glsl");
 	private final Renderer renderer;
 	public static Camera camera = new Camera();
+	private static final Overworld overworld = Overworld.getInstance();
 
 	public Game(long window) {
 		this.window = window;
@@ -27,32 +28,19 @@ public class Game {
 		float endTime;
 		float dt = -1.0f;
 
-		int camOffsetX = 0;
-		int camOffsetY = 0;
-		int osFactor = 10;
-
-		GameObject debugObj = new GameObject("sample.png", new Vector2f());
+		GameObject debugObj = new GameObject("sample.png", new Vector2f(150, 0));
 		camera.fix(debugObj);
 
 		while ( !glfwWindowShouldClose(window) ) {
 			if(KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
 				System.exit(0);
-			} else if(KeyListener.isKeyPressed(GLFW_KEY_UP)){
-				camOffsetY += osFactor;
-				camera.setOffset(camOffsetX, camOffsetY);
-			} else if(KeyListener.isKeyPressed(GLFW_KEY_DOWN)){
-				camOffsetY -= osFactor;
-				camera.setOffset(camOffsetX, camOffsetY);
-			} else if(KeyListener.isKeyPressed(GLFW_KEY_LEFT)){
- 				camOffsetX -= osFactor;
-				camera.setOffset(camOffsetX, camOffsetY);
-			} else if(KeyListener.isKeyPressed(GLFW_KEY_RIGHT)){
-				camOffsetX += osFactor;
-				camera.setOffset(camOffsetX, camOffsetY);
 			}
+
+			camera.move();
 
 			if(dt >= 0) {
 				this.renderer.clear();
+				overworld.render();
 				camera.update();
 				debugObj.render();
 				//System.out.println((1.0f / dt) + "FPS");

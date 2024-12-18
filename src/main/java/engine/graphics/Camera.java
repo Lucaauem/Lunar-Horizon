@@ -1,13 +1,19 @@
 package engine.graphics;
 
 import engine.GameWindow;
+import engine.controls.KeyListener;
 import engine.objects.GameObject;
 import org.joml.*;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 
 public class Camera {
 	private final Matrix4f matrix;
 	private final Vector2f offset;
 	private GameObject fixObj;
+	private int camOffsetX = 0;
+	private int camOffsetY = 0;
 
 	public Camera() {
 		this.matrix = new Matrix4f().identity();
@@ -41,5 +47,23 @@ public class Camera {
 		}
 
 		this.matrix.set(matrix);
+	}
+
+	public void move() {
+		int osFactor = 10;
+
+		if(KeyListener.isKeyPressed(GLFW_KEY_UP)){
+			camOffsetY += osFactor;
+			this.setOffset(camOffsetX, camOffsetY);
+		} else if(KeyListener.isKeyPressed(GLFW_KEY_DOWN)){
+			camOffsetY -= osFactor;
+			this.setOffset(camOffsetX, camOffsetY);
+		} else if(KeyListener.isKeyPressed(GLFW_KEY_LEFT)){
+			camOffsetX -= osFactor;
+			this.setOffset(camOffsetX, camOffsetY);
+		} else if(KeyListener.isKeyPressed(GLFW_KEY_RIGHT)){
+			camOffsetX += osFactor;
+			this.setOffset(camOffsetX, camOffsetY);
+		}
 	}
 }

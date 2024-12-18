@@ -13,8 +13,8 @@ public class GameObject {
 	public static final int DEFAULT_TILE_SIZE = 72;
 
 	private int id = -1;
-	private Model model;
-	private Texture texture;
+	protected Model model;
+	protected Texture texture;
 	protected final Vector2f position = new Vector2f();
 	protected Hitbox hitbox;
 
