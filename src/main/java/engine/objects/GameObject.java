@@ -19,7 +19,9 @@ public class GameObject {
 	protected Hitbox hitbox;
 
 	public GameObject(String texturePath, Vector2f position) {
-		this.position.set(position);
+		if(position != null) {
+			this.position.set(position);
+		}
 
 		this.texture = new Texture(texturePath);
 		this.model = new Model(new float[] {
@@ -108,6 +110,7 @@ public class GameObject {
 		Matrix4f proj = new Matrix4f().ortho(0.0f, GameWindow.WINDOW_WIDTH, 0.0f, GameWindow.WINDOW_HEIGHT, -1.0f, 1.0f);
 		Matrix4f view = Game.camera.getMatrix();
 		Matrix4f model = new Matrix4f().identity();
+		model.translate(this.position.x + DEFAULT_TILE_SIZE, this.position.y + DEFAULT_TILE_SIZE, 0);
 
 		Matrix4f mvp = proj.mul(view).mul(model);
 		Game.shader.setUniformMat4f("u_MVP", mvp);

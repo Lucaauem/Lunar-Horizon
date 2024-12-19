@@ -1,11 +1,11 @@
 package engine;
 
+import engine.controls.Controller;
 import engine.controls.KeyListener;
 import engine.graphics.Camera;
-import engine.objects.GameObject;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
-import org.joml.Vector2f;
+import engine.objects.Player;
 import util.Time;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -15,6 +15,7 @@ public class Game {
 	private final Renderer renderer;
 	public static Camera camera = new Camera();
 	private static final Overworld overworld = Overworld.getInstance();
+	public static final Player player = new Player();
 
 	public Game(long window) {
 		this.window = window;
@@ -23,35 +24,40 @@ public class Game {
 		this.renderer = Renderer.getInstance();
 	}
 
-	public void startGameLoop() {
-		float beginTime = Time.getTime();
-		float endTime;
-		float dt = -1.0f;
+	private void init() {
+		camera.fix(player);
+	}
 
-		GameObject debugObj = new GameObject("sample.png", new Vector2f(150, 0));
-		camera.fix(debugObj);
+	public void start() {
+		this.init();
 
-		while ( !glfwWindowShouldClose(window) ) {
+		float lastTime = Time.getTime();
+		while (!glfwWindowShouldClose(window)) {
 			if(KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
 				System.exit(0);
 			}
 
-			camera.move();
+			float currentTime = Time.getTime();
+			float dt = currentTime - lastTime;
+			lastTime = currentTime;
 
-			if(dt >= 0) {
-				this.renderer.clear();
-				overworld.render();
-				camera.update();
-				debugObj.render();
-				//System.out.println((1.0f / dt) + "FPS");
-			}
+			this.update(dt);
 
+			this.render();
 			glfwSwapBuffers(window);
 			glfwPollEvents();
-
-			endTime = Time.getTime();
-			dt = endTime - beginTime;
-			beginTime = endTime;
 		}
+	}
+
+	private void update(float dt) {
+		System.out.println((1.0f / dt) + "FPS");
+		Controller.getInstance().checkInputs(dt);
+	}
+
+	private void render() {
+		this.renderer.clear();
+		camera.update();
+		overworld.render();
+		player.render();
 	}
 }

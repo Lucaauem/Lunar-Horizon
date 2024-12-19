@@ -7,7 +7,7 @@ public class Main {
 		gameWindow.create();
 
 		Game game = new Game(gameWindow.getWindow());
-		game.startGameLoop();
+		game.start();
 
 		gameWindow.destroy();
 	}
