@@ -40,8 +40,8 @@ public class Camera {
 		);
 
 		if(this.fixObj != null){
-			matrix.translate(GameWindow.WINDOW_WIDTH / 2.0f, GameWindow.WINDOW_HEIGHT / 2.0f, 0);
-			matrix.translate(-fullOffset.x, -fullOffset.y, 1);
+			matrix.translate(GameWindow.RESOLUTION.x / 2.0f, GameWindow.RESOLUTION.y / 2.0f, 0);
+			matrix.translate(-fullOffset.x, -fullOffset.y, 0);
 		} else {
 			matrix.translate(-fullOffset.x, -fullOffset.y, 0);
 		}

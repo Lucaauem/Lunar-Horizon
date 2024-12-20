@@ -17,8 +17,8 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class GameWindow {
-	public static int WINDOW_HEIGHT = 360;
-	public static int WINDOW_WIDTH = 640;
+	public static int WINDOW_HEIGHT = 720;
+	public static int WINDOW_WIDTH = 1280;
 	public static final Vector2i RESOLUTION = new Vector2i(640, 360);
 	private long  window;
 
@@ -67,6 +67,13 @@ public class GameWindow {
 			);
 		} // the stack frame is popped automatically
 
+		// Check whenever the size of the window is changed and updated scaling accordingly
+		glfwSetFramebufferSizeCallback(window, (window, width, height) -> {
+			WINDOW_WIDTH = width;
+			WINDOW_HEIGHT = height;
+			glViewport(0, 0, width, height);
+		});
+
 		glfwSetKeyCallback(this.window, KeyListener::keyCallback);
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1); // Enable v-sync
@@ -76,6 +83,20 @@ public class GameWindow {
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
+	}
+
+	public static void setScale() {
+		int scaleX = WINDOW_WIDTH / RESOLUTION.x;
+		int scaleY = WINDOW_HEIGHT / RESOLUTION.y;
+		int scale = Math.min(scaleX, scaleY);  // Maintain aspect ratio
+
+		int scaledWidth = RESOLUTION.x * scale;
+		int scaledHeight = RESOLUTION.y * scale;
+
+		int viewportX = (WINDOW_WIDTH - scaledWidth) / 2;
+		int viewportY = (WINDOW_HEIGHT - scaledHeight) / 2;
+
+		glViewport(viewportX, viewportY, scaledWidth, scaledHeight);
 	}
 
 	public void destroy() {

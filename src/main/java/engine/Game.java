@@ -55,6 +55,7 @@ public class Game {
 	}
 
 	private void render() {
+		GameWindow.setScale();
 		this.renderer.clear();
 		camera.update();
 		overworld.render();
