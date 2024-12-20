@@ -36,7 +36,7 @@ public class Overworld{
 		this.texture.bind();
 
 		// Render model
-		Matrix4f proj = new Matrix4f().ortho(0.0f, GameWindow.WINDOW_WIDTH, 0.0f, GameWindow.WINDOW_HEIGHT, -1.0f, 1.0f);
+		Matrix4f proj = new Matrix4f().ortho(0.0f, GameWindow.RESOLUTION.x, 0.0f, GameWindow.RESOLUTION.y, -1.0f, 1.0f);
 		Matrix4f view = Game.camera.getMatrix();
 
 		Matrix4f mvp = proj.mul(view);

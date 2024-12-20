@@ -1,6 +1,7 @@
 package engine;
 
 import engine.controls.KeyListener;
+import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -16,8 +17,9 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class GameWindow {
-	public static int WINDOW_HEIGHT = 720;
-	public static int WINDOW_WIDTH = 1296;
+	public static int WINDOW_HEIGHT = 360;
+	public static int WINDOW_WIDTH = 640;
+	public static final Vector2i RESOLUTION = new Vector2i(640, 360);
 	private long  window;
 
 	public void create() {

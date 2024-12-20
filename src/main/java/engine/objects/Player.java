@@ -7,7 +7,7 @@ public class Player extends Entity{
 	private static final float MOVEMENT_SPEED = 200.0f;
 
 	public Player() {
-		super(PLAYER_TEXTURE_PATH, new Vector2f(200, 1000));
+		super(PLAYER_TEXTURE_PATH, new Vector2f(0, 0));
 	}
 
 	@Override
