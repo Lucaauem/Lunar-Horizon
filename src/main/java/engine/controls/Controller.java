@@ -1,29 +1,39 @@
 package engine.controls;
 
-import engine.Game;
+import java.util.Map;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class Controller {
-	private static Controller instance;
-
-	private Controller () {}
-
-	public static Controller getInstance () {
-		if (instance == null) {
-			instance = new Controller();
-		}
-		return instance;
-	}
+public abstract class Controller {
+	protected static boolean needReset = false;
 
 	public void checkInputs(float dt) {
-		if(KeyListener.isKeyPressed(GLFW_KEY_W)) {
-			Game.player.move(0, dt);
-		}else if(KeyListener.isKeyPressed(GLFW_KEY_A)) {
-			Game.player.move(-dt, 0);
-		}else if(KeyListener.isKeyPressed(GLFW_KEY_S)) {
-			Game.player.move(0, -dt);
-		}else if(KeyListener.isKeyPressed(GLFW_KEY_D)) {
-			Game.player.move(dt, 0);
+		Map<Integer, Runnable> keyActions = Map.of(
+				GLFW_KEY_W, () -> this.onUp(dt),
+				GLFW_KEY_A, () -> this.onLeft(dt),
+				GLFW_KEY_S, () -> this.onDown(dt),
+				GLFW_KEY_D, () -> this.onRight(dt),
+				GLFW_KEY_E, () -> this.onStart(dt)
+		);
+
+		boolean keyPressed = false;
+		for(var entry : keyActions.entrySet()) {
+			if (KeyListener.isKeyPressed(entry.getKey())) {
+				keyPressed = true;
+				if(!needReset) {
+					entry.getValue().run();
+				}
+				break;
+			}
+		}
+
+		if(!keyPressed) {
+			needReset = false;
 		}
 	}
+
+	protected abstract void onUp(float dt);
+	protected abstract void onDown(float dt);
+	protected abstract void onLeft(float dt);
+	protected abstract void onRight(float dt);
+	protected abstract void onStart(float dt);
 }

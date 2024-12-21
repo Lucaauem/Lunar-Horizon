@@ -2,6 +2,8 @@ package engine;
 
 import engine.controls.Controller;
 import engine.controls.KeyListener;
+import engine.controls.MenuController;
+import engine.controls.PlayerController;
 import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
@@ -16,6 +18,7 @@ public class Game {
 	public static Camera camera = new Camera();
 	private static final Overworld overworld = Overworld.getInstance();
 	public static final Player player = new Player();
+	private static Controller controller = new PlayerController();
 
 	public Game(long window) {
 		this.window = window;
@@ -50,8 +53,8 @@ public class Game {
 	}
 
 	private void update(float dt) {
-		System.out.println((1.0f / dt) + "FPS");
-		Controller.getInstance().checkInputs(dt);
+		//System.out.println((1.0f / dt) + "FPS");
+		controller.checkInputs(dt);
 	}
 
 	private void render() {
@@ -60,5 +63,13 @@ public class Game {
 		camera.update();
 		overworld.render();
 		player.render();
+	}
+
+	public static void toggleMenu() {
+		if(controller instanceof PlayerController) {
+			controller = new MenuController();
+			return;
+		}
+		controller = new PlayerController();
 	}
 }
