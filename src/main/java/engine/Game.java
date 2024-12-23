@@ -8,6 +8,8 @@ import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
 import engine.objects.Player;
+import engine.ui.UiManager;
+import engine.ui.UiMenu;
 import util.Time;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -29,6 +31,7 @@ public class Game {
 
 	private void init() {
 		camera.fix(player);
+		UiManager.getInstance().addElement("overworld_menu", new UiMenu());
 	}
 
 	public void start() {
@@ -63,9 +66,13 @@ public class Game {
 		camera.update();
 		overworld.render();
 		player.render();
+
+		UiManager.getInstance().render();
 	}
 
 	public static void toggleMenu() {
+		UiManager.getInstance().getElement("overworld_menu").toggle();
+
 		if(controller instanceof PlayerController) {
 			controller = new MenuController();
 			return;
