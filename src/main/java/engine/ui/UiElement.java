@@ -7,6 +7,7 @@ import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
+import org.joml.Vector4f;
 
 public class UiElement {
 	private final Texture texture;
@@ -25,6 +26,18 @@ public class UiElement {
 				size.x, 0.0f,   1, 1,
 				size.x, size.y, 1, 0,
 				0.0f,   size.y, 0, 0
+		});
+	}
+
+	public UiElement(Texture texture, Vector2i size, Vector4f uv, Vector2i position) {
+		this.texture = texture;
+		this.position = position;
+
+		this.model = new Model(new float[] {
+				0.0f,   0.0f,   uv.x, uv.y,
+				size.x, 0.0f,   uv.z, uv.y,
+				size.x, size.y, uv.z, uv.w,
+				0.0f,   size.y, uv.x, uv.w,
 		});
 	}
 
