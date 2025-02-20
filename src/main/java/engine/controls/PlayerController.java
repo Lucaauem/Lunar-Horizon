@@ -28,4 +28,9 @@ public class PlayerController extends Controller {
 		Game.toggleMenu();
 		needReset = true;
 	}
+
+	@Override
+	protected void onAction(float dt) {
+
+	}
 }

@@ -8,11 +8,12 @@ public abstract class Controller {
 
 	public void checkInputs(float dt) {
 		Map<Integer, Runnable> keyActions = Map.of(
-				GLFW_KEY_W, () -> this.onUp(dt),
-				GLFW_KEY_A, () -> this.onLeft(dt),
-				GLFW_KEY_S, () -> this.onDown(dt),
-				GLFW_KEY_D, () -> this.onRight(dt),
-				GLFW_KEY_E, () -> this.onStart(dt)
+				GLFW_KEY_W, ()     -> this.onUp(dt),
+				GLFW_KEY_A, ()     -> this.onLeft(dt),
+				GLFW_KEY_S, ()     -> this.onDown(dt),
+				GLFW_KEY_D, ()     -> this.onRight(dt),
+				GLFW_KEY_E, () 	   -> this.onStart(dt),
+				GLFW_KEY_SPACE, () -> this.onAction(dt)
 		);
 
 		boolean keyPressed = false;
@@ -36,4 +37,5 @@ public abstract class Controller {
 	protected abstract void onLeft(float dt);
 	protected abstract void onRight(float dt);
 	protected abstract void onStart(float dt);
+	protected abstract void onAction(float dt);
 }
