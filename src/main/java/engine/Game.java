@@ -18,6 +18,7 @@ import java.util.List;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
+	private static final int FPS_CAP = 60;
 	private static final ArrayList<MenuItem> MENU_ITEMS = new ArrayList<>(List.of(
 			new MenuItem("ITEM 1", () -> System.out.println(1)),
 			new MenuItem("ITEM 2", () -> System.out.println(2))
@@ -54,6 +55,11 @@ public class Game {
 
 			float currentTime = Time.getTime();
 			float dt = currentTime - lastTime;
+
+			if(dt < 1.0f / (float) FPS_CAP) {
+				continue;
+			}
+
 			lastTime = currentTime;
 
 			this.update(dt);
@@ -67,6 +73,7 @@ public class Game {
 	private void update(float dt) {
 		//System.out.println((1.0f / dt) + "FPS");
 		controller.checkInputs(dt);
+		player.update();
 	}
 
 	private void render() {
