@@ -2,12 +2,14 @@ package engine.scenes;
 
 import engine.graphics.tiles.Tile;
 import engine.graphics.tiles.Tilemap;
+import org.joml.Vector2f;
 import util.FileHandler;
 import java.util.ArrayList;
 
 public class Scene {
 	private static final String SCENE_BASE_PATH = "src/main/assets/scenes/";
 	private static final String SCENE_EXTENSION = ".scene.bin";
+	private static final int SCENE_SIZE = 3;
 
 	private final Tilemap tilemap = new Tilemap();
 	private final Tile[] tiles;
@@ -16,15 +18,23 @@ public class Scene {
 		byte[] rawData = FileHandler.readBinary(SCENE_BASE_PATH + name + SCENE_EXTENSION);
 		ArrayList<Tile> tiles = new ArrayList<>();
 
-		for(byte b : rawData) {
-			tiles.add(this.generateTile(b));
+		Vector2f tilePosition = new Vector2f(0, SCENE_SIZE);
+		for (byte rawDatum : rawData) {
+			tiles.add(this.generateTile(rawDatum, new Vector2f(tilePosition.x, tilePosition.y)));
+
+			if(tilePosition.x++ > SCENE_SIZE) {
+				tilePosition.x = 0;
+				tilePosition.y--;
+			}
 		}
 
 		this.tiles = tiles.toArray(new Tile[0]);
 	}
 
-	public Tile generateTile(byte data) {
-		return new Tile(this.tilemap, 0);
+	public Tile generateTile(byte data, Vector2f position) {
+		if(data == 0) { return null; }
+
+		return new Tile(this.tilemap, 0, position);
 	}
 
 	public void render() {
