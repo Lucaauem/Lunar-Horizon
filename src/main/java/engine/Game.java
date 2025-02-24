@@ -8,6 +8,7 @@ import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
 import engine.objects.Player;
+import engine.scenes.Scene;
 import engine.ui.UiManager;
 import engine.ui.menu.MenuItem;
 import engine.ui.menu.UiMenu;
@@ -28,14 +29,15 @@ public class Game {
 	public static Shader shader = new Shader("src/main/assets/shaders/Basic.glsl");
 	private final Renderer renderer;
 	public static Camera camera = new Camera();
-	private static final Overworld overworld = Overworld.getInstance();
 	public static final Player player = new Player();
 	private static Controller controller = new PlayerController();
+	private static Scene scene;
 
 	public Game(long window) {
 		this.window = window;
 		Game.shader.bind();
 
+		scene = new Scene("overworld");
 		this.renderer = Renderer.getInstance();
 	}
 
@@ -81,7 +83,7 @@ public class Game {
 		this.renderer.clear();
 
 		camera.update();
-		overworld.render();
+		scene.render();
 		player.render();
 
 		UiManager.getInstance().render();

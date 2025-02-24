@@ -15,7 +15,6 @@ public class Entity extends GameObject {
 	public void update() {
 		if(this.remainingMoveSteps > 0) {
 			this.makeMoveStep();
-			System.out.println(this.position.x + ", " + this.position.y);
 		}
 	}
 

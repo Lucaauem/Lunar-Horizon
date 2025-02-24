@@ -82,4 +82,12 @@ public class FileHandler {
 			System.out.println("ERROR CREATING FILE: " + path);
 		}
 	}
+
+	public static byte[] readBinary(String path) {
+		try(FileInputStream fis = new FileInputStream(path)) {
+			return fis.readAllBytes();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
