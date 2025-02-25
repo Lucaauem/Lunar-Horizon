@@ -13,14 +13,17 @@ public class Scene {
 
 	private final Tilemap tilemap = new Tilemap();
 	private final Tile[] tiles;
-
 	public Scene(String name) {
 		byte[] rawData = FileHandler.readBinary(SCENE_BASE_PATH + name + SCENE_EXTENSION);
 		ArrayList<Tile> tiles = new ArrayList<>();
 
 		Vector2f tilePosition = new Vector2f(0, SCENE_SIZE);
-		for (byte rawDatum : rawData) {
-			tiles.add(this.generateTile(rawDatum, new Vector2f(tilePosition.x, tilePosition.y)));
+
+		// Tiles consist of 2 bytes.
+		// The first byte is the index in the tilemap (texture).
+		// The second byte contains stauts information (e.g. collision, special behaviour, ...).
+		for(int i=0; i<rawData.length; i+=2) {
+			tiles.add(this.generateTile(rawData[i], rawData[i + 1], new Vector2f(tilePosition.x, tilePosition.y)));
 
 			if(tilePosition.x++ > SCENE_SIZE) {
 				tilePosition.x = 0;
@@ -31,8 +34,8 @@ public class Scene {
 		this.tiles = tiles.toArray(new Tile[0]);
 	}
 
-	public Tile generateTile(byte data, Vector2f position) {
-		if(data == 0) { return null; }
+	public Tile generateTile(byte index, byte status, Vector2f position) {
+		if(index == 0) { return null; }
 
 		return new Tile(this.tilemap, 0, position);
 	}
