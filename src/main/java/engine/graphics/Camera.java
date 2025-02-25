@@ -14,6 +14,7 @@ public class Camera {
 	private GameObject fixObj;
 	private int camOffsetX = 0;
 	private int camOffsetY = 0;
+	private float zoom = 1.5f;
 
 	public Camera() {
 		this.matrix = new Matrix4f().identity();
@@ -39,14 +40,15 @@ public class Camera {
 				GameObject.DEFAULT_TILE_SIZE + this.offset.y + this.fixObj.getPosition().y
 		);
 
-		if(this.fixObj != null){
-			matrix.translate(GameWindow.RESOLUTION.x / 2.0f, GameWindow.RESOLUTION.y / 2.0f, 0);
-			matrix.translate(-fullOffset.x, -fullOffset.y, 0);
-		} else {
-			matrix.translate(-fullOffset.x, -fullOffset.y, 0);
-		}
+		matrix.translate(GameWindow.RESOLUTION.x / 2.0f, GameWindow.RESOLUTION.y / 2.0f, 0);
+		matrix.scale(this.zoom, this.zoom, 1.0f);
+		matrix.translate(-fullOffset.x, -fullOffset.y, 0);
 
 		this.matrix.set(matrix);
+	}
+
+	public void setZoom(float zoom) {
+		this.zoom = zoom;
 	}
 
 	public void move() {

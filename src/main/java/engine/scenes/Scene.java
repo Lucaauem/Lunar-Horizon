@@ -37,7 +37,7 @@ public class Scene {
 	public Tile generateTile(byte index, byte status, Vector2f position) {
 		if(index == 0) { return null; }
 
-		return new Tile(this.tilemap, 0, position);
+		return new Tile(this.tilemap, index - 1, position);
 	}
 
 	public void render() {

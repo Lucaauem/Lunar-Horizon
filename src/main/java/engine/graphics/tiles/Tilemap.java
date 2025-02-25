@@ -4,7 +4,7 @@ import engine.graphics.Texture;
 import org.joml.Vector4f;
 
 public class Tilemap {
-	private static final int TILE_SIZE = 8;
+	private static final int TILE_SIZE = 16;
 
 	private final Texture tilemap = new Texture("tiles.png");
 	private final int dimensionHeight;
