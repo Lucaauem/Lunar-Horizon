@@ -8,7 +8,7 @@ import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
 import engine.objects.Player;
-import engine.scenes.Scene;
+import engine.scenes.SceneManager;
 import engine.ui.UiManager;
 import engine.ui.menu.MenuItem;
 import engine.ui.menu.UiMenu;
@@ -31,17 +31,16 @@ public class Game {
 	public static Camera camera = new Camera();
 	public static final Player player = new Player();
 	private static Controller controller = new PlayerController();
-	private static Scene scene;
 
 	public Game(long window) {
 		this.window = window;
 		Game.shader.bind();
 
-		scene = new Scene("overworld");
 		this.renderer = Renderer.getInstance();
 	}
 
 	private void init() {
+		SceneManager.getInstance().switchScene("overworld");
 		camera.fix(player);
 		UiManager.getInstance().addElement("overworld_menu", new UiMenu(MENU_ITEMS));
 	}
@@ -83,7 +82,7 @@ public class Game {
 		this.renderer.clear();
 
 		camera.update();
-		scene.render();
+		SceneManager.getInstance().getCurrentScene().render();
 		player.render();
 
 		UiManager.getInstance().render();
