@@ -12,20 +12,47 @@ public class Tile {
 	private static final int TILE_SIZE = 16;
 
 	private final Tilemap tilemap;
-	private final Model model;
+	private Model model;
 	private final Vector2f position;
+	private Vector2f[] uv;
 
 	public Tile(Tilemap tilemap, int textureIndex, Vector2f position) {
 		this.position = position;
 		this.tilemap = tilemap;
 		Vector4f uv = tilemap.getUv(textureIndex);
 
+		this.uv = new Vector2f[]{
+				new Vector2f(uv.x, uv.w),
+				new Vector2f(uv.z, uv.w),
+				new Vector2f(uv.z, uv.y),
+				new Vector2f(uv.x, uv.y),
+		};
+
+		this.updateModel();
+	}
+
+	private void updateModel() {
 		this.model = new Model(new float[] {
-				0.0f,      0.0f,      uv.x, uv.w,
-				TILE_SIZE, 0.0f,      uv.z, uv.w,
-				TILE_SIZE, TILE_SIZE, uv.z, uv.y,
-				0.0f,      TILE_SIZE, uv.x, uv.y
+				0.0f,      0.0f,      this.uv[0].x, this.uv[0].y,
+				TILE_SIZE, 0.0f,      this.uv[1].x, this.uv[1].y,
+				TILE_SIZE, TILE_SIZE, this.uv[2].x, this.uv[2].y,
+				0.0f,      TILE_SIZE, this.uv[3].x, this.uv[3].y,
 		});
+	}
+
+	// is rotated clockwise
+	public void rotate90Deg(int times) {
+		int normalizedTimes = ((times % 4) + 4) % 4;
+
+		for(int i=0; i<normalizedTimes; i++) {
+			this.uv = new Vector2f[]{
+					new Vector2f(this.uv[1].x, this.uv[1].y),
+					new Vector2f(this.uv[2].x, this.uv[2].y),
+					new Vector2f(this.uv[3].x, this.uv[3].y),
+					new Vector2f(this.uv[0].x, this.uv[0].y),
+			};
+		}
+		this.updateModel();
 	}
 
 	public void render() {
