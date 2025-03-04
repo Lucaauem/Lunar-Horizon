@@ -9,18 +9,20 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 public class Tile {
-	private static final int TILE_SIZE = 16;
+	public static final int TILE_SIZE = 16;
 
 	private final Tilemap tilemap;
-	private Model model;
 	private final Vector2f position;
+	private final boolean isSolid;
 	private Vector2f[] uv;
+	private Model model;
 
-	public Tile(Tilemap tilemap, int textureIndex, Vector2f position) {
+	public Tile(Tilemap tilemap, int textureIndex, Vector2f position, boolean solid) {
 		this.position = position;
 		this.tilemap = tilemap;
-		Vector4f uv = tilemap.getUv(textureIndex);
+		this.isSolid = solid;
 
+		Vector4f uv = tilemap.getUv(textureIndex);
 		this.uv = new Vector2f[]{
 				new Vector2f(uv.x, uv.w),
 				new Vector2f(uv.z, uv.w),
@@ -53,6 +55,10 @@ public class Tile {
 			};
 		}
 		this.updateModel();
+	}
+
+	public boolean isSolid() {
+		return this.isSolid;
 	}
 
 	public void render() {

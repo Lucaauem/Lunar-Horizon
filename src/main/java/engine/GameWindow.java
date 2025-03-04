@@ -62,7 +62,7 @@ public class GameWindow {
 			assert vidmode != null;
 			glfwSetWindowPos(
 					window,
-					(vidmode.width() - pWidth.get(0)) / 2,
+					(vidmode.width() - pWidth.get(0)) / 2 - vidmode.width(),
 					(vidmode.height() - pHeight.get(0)) / 2
 			);
 		} // the stack frame is popped automatically

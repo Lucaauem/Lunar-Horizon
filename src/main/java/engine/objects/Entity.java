@@ -1,5 +1,6 @@
 package engine.objects;
 
+import engine.scenes.SceneManager;
 import org.joml.Vector2f;
 
 public class Entity extends GameObject {
@@ -19,23 +20,40 @@ public class Entity extends GameObject {
 	}
 
 	public void move(MoveDirection direction) {
-		if(this.remainingMoveSteps > 0) {
+		if((this.remainingMoveSteps > 0) || (!this.canMove(direction))) {
 			return;
 		}
 		this.direction = direction;
 		this.remainingMoveSteps = MOVE_TIME;
 	}
 
-	private void makeMoveStep() {
-		float stepSize = 1.0f / MOVE_TIME;
+	private boolean canMove(MoveDirection direction) {
+		Vector2f moveVector =  this.getMoveVector(direction);
+		int targetX = (int) (this.position.x + moveVector.x * DEFAULT_TILE_SIZE);
+		int targetY = (int) (this.position.y + moveVector.y * DEFAULT_TILE_SIZE);
+
+		if(SceneManager.getInstance().getCurrentScene().isInScene(targetX, targetY)) {
+			return !SceneManager.getInstance().getCurrentScene().getTile(targetX, targetY).isSolid();
+		}
+		return true;
+	}
+
+	private Vector2f getMoveVector(MoveDirection direction) {
 		Vector2f moveVector = new Vector2f();
 
-		switch (this.direction) {
+		switch (direction) {
 			case UP    -> moveVector.y = 1;
 			case DOWN  -> moveVector.y = -1;
 			case LEFT  -> moveVector.x = -1;
 			case RIGHT -> moveVector.x = 1;
 		}
+
+		return moveVector;
+	}
+
+	private void makeMoveStep() {
+		float stepSize = 1.0f / MOVE_TIME;
+		Vector2f moveVector = this.getMoveVector(direction);
 
 		this.position.add(moveVector.mul(GameObject.DEFAULT_TILE_SIZE * stepSize));
 

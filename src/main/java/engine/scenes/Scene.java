@@ -36,6 +36,20 @@ public class Scene {
 		this.tiles = tiles.toArray(new Tile[0]);
 	}
 
+	public Tile getTile(float x, float y) {
+		int tileIndexX = (int) (x / Tile.TILE_SIZE);
+		int tileIndexY = SCENE_SIZE - (int) (y / Tile.TILE_SIZE);
+
+		return this.tiles[tileIndexY * SCENE_SIZE + tileIndexX];
+	}
+
+	public boolean isInScene(float xPos, float yPos) {
+		int tileIndexX = (int) (xPos / Tile.TILE_SIZE);
+		int tileIndexY = (int) (yPos / Tile.TILE_SIZE) - 1;
+
+		return (tileIndexX >= 0 && tileIndexX < SCENE_SIZE) && (tileIndexY >= 0 && tileIndexY < SCENE_SIZE);
+	}
+
 	// Modifier byte:
 	// 76543210
 	// ||||||||
@@ -46,10 +60,19 @@ public class Scene {
 	// |||+-----
 	// |+-------
 	// +--------
-	public Tile generateTile(byte index, byte modifier, byte status, Vector2f position) {
-		if(index == 0) { return null; }
 
-		Tile tile = new Tile(this.tilemap, index - 1, position);
+	// Status byte:
+	// 76543210
+	// ||||||||
+	// |||||||+- Can be walked on/through
+	// ||||||+--
+	// |||||+---
+	// ||||+----
+	// |||+-----
+	// |+-------
+	// +--------
+	public Tile generateTile(byte index, byte modifier, byte status, Vector2f position) {
+		Tile tile = new Tile(this.tilemap, index, position, (status & 0b00000001) != 0);
 		tile.rotate90Deg(modifier & 0b00000011);
 		return tile;
 	}
