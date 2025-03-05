@@ -3,7 +3,7 @@ package engine.objects;
 import engine.scenes.SceneManager;
 import org.joml.Vector2f;
 
-public class Entity extends GameObject {
+public abstract class Entity extends GameObject {
 	private static final int MOVE_TIME = 10;
 
 	protected MoveDirection direction = MoveDirection.DOWN;
@@ -57,12 +57,16 @@ public class Entity extends GameObject {
 
 		this.position.add(moveVector.mul(GameObject.DEFAULT_TILE_SIZE * stepSize));
 
-		// Snap to tile
 		if(this.remainingMoveSteps == 1) {
-			this.position.x = Math.round(this.position.x);
-			this.position.y = Math.round(this.position.y);
+			this.onStepEnd();
 		}
 
 		this.remainingMoveSteps--;
+	}
+
+	protected void onStepEnd() {
+		// Snap to tile
+		this.position.x = Math.round(this.position.x);
+		this.position.y = Math.round(this.position.y);
 	}
 }

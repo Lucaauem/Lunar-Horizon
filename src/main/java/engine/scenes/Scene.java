@@ -1,7 +1,7 @@
 package engine.scenes;
 
-import engine.graphics.tiles.Tile;
-import engine.graphics.tiles.Tilemap;
+import engine.objects.Tile;
+import engine.graphics.Tilemap;
 import org.joml.Vector2f;
 import util.FileHandler;
 import java.util.ArrayList;

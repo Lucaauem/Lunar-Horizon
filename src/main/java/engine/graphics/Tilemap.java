@@ -1,6 +1,5 @@
-package engine.graphics.tiles;
+package engine.graphics;
 
-import engine.graphics.Texture;
 import org.joml.Vector4f;
 
 public class Tilemap {

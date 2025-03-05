@@ -1,9 +1,11 @@
-package engine.graphics.tiles;
+package engine.objects;
 
 import engine.Game;
 import engine.GameWindow;
 import engine.graphics.Model;
+import engine.graphics.Tilemap;
 import engine.graphics.renderer.Renderer;
+import engine.objects.trigger.Trigger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -14,6 +16,7 @@ public class Tile {
 	private final Tilemap tilemap;
 	private final Vector2f position;
 	private final boolean isSolid;
+	private Trigger trigger = null;
 	private Vector2f[] uv;
 	private Model model;
 
@@ -40,6 +43,18 @@ public class Tile {
 				TILE_SIZE, TILE_SIZE, this.uv[2].x, this.uv[2].y,
 				0.0f,      TILE_SIZE, this.uv[3].x, this.uv[3].y,
 		});
+	}
+
+	public void activateTrigger() {
+		this.trigger.trigger();
+	}
+
+	public boolean hasTrigger() {
+		return this.trigger != null;
+	}
+
+	public void setTrigger(Trigger trigger) {
+		this.trigger = trigger;
 	}
 
 	// is rotated clockwise
