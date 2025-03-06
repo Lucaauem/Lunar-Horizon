@@ -1,8 +1,10 @@
 package engine.objects.trigger;
 
+import engine.scenes.SceneManager;
+
 public class SceneChangeTrigger extends Trigger {
 	@Override
 	public void trigger() {
-		System.out.println("SceneChangeTrigger triggered: " + this.parameter);
+		SceneManager.getInstance().switchScene(this.parameter);
 	}
 }

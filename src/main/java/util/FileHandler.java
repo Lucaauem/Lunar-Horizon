@@ -87,7 +87,7 @@ public class FileHandler {
 		try(FileInputStream fis = new FileInputStream(path)) {
 			return fis.readAllBytes();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			return new byte[0];
 		}
 	}
 }
