@@ -7,8 +7,14 @@ import org.joml.Vector2f;
 public class Player extends Entity {
 	private static final String PLAYER_TEXTURE_PATH = "sample.png";
 
+	private final Vector2f lastValidPosition = new Vector2f();
+
 	public Player() {
 		super(PLAYER_TEXTURE_PATH, new Vector2f(0, 0));
+	}
+
+	public Vector2f getLastValidPosition() {
+		return lastValidPosition;
 	}
 
 	@Override
@@ -23,5 +29,7 @@ public class Player extends Entity {
 		if(currentTile.hasTrigger()) {
 			currentTile.activateTrigger();
 		}
+
+		this.lastValidPosition.set(this.position.x, this.position.y);
 	}
 }

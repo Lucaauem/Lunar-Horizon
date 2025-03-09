@@ -20,8 +20,11 @@ public class Scene {
 	private final Tilemap tilemap = new Tilemap();
 	private final Tile[] tiles;
 	private final Vector2i spawn = new Vector2i();
+	private final String name;
 
 	public Scene(String name) {
+		this.name = name;
+
 		byte[] rawTileData = FileHandler.readBinary(SCENE_BASE_PATH + name + SCENE_EXTENSION);
 		ArrayList<Tile> tiles = new ArrayList<>();
 		Vector2f tilePosition = new Vector2f(0, SCENE_SIZE);
@@ -70,7 +73,7 @@ public class Scene {
 
 		if(type == 1) {
 			trigger = new SceneChangeTrigger();
-			trigger.setParameter(TargetScene.values()[parameter].name().toLowerCase());
+			trigger.setParameter(TargetScene.values()[parameter].name());
 		}
 
 		if(trigger != null) {
@@ -87,6 +90,10 @@ public class Scene {
 		int tileIndexY = SCENE_SIZE - (int) (y / Tile.TILE_SIZE);
 
 		return this.tiles[tileIndexY * SCENE_SIZE + tileIndexX];
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public boolean isInScene(float xPos, float yPos) {
