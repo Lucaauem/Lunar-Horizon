@@ -6,6 +6,7 @@ import engine.objects.trigger.SceneChangeTrigger;
 import engine.objects.trigger.TargetScene;
 import engine.objects.trigger.Trigger;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 import util.FileHandler;
 import java.util.ArrayList;
 
@@ -13,10 +14,12 @@ public class Scene {
 	private static final String SCENE_BASE_PATH = "src/main/assets/scenes/";
 	private static final String SCENE_EXTENSION = ".scene.bin";
 	private static final String TRIGGER_EXTENSION = ".trigger.bin";
+	private static final String CONFIG_EXTENSION = ".conf.bin";
 	private static final int SCENE_SIZE = 8;
 
 	private final Tilemap tilemap = new Tilemap();
 	private final Tile[] tiles;
+	private final Vector2i spawn = new Vector2i();
 
 	public Scene(String name) {
 		byte[] rawTileData = FileHandler.readBinary(SCENE_BASE_PATH + name + SCENE_EXTENSION);
@@ -38,6 +41,10 @@ public class Scene {
 
 		this.tiles = tiles.toArray(new Tile[0]);
 
+		byte[] rawConfigData = FileHandler.readBinary(SCENE_BASE_PATH + name + CONFIG_EXTENSION);
+		for(int i=0; i<rawConfigData.length; i+=3) {
+			this.loadConfig(rawConfigData[i], rawConfigData[i + 1], rawConfigData[i + 2]);
+		}
 
 		byte[] rawTriggerData = FileHandler.readBinary(SCENE_BASE_PATH + name + TRIGGER_EXTENSION);
 
@@ -48,6 +55,13 @@ public class Scene {
 		// The fourth byte is parameter data for the trigger.
 		for(int i=0; i<rawTriggerData.length; i+=4) {
 			this.createTrigger(rawTriggerData[i], rawTriggerData[i + 1], rawTriggerData[i + 2], rawTriggerData[i + 3]);
+		}
+	}
+
+	private void loadConfig(byte type, byte param1, byte param2) {
+		if(type == 0) {
+			this.spawn.x = param1;
+			this.spawn.y = param2;
 		}
 	}
 
@@ -62,6 +76,10 @@ public class Scene {
 		if(trigger != null) {
 			this.tiles[yIndex * SCENE_SIZE + xIndex].setTrigger(trigger);
 		}
+	}
+
+	public Vector2i getSpawn() {
+		return this.spawn;
 	}
 
 	public Tile getTile(float x, float y) {

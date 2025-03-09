@@ -33,6 +33,10 @@ public class GameObject {
 		return new Vector2f(this.position.x, this.position.y);
 	}
 
+	public void setPosition(Vector2f position) {
+		this.position.set(position);
+	}
+
 	public void render(){
 		this.texture.bind();
 
