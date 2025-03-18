@@ -7,6 +7,7 @@ import engine.ui.Text;
 import engine.ui.UiElement;
 import org.joml.Vector2i;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class UiMenu extends UiElement {
 	private static final Texture TEXTURE = new Texture("ui/menu.png");
@@ -20,12 +21,14 @@ public class UiMenu extends UiElement {
 
 	private ArrayList<MenuItem> items;
 	private int cursorIndex = 0;
+	private MenuPage currentPage = null;
+	private final Stack<MenuPage> pageStack = new Stack<>();
 
 	public UiMenu() {
-		this(MenuPages.MAIN_MENU_0);
+		this(MenuPage.MAIN_MENU_0);
 	}
 
-	public UiMenu(MenuPages page) {
+	public UiMenu(MenuPage page) {
 		super(TEXTURE, POSITION);
 		this.changeMenuPage(page);
 	}
@@ -36,9 +39,24 @@ public class UiMenu extends UiElement {
 		this.cursorIndex = Math.min(this.items.size() - 1, this.cursorIndex);
 	}
 
-	public void changeMenuPage(MenuPages page) {
+	public void changeMenuPage(MenuPage page) {
+		this.changeMenuPage(page, true);
+	}
+
+	public void changeMenuPage(MenuPage page, boolean pushToStack) {
 		this.items = PageContent.getPageItems(page, this);
 		this.cursorIndex = 0;
+
+		if(this.currentPage != null && pushToStack) {
+			this.pageStack.push(this.currentPage);
+		}
+		this.currentPage = page;
+	}
+
+	public void goPageBack() {
+		if(!this.pageStack.isEmpty()) {
+			this.changeMenuPage(this.pageStack.pop(), false);
+		}
 	}
 
 	@Override

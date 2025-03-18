@@ -24,7 +24,8 @@ public class MenuController extends Controller {
 
 	@Override
 	protected void onLeft(float dt) {
-
+		menu.goPageBack();
+		needReset = true;
 	}
 
 	@Override
