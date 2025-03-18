@@ -19,7 +19,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class GameWindow {
 	public static int WINDOW_HEIGHT = 720;
 	public static int WINDOW_WIDTH = 1280;
-	public static final Vector2i RESOLUTION = new Vector2i(640, 360);
+	public static final Vector2i RESOLUTION = new Vector2i(320, 180);
 	private long  window;
 
 	public void create() {

@@ -14,7 +14,7 @@ public class Camera {
 	private GameObject fixObj;
 	private int camOffsetX = 0;
 	private int camOffsetY = 0;
-	private float zoom = 1.5f;
+	private float zoom = 1f;
 
 	public Camera() {
 		this.matrix = new Matrix4f().identity();
