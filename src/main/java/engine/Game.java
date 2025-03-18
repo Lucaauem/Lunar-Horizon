@@ -10,20 +10,12 @@ import engine.graphics.renderer.shader.Shader;
 import engine.objects.Player;
 import engine.scenes.SceneManager;
 import engine.ui.UiManager;
-import engine.ui.menu.MenuItem;
 import engine.ui.menu.UiMenu;
 import util.Time;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
 	private static final int FPS_CAP = 60;
-	private static final ArrayList<MenuItem> MENU_ITEMS = new ArrayList<>(List.of(
-			new MenuItem("ITEM 1", () -> System.out.println(1)),
-			new MenuItem("ITEM 2", () -> System.out.println(2))
-	));
 
 	private final long window;
 	public static Shader shader = new Shader("src/main/assets/shaders/Basic.glsl");
@@ -42,7 +34,7 @@ public class Game {
 	private void init() {
 		SceneManager.getInstance().switchScene("overworld");
 		camera.fix(player);
-		UiManager.getInstance().addElement("overworld_menu", new UiMenu(MENU_ITEMS));
+		UiManager.getInstance().addElement("overworld_menu", new UiMenu());
 	}
 
 	public void start() {

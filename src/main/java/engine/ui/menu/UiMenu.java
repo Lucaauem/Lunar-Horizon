@@ -18,18 +18,27 @@ public class UiMenu extends UiElement {
 	private static final int TEXT_OFFSET_Y = TEXTURE.getHeight() - 20;
 	private static final int TEXT_SPACING = Text.CHARACTER_HEIGHT + 7;
 
-	private final ArrayList<MenuItem> items;
+	private ArrayList<MenuItem> items;
 	private int cursorIndex = 0;
 
-	public UiMenu(ArrayList<MenuItem> items) {
+	public UiMenu() {
+		this(MenuPages.MAIN_MENU_0);
+	}
+
+	public UiMenu(MenuPages page) {
 		super(TEXTURE, POSITION);
-		this.items = items;
+		this.changeMenuPage(page);
 	}
 
 	public void moveCursor(int direction) {
 		this.cursorIndex += direction;
 		this.cursorIndex = Math.max(0, this.cursorIndex);
 		this.cursorIndex = Math.min(this.items.size() - 1, this.cursorIndex);
+	}
+
+	public void changeMenuPage(MenuPages page) {
+		this.items = PageContent.getPageItems(page, this);
+		this.cursorIndex = 0;
 	}
 
 	@Override
