@@ -9,14 +9,14 @@ import org.joml.Vector2i;
 import java.util.ArrayList;
 
 public class UiMenu extends UiElement {
-	private static final Texture TEXTURE = new Texture("menu.png");
+	private static final Texture TEXTURE = new Texture("ui/menu.png");
 	private static final Vector2i POSITION = new Vector2i(
-			GameWindow.RESOLUTION.x - 11 * GameObject.DEFAULT_TILE_SIZE,
+			GameWindow.RESOLUTION.x - 7 * GameObject.DEFAULT_TILE_SIZE,
 			(GameWindow.RESOLUTION.y - TEXTURE.getHeight()) / 2
 	);
-	private static final int TEXT_PADDING_LEFT = 20;
-	private static final int TEXT_OFFSET_Y = TEXTURE.getHeight() - 35;
-	private static final int TEXT_SPACING = Text.CHARACTER_HEIGHT + 10;
+	private static final int TEXT_PADDING_LEFT = 10;
+	private static final int TEXT_OFFSET_Y = TEXTURE.getHeight() - 20;
+	private static final int TEXT_SPACING = Text.CHARACTER_HEIGHT + 7;
 
 	private final ArrayList<MenuItem> items;
 	private int cursorIndex = 0;

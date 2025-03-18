@@ -9,8 +9,8 @@ import java.util.Arrays;
 public class Text{
 	private static final Texture FONT_TEXTURE = new Texture("font/default.png");
 	private static final ArrayList<Character> SPECIAL_CHARACTERS = new ArrayList<>(Arrays.asList(',', '!', '\'', '&', '.', '"', '?', '-'));
-	public static final int CHARACTER_WIDTH = 9;
-	public static final int CHARACTER_HEIGHT = 9;
+	public static final int CHARACTER_WIDTH = 8;
+	public static final int CHARACTER_HEIGHT = 8;
 
 	private final ArrayList<UiElement> characters;
 	private final Vector2i position;
