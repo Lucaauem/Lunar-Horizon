@@ -1,8 +1,10 @@
 package engine.objects;
 
+import engine.mechanics.items.Item;
 import engine.scenes.Scene;
 import engine.scenes.SceneManager;
 import org.joml.Vector2f;
+import java.util.ArrayList;
 
 public class Player extends Entity {
 	private static final String PLAYER_TEXTURE_PATH = "sample.png";
@@ -15,6 +17,7 @@ public class Player extends Entity {
 	private int maxMagic = 15;
 	private int magic = maxMagic;
 	private int experience = 0;
+	private final ArrayList<Item> inventory = new ArrayList<>();
 
 	public Player() {
 		super(PLAYER_TEXTURE_PATH, new Vector2f(0, 0));
@@ -35,6 +38,16 @@ public class Player extends Entity {
 	public int getMaxMagic() { return this.magic; }
 
 	public int getExperience() { return this.experience; }
+
+	public Item[] getInventory() { return this.inventory.toArray(new Item[0]); }
+
+	public void addToInventory(Item item) {
+		this.inventory.add(item);
+	}
+
+	public void heal(int amount) {
+		this.health = Math.min(maxHealth, this.health + amount);
+	}
 
 	@Override
 	protected void onStepEnd() {
