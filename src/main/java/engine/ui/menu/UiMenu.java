@@ -53,6 +53,10 @@ public class UiMenu extends UiElement {
 		this.currentPage = page;
 	}
 
+	public void refreshPage() {
+		this.changeMenuPage(this.currentPage);
+	}
+
 	public void goPageBack() {
 		if(!this.pageStack.isEmpty()) {
 			this.changeMenuPage(this.pageStack.pop(), false);

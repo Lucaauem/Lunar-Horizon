@@ -32,6 +32,7 @@ public class Game {
 		this.renderer = Renderer.getInstance();
 
 		player.addToInventory(new Potion());
+		player.addToInventory(new Potion());
 	}
 
 	private void init() {

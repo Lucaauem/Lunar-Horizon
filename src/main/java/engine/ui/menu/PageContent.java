@@ -17,19 +17,23 @@ public class PageContent {
 					new MenuItem("INV.", () -> menu.changeMenuPage(MenuPage.PLAYER_INVENTORY)),
 					new MenuItem("STATS", PageContent::showStats)
 			));
-			case PLAYER_INVENTORY -> loadInventory();
+			case PLAYER_INVENTORY -> loadInventory(menu);
 			case SYSTEM -> new ArrayList<>(List.of(
 					new MenuItem("EXIT", () -> System.exit(0))
 			));
 		};
 	}
 
-	private static ArrayList<MenuItem> loadInventory() {
+	private static ArrayList<MenuItem> loadInventory(UiMenu menu) {
 		ArrayList<MenuItem> itemList = new ArrayList<>();
 		Item[] items = Game.player.getInventory();
 
 		for(Item item : items) {
-			itemList.add(new MenuItem(item.getName(), item::use));
+			itemList.add(new MenuItem(item.getName(), () -> {
+				item.use();
+				Game.player.removeFromInventory(item);
+				menu.refreshPage();
+			}));
 		}
 
 		return itemList;

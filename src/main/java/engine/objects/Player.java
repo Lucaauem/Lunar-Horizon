@@ -45,6 +45,10 @@ public class Player extends Entity {
 		this.inventory.add(item);
 	}
 
+	public void removeFromInventory(Item item) {
+		this.inventory.remove(item);
+	}
+
 	public void heal(int amount) {
 		this.health = Math.min(maxHealth, this.health + amount);
 	}
