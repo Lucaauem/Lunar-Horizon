@@ -7,6 +7,7 @@ import engine.controls.PlayerController;
 import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
+import engine.mechanics.items.Potion;
 import engine.objects.Player;
 import engine.scenes.SceneManager;
 import engine.ui.UiManager;
@@ -29,6 +30,8 @@ public class Game {
 		Game.shader.bind();
 
 		this.renderer = Renderer.getInstance();
+
+		player.addToInventory(new Potion());
 	}
 
 	private void init() {

@@ -1,7 +1,7 @@
 package engine.ui.menu;
 
 import engine.Game;
-
+import engine.mechanics.items.Item;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,25 @@ public class PageContent {
 					new MenuItem("SYSTEM", () -> menu.changeMenuPage(MenuPage.SYSTEM))
 			));
 			case PLAYER_MENU -> new ArrayList<>(List.of(
-					new MenuItem("INV.", () -> { /* TODO */}),
+					new MenuItem("INV.", () -> menu.changeMenuPage(MenuPage.PLAYER_INVENTORY)),
 					new MenuItem("STATS", PageContent::showStats)
 			));
+			case PLAYER_INVENTORY -> loadInventory();
 			case SYSTEM -> new ArrayList<>(List.of(
 					new MenuItem("EXIT", () -> System.exit(0))
 			));
 		};
+	}
+
+	private static ArrayList<MenuItem> loadInventory() {
+		ArrayList<MenuItem> itemList = new ArrayList<>();
+		Item[] items = Game.player.getInventory();
+
+		for(Item item : items) {
+			itemList.add(new MenuItem(item.getName(), item::use));
+		}
+
+		return itemList;
 	}
 
 	// !TODO! Open real menu
