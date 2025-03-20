@@ -54,7 +54,7 @@ public class UiMenu extends UiElement {
 	}
 
 	public void refreshPage() {
-		this.changeMenuPage(this.currentPage);
+		this.changeMenuPage(this.currentPage, false);
 	}
 
 	public void goPageBack() {
@@ -77,16 +77,20 @@ public class UiMenu extends UiElement {
 			text.render();
 		}
 
-		Vector2i itemTextPos = new Vector2i(
-				POSITION.x + TEXT_PADDING_LEFT,
-				POSITION.y + TEXT_OFFSET_Y - (cursorIndex * TEXT_SPACING)
-		);
+		if(!this.items.isEmpty()) {
+			Vector2i itemTextPos = new Vector2i(
+					POSITION.x + TEXT_PADDING_LEFT,
+					POSITION.y + TEXT_OFFSET_Y - (cursorIndex * TEXT_SPACING)
+			);
 
-		Text text = new Text("-", itemTextPos);
-		text.render();
+			Text text = new Text("-", itemTextPos);
+			text.render();
+		}
 	}
 
 	public void toggleEvent() {
-		this.items.get(this.cursorIndex).action();
+		if(!this.items.isEmpty()) {
+			this.items.get(this.cursorIndex).action();
+		}
 	}
 }
