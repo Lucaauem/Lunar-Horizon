@@ -24,6 +24,7 @@ public class Game {
 	public static Camera camera = new Camera();
 	public static final Player player = new Player();
 	private static Controller controller = new PlayerController();
+	private static GameState state = GameState.OVERWORLD;
 
 	public Game(long window) {
 		this.window = window;
@@ -39,6 +40,10 @@ public class Game {
 		SceneManager.getInstance().switchScene("overworld");
 		camera.fix(player);
 		UiManager.getInstance().addElement("overworld_menu", new UiMenu());
+	}
+
+	public static void changeState(GameState newState) {
+		Game.state = newState;
 	}
 
 	public void start() {
@@ -78,10 +83,18 @@ public class Game {
 		this.renderer.clear();
 
 		camera.update();
-		SceneManager.getInstance().getCurrentScene().render();
-		player.render();
 
-		UiManager.getInstance().render();
+		switch (state) {
+			case OVERWORLD -> {
+				SceneManager.getInstance().getCurrentScene().render();
+				player.render();
+
+				UiManager.getInstance().render();
+			}
+			case BATTLE -> {
+				System.out.println("BATTLE");
+			}
+		}
 	}
 
 	public static void toggleMenu() {
