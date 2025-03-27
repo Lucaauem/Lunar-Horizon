@@ -93,4 +93,11 @@ public class UiMenu extends UiElement {
 			this.items.get(this.cursorIndex).action();
 		}
 	}
+
+	@Override
+	public void toggle() {
+		this.pageStack.clear();
+		this.changeMenuPage(MenuPage.MAIN_MENU_0, false);
+		super.toggle();
+	}
 }
