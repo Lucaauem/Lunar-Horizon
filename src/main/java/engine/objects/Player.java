@@ -1,5 +1,6 @@
 package engine.objects;
 
+import engine.graphics.Texture;
 import engine.mechanics.items.Item;
 import engine.scenes.Scene;
 import engine.scenes.SceneManager;
@@ -7,7 +8,10 @@ import org.joml.Vector2f;
 import java.util.ArrayList;
 
 public class Player extends Entity {
-	private static final String PLAYER_TEXTURE_PATH = "sample.png";
+	private static final String PLAYER_TEXTURE_DOWN = "player/player_down.png";
+	private static final String PLAYER_TEXTURE_UP = "player/player_up.png";
+	private static final String PLAYER_TEXTURE_LEFT = "player/player_left.png";
+	private static final String PLAYER_TEXTURE_RIGHT = "player/player_right.png";
 
 	private final Vector2f lastValidPosition = new Vector2f();
 	private int level = 1;
@@ -20,7 +24,7 @@ public class Player extends Entity {
 	private final ArrayList<Item> inventory = new ArrayList<>();
 
 	public Player() {
-		super(PLAYER_TEXTURE_PATH, new Vector2f(0, 0));
+		super(PLAYER_TEXTURE_DOWN, new Vector2f(0, 0));
 	}
 
 	public Vector2f getLastValidPosition() { return lastValidPosition; }
@@ -51,6 +55,18 @@ public class Player extends Entity {
 
 	public void heal(int amount) {
 		this.health = Math.min(maxHealth, this.health + amount);
+	}
+
+	@Override
+	public void move(MoveDirection direction) {
+		switch(direction) {
+			case UP    -> this.texture = new Texture(PLAYER_TEXTURE_UP);
+			case DOWN  -> this.texture = new Texture(PLAYER_TEXTURE_DOWN);
+			case LEFT  -> this.texture = new Texture(PLAYER_TEXTURE_LEFT);
+			case RIGHT -> this.texture = new Texture(PLAYER_TEXTURE_RIGHT);
+		}
+
+		super.move(direction);
 	}
 
 	@Override
