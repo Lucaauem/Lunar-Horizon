@@ -1,9 +1,7 @@
 package engine;
 
-import engine.controls.Controller;
-import engine.controls.KeyListener;
-import engine.controls.MenuController;
-import engine.controls.PlayerController;
+import engine.battle.BattleEngine;
+import engine.controls.*;
 import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
@@ -25,6 +23,7 @@ public class Game {
 	public static final Player player = new Player();
 	private static Controller controller = new PlayerController();
 	private static GameState state = GameState.OVERWORLD;
+	private static BattleEngine battleEngine = null;
 
 	public Game(long window) {
 		this.window = window;
@@ -76,23 +75,28 @@ public class Game {
 		//System.out.println((1.0f / dt) + "FPS");
 		controller.checkInputs(dt);
 		player.update();
+
+		// !DEBUG!
+		controller = new BattleController();
+		Game.changeState(GameState.BATTLE);
+		Game.battleEngine = new BattleEngine();
 	}
 
 	private void render() {
 		GameWindow.setScale();
 		this.renderer.clear();
 
-		camera.update();
 
 		switch (state) {
 			case OVERWORLD -> {
+				camera.update();
 				SceneManager.getInstance().getCurrentScene().render();
 				player.render();
 
 				UiManager.getInstance().render();
 			}
 			case BATTLE -> {
-				System.out.println("BATTLE");
+				Game.battleEngine.render();
 			}
 		}
 	}
