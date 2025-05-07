@@ -1,9 +1,22 @@
 package util;
 
+import org.json.JSONObject;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class FileHandler {
+	public static JSONObject readJSON(String path) {
+		try {
+			String content = new String(Files.readAllBytes(Paths.get(path)));
+			return new JSONObject(content);
+		} catch (Exception e) {
+			return new JSONObject();
+		}
+	}
+
 	public static String[] readFileLines(String fileName) {
 		try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 			List<String> lines = new ArrayList<>();

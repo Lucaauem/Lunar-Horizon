@@ -79,7 +79,10 @@ public class Game {
 		// !DEBUG!
 		controller = new BattleController();
 		Game.changeState(GameState.BATTLE);
-		Game.battleEngine = new BattleEngine();
+
+		if(Game.battleEngine == null) {
+			Game.battleEngine = new BattleEngine();
+		}
 	}
 
 	private void render() {

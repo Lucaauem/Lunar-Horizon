@@ -7,13 +7,13 @@ import engine.graphics.renderer.Renderer;
 import org.joml.Matrix4f;
 
 public class BattleEngine {
-	private static final Texture BACKGROUND_TEXTURE = new Texture("ui/battle/background/debug_background.png");
+	private static final Texture BACKGROUND_TEXTURE = new Texture("ui/battle/background/debug.png");
 	private static final Texture STATUS_BOX_MODEL_TEXTURE = new Texture("ui/battle/status_box.png");
 	private static final Texture GROUND_TEXTURE = new Texture("ui/battle/ground/debug.png");
 	private static final Texture MENU_TEXTURE = new Texture("ui/battle/menu.png");
 	private static final Model MENU_MODEL = new Model(new float[] {
-			0.0f, 0.0f, 0, 1,
-			1.0f, 0.0f, 1, 1,
+			0.0f, 0.0f,  0, 1,
+			1.0f, 0.0f,  1, 1,
 			1.0f, 0.25f, 1, 0,
 			0.0f, 0.25f, 0, 0
 	});
@@ -24,8 +24,8 @@ public class BattleEngine {
 			0.0f, 1.0f,  0, 0
 	});
 	private static final Model GROUND_MODEL = new Model(new float[] {
-			0.0f, 0.25f, 0, 1,
-			1.0f, 0.25f, 1, 1,
+			0.0f, 0.25f,  0, 1,
+			1.0f, 0.25f,  1, 1,
 			1.0f, 0.375f, 1, 0,
 			0.0f, 0.375f, 0, 0
 	});
@@ -36,10 +36,12 @@ public class BattleEngine {
 			0.025f, 0.975f, 0, 0
 	});
 
-	private Enemy[] enemies;
+	private Enemy enemy;
 
 	public BattleEngine() {
-
+		// Load monster data
+		// TODO: Randomly choose monster based on certain parameters
+		this.enemy = new Enemy("test");
 	}
 
 	public void render() {
@@ -54,8 +56,14 @@ public class BattleEngine {
 		MENU_TEXTURE.bind();
 		Renderer.getInstance().draw(MENU_MODEL.getVertexArray(), MENU_MODEL.getIndexBuffer(), Game.shader);
 
+		// Render entities
+		Model enemyModel = this.enemy.getModel();
+		this.enemy.getTexture().bind();
+		Renderer.getInstance().draw(enemyModel.getVertexArray(), enemyModel.getIndexBuffer(), Game.shader);
+
 		// Render ui elements
 		STATUS_BOX_MODEL_TEXTURE.bind();
 		Renderer.getInstance().draw(STATUX_BOX_MODEL.getVertexArray(), STATUX_BOX_MODEL.getIndexBuffer(), Game.shader);
+
 	}
 }
