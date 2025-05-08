@@ -12,22 +12,22 @@ public class BattleEngine {
 	private static final Texture GROUND_TEXTURE = new Texture("ui/battle/ground/debug.png");
 	private static final Texture MENU_TEXTURE = new Texture("ui/battle/menu.png");
 	private static final Model MENU_MODEL = new Model(new float[] {
-			0.0f, 0.0f,  0, 1,
-			1.0f, 0.0f,  1, 1,
-			1.0f, 0.25f, 1, 0,
-			0.0f, 0.25f, 0, 0
+			0.0f, 0.0f, 0, 1,
+			1.0f, 0.0f, 1, 1,
+			1.0f, 0.35f, 1, 0,
+			0.0f, 0.35f, 0, 0
 	});
 	private static final Model BACKGROUND_MODEL = new Model(new float[] {
-			0.0f, 0.25f, 0, 1,
-			1.0f, 0.25f, 1, 1,
+			0.0f, 0.35f, 0, 1,
+			1.0f, 0.35f, 1, 1,
 			1.0f, 1.0f,  1, 0,
 			0.0f, 1.0f,  0, 0
 	});
 	private static final Model GROUND_MODEL = new Model(new float[] {
-			0.0f, 0.25f,  0, 1,
-			1.0f, 0.25f,  1, 1,
-			1.0f, 0.375f, 1, 0,
-			0.0f, 0.375f, 0, 0
+			0.0f, 0.35f,  0, 1,
+			1.0f, 0.35f,  1, 1,
+			1.0f, 0.475f, 1, 0,
+			0.0f, 0.475f, 0, 0
 	});
 	private static final Model STATUX_BOX_MODEL = new Model(new float[] {
 			0.025f, 0.805f, 0, 1,
@@ -37,11 +37,23 @@ public class BattleEngine {
 	});
 
 	private Enemy enemy;
+	private boolean isPlayerTurn = true; // TODO: Maybe calculate based on speed attribute?
 
 	public BattleEngine() {
 		// Load monster data
 		// TODO: Randomly choose monster based on certain parameters
 		this.enemy = new Enemy("test");
+	}
+
+	public void nextTurn() {
+		if(this.isPlayerTurn) {
+			// TODO: Wait for user input
+		} else {
+			// TODO: Generate move
+			this.enemy.attack();
+		}
+
+		this.isPlayerTurn = !this.isPlayerTurn;
 	}
 
 	public void render() {

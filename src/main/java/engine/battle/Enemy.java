@@ -1,5 +1,6 @@
 package engine.battle;
 
+import engine.Game;
 import engine.graphics.Model;
 import engine.graphics.Texture;
 import org.json.JSONObject;
@@ -11,19 +12,24 @@ public class Enemy {
 
 	private final Texture texture;
 	private final Model model = new Model(new float[] {
-			0.6f, 0.3f,  0, 1,
-			0.8f, 0.3f,  1, 1,
-			0.8f, 0.64f, 1, 0,
-			0.6f, 0.64f, 0, 0
+			0.6f, 0.4f,  0, 1,
+			0.8f, 0.4f,  1, 1,
+			0.8f, 0.74f, 1, 0,
+			0.6f, 0.74f, 0, 0
 	});
 	private int health;
 	private int damage;
 
-	public Enemy(String name) {
-		JSONObject data = FileHandler.readJSON(MONSTER_DATA_PATH + name + ".json");
+	public Enemy(String id) {
+		JSONObject data = FileHandler.readJSON(MONSTER_DATA_PATH + id + ".json");
 
-		System.out.println(MONSTER_TEXTURE_PATH + data.getString("texture") + ".png");
 		this.texture = new Texture(MONSTER_TEXTURE_PATH + data.getString("texture") + ".png");
+		this.health = data.getInt("health");
+		this.damage = data.getInt("damage");
+	}
+
+	public void attack() {
+		Game.player.reduceHealth(this.damage);
 	}
 
 	public Texture getTexture() {

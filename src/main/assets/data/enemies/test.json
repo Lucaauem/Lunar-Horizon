@@ -1,5 +1,6 @@
 {
     "name" : "Test",
+    "texture" : "debug",
     "health" : 10,
-    "texture" : "debug"
+    "damage" : 2
 }
