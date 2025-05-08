@@ -48,6 +48,9 @@ public class Game {
 	public void start() {
 		this.init();
 
+		// DEBUG
+		Game.battleEngine = new BattleEngine();
+
 		float lastTime = Time.getTime();
 		while (!glfwWindowShouldClose(window)) {
 			if(KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
@@ -74,15 +77,8 @@ public class Game {
 	private void update(float dt) {
 		//System.out.println((1.0f / dt) + "FPS");
 		controller.checkInputs(dt);
-		player.update();
+		//player.update();
 
-		// !DEBUG!
-		controller = new BattleController();
-		Game.changeState(GameState.BATTLE);
-
-		if(Game.battleEngine == null) {
-			Game.battleEngine = new BattleEngine();
-		}
 	}
 
 	private void render() {
@@ -102,6 +98,10 @@ public class Game {
 				Game.battleEngine.render();
 			}
 		}
+	}
+
+	public static void setController(Controller controller) {
+		Game.controller = controller;
 	}
 
 	public static void toggleMenu() {

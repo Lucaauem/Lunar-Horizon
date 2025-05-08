@@ -1,10 +1,15 @@
 package engine.battle;
 
 import engine.Game;
+import engine.GameState;
+import engine.controls.BattleController;
 import engine.graphics.Model;
 import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
+import engine.ui.BattleMenu;
+import engine.ui.UiButton;
 import org.joml.Matrix4f;
+import org.joml.Vector2i;
 
 public class BattleEngine {
 	private static final Texture BACKGROUND_TEXTURE = new Texture("ui/battle/background/debug.png");
@@ -38,11 +43,26 @@ public class BattleEngine {
 
 	private Enemy enemy;
 	private boolean isPlayerTurn = true; // TODO: Maybe calculate based on speed attribute?
+	private BattleMenu menu = new BattleMenu();
 
 	public BattleEngine() {
+		// Init game state
+		Game.changeState(GameState.BATTLE);
+		Game.setController(new BattleController(this));
+
 		// Load monster data
 		// TODO: Randomly choose monster based on certain parameters
 		this.enemy = new Enemy("test");
+
+		// TODO: Show on player turn
+		this.menu.setButtons(new UiButton[]{
+			new UiButton("Attack", new Vector2i(20, 35), () -> System.out.println(1)),
+			new UiButton("Magic", new Vector2i(20, 15), () -> System.out.println(1)),
+			new UiButton("Items", new Vector2i(120, 35), () -> System.out.println(1)),
+			new UiButton("Status", new Vector2i(120, 15), () -> System.out.println(1)),
+			new UiButton("Block", new Vector2i(220, 35), () -> System.out.println(1)),
+			new UiButton("Flee", new Vector2i(220, 15), () -> System.out.println(1))
+		});
 	}
 
 	public void nextTurn() {
@@ -76,6 +96,14 @@ public class BattleEngine {
 		// Render ui elements
 		STATUS_BOX_MODEL_TEXTURE.bind();
 		Renderer.getInstance().draw(STATUX_BOX_MODEL.getVertexArray(), STATUX_BOX_MODEL.getIndexBuffer(), Game.shader);
+		this.menu.render();
+	}
 
+	public void moveCursor(int ammount) {
+		this.menu.moveCursor(ammount);
+	}
+
+	public void clickButton() {
+		this.menu.clickButton();
 	}
 }

@@ -14,10 +14,12 @@ public class Text{
 
 	private final ArrayList<UiElement> characters;
 	private final Vector2i position;
+	private final String originalString;
 
 	public Text(String text, Vector2i position) {
 		this.characters = new ArrayList<>();
 		this.position = position;
+		this.originalString = text;
 
 		for(int i=0; i<text.length(); i++) {
 			if(text.charAt(i) == ' ') { continue; }
@@ -59,6 +61,14 @@ public class Text{
 		int yIndex = characterIndex % 2;
 
 		return new Vector4f((float) xIndex / 22, (yIndex + 1) * 0.5f, (float) (xIndex + 1)/22, yIndex * 0.5f);
+	}
+
+	public Vector2i getPosition() {
+		return this.position;
+	}
+
+	public String getText() {
+		return this.originalString;
 	}
 
 	public void render() {
