@@ -53,6 +53,10 @@ public class Player extends Entity {
 		this.inventory.remove(item);
 	}
 
+	public boolean isDead() {
+		return this.health <= 0;
+	}
+
 	public void reduceHealth(int damage) {
 		this.health -= damage;
 	}

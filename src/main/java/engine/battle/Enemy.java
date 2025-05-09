@@ -32,6 +32,10 @@ public class Enemy {
 		Game.player.reduceHealth(this.damage);
 	}
 
+	public boolean isDead() {
+		return this.health <= 0;
+	}
+
 	public void changeHealth(int ammount) {
 		this.health += ammount;
 	}

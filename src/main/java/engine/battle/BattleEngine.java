@@ -19,8 +19,9 @@ public class BattleEngine {
 	private static final Texture STATUS_BOX_MODEL_TEXTURE = new Texture("ui/battle/status_box.png");
 	private static final Texture GROUND_TEXTURE = new Texture("ui/battle/ground/debug.png");
 	private static final Texture MENU_TEXTURE = new Texture("ui/battle/menu.png");
-	private static final UiElement MANA_ICON = new UiElement(new Texture("ui/battle/mana_icon.png"), new Vector2i(15, 150));
-	private static final UiElement HEALTH_ICON = new UiElement(new Texture("ui/battle/health_icon.png"), new Vector2i(15, 162));
+	private static final UiElement HEALTH_ICON = new UiElement(new Texture("ui/battle/health_icon.png"), new Vector2i(15, 158));
+	private static final UiElement MANA_ICON = new UiElement(new Texture("ui/battle/mana_icon.png"), new Vector2i(15, 145));
+	private static final UiElement STATUX_BOX_MODEL_ELEMENT = new UiElement(STATUS_BOX_MODEL_TEXTURE, new Vector2i(8, 140));
 	private static final Model MENU_MODEL = new Model(new float[] {
 			0.0f, 0.0f, 0, 1,
 			1.0f, 0.0f, 1, 1,
@@ -38,12 +39,6 @@ public class BattleEngine {
 			1.0f, 0.35f,  1, 1,
 			1.0f, 0.475f, 1, 0,
 			0.0f, 0.475f, 0, 0
-	});
-	private static final Model STATUX_BOX_MODEL = new Model(new float[] {
-			0.025f, 0.805f, 0, 1,
-			0.175f, 0.805f, 1, 1,
-			0.175f, 0.975f, 1, 0,
-			0.025f, 0.975f, 0, 0
 	});
 
 	private final Enemy enemy;
@@ -79,11 +74,20 @@ public class BattleEngine {
 	public void nextTurn() {
 		this.isPlayerTurn = !this.isPlayerTurn;
 
+		// Check ending condition
+		if(Game.player.isDead()) {
+			// TODO
+		} else if(this.enemy.isDead()) {
+			this.winBattle();
+			return;
+		}
+
 		if(this.isPlayerTurn) {
 			// TODO: Wait for user input
 		} else {
 			// TODO: Generate move
-			//this.enemy.attack();
+			this.textbox.setTexts(new String[]{"The monster attacks!"});
+			this.textbox.open(() -> { this.enemy.attack(); this.nextTurn(); });
 		}
 	}
 
@@ -91,6 +95,17 @@ public class BattleEngine {
 		this.enemy.changeHealth(-1 * Game.player.getAttack());
 		this.textbox.setTexts(new String[]{"You attack!", "The monster took  " + Game.player.getAttack() + " damage!"});
 		this.textbox.open(this::nextTurn);
+	}
+
+	private void winBattle() {
+		// TODO: EXP
+		this.textbox.setTexts(new String[]{"You defeated the monster!"});
+		this.textbox.open(this::endBattle);
+	}
+
+	private void endBattle() {
+		// TODO
+		System.exit(0);
 	}
 
 	public void render() {
@@ -111,8 +126,7 @@ public class BattleEngine {
 		Renderer.getInstance().draw(enemyModel.getVertexArray(), enemyModel.getIndexBuffer(), Game.shader);
 
 		// Render ui elements
-		STATUS_BOX_MODEL_TEXTURE.bind();
-		Renderer.getInstance().draw(STATUX_BOX_MODEL.getVertexArray(), STATUX_BOX_MODEL.getIndexBuffer(), Game.shader);
+		STATUX_BOX_MODEL_ELEMENT.render();
 		if(this.textbox.isOpen()) {
 			this.textbox.render();
 		}else {
@@ -120,8 +134,8 @@ public class BattleEngine {
 		}
 
 		// Render player stats
-		new Text("" + Game.player.getHealth(), new Vector2i(25, 162)).render();
-		new Text("" + Game.player.getMagic(), new Vector2i(25, 150)).render();
+		new Text("" + Game.player.getHealth(), new Vector2i(25, 158)).render();
+		new Text("" + Game.player.getMagic(), new Vector2i(25, 145)).render();
 		HEALTH_ICON.render();
 		MANA_ICON.render();
 	}
