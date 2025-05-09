@@ -104,6 +104,10 @@ public class Game {
 		Game.controller = controller;
 	}
 
+	public static Controller getController() {
+		return Game.controller;
+	}
+
 	public static void toggleMenu() {
 		UiManager.getInstance().getElement("overworld_menu").toggle();
 

@@ -8,6 +8,7 @@ import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
 import engine.ui.BattleMenu;
 import engine.ui.UiButton;
+import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
 
@@ -41,14 +42,16 @@ public class BattleEngine {
 			0.025f, 0.975f, 0, 0
 	});
 
-	private Enemy enemy;
-	private boolean isPlayerTurn = true; // TODO: Maybe calculate based on speed attribute?
-	private BattleMenu menu = new BattleMenu();
+	private final Enemy enemy;
+	private final BattleMenu menu = new BattleMenu();
+	private final UiTextbox textbox = new UiTextbox(new String[0], new Vector2i(10, 10));
+	private boolean isPlayerTurn = false; // TODO: Maybe calculate based on speed attribute?
 
 	public BattleEngine() {
 		// Init game state
 		Game.changeState(GameState.BATTLE);
 		Game.setController(new BattleController(this));
+		this.textbox.setTexts(new String[] {"A monster appears!"});
 
 		// Load monster data
 		// TODO: Randomly choose monster based on certain parameters
@@ -56,24 +59,33 @@ public class BattleEngine {
 
 		// TODO: Show on player turn
 		this.menu.setButtons(new UiButton[]{
-			new UiButton("Attack", new Vector2i(20, 35), () -> System.out.println(1)),
+			new UiButton("Attack", new Vector2i(20, 35), this::attackEnemy),
 			new UiButton("Magic", new Vector2i(20, 15), () -> System.out.println(1)),
 			new UiButton("Items", new Vector2i(120, 35), () -> System.out.println(1)),
 			new UiButton("Status", new Vector2i(120, 15), () -> System.out.println(1)),
 			new UiButton("Block", new Vector2i(220, 35), () -> System.out.println(1)),
 			new UiButton("Flee", new Vector2i(220, 15), () -> System.out.println(1))
 		});
+
+		this.textbox.open();
+
+		this.nextTurn();
 	}
 
 	public void nextTurn() {
+		this.isPlayerTurn = !this.isPlayerTurn;
+
 		if(this.isPlayerTurn) {
 			// TODO: Wait for user input
 		} else {
 			// TODO: Generate move
-			this.enemy.attack();
+			//this.enemy.attack();
 		}
+	}
 
-		this.isPlayerTurn = !this.isPlayerTurn;
+	private void attackEnemy() {
+		this.enemy.changeHealth(-1 * Game.player.getAttack());
+		this.nextTurn();
 	}
 
 	public void render() {
@@ -96,7 +108,11 @@ public class BattleEngine {
 		// Render ui elements
 		STATUS_BOX_MODEL_TEXTURE.bind();
 		Renderer.getInstance().draw(STATUX_BOX_MODEL.getVertexArray(), STATUX_BOX_MODEL.getIndexBuffer(), Game.shader);
-		this.menu.render();
+		if(this.textbox.isOpen()) {
+			this.textbox.render();
+		}else {
+			this.menu.render();
+		}
 	}
 
 	public void moveCursor(int ammount) {

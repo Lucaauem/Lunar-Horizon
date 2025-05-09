@@ -32,6 +32,10 @@ public class Enemy {
 		Game.player.reduceHealth(this.damage);
 	}
 
+	public void changeHealth(int ammount) {
+		this.health += ammount;
+	}
+
 	public Texture getTexture() {
 		return this.texture;
 	}
