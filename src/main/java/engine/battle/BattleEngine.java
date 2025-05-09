@@ -7,7 +7,9 @@ import engine.graphics.Model;
 import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
 import engine.ui.BattleMenu;
+import engine.ui.Text;
 import engine.ui.UiButton;
+import engine.ui.UiElement;
 import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
@@ -17,6 +19,8 @@ public class BattleEngine {
 	private static final Texture STATUS_BOX_MODEL_TEXTURE = new Texture("ui/battle/status_box.png");
 	private static final Texture GROUND_TEXTURE = new Texture("ui/battle/ground/debug.png");
 	private static final Texture MENU_TEXTURE = new Texture("ui/battle/menu.png");
+	private static final UiElement MANA_ICON = new UiElement(new Texture("ui/battle/mana_icon.png"), new Vector2i(15, 150));
+	private static final UiElement HEALTH_ICON = new UiElement(new Texture("ui/battle/health_icon.png"), new Vector2i(15, 162));
 	private static final Model MENU_MODEL = new Model(new float[] {
 			0.0f, 0.0f, 0, 1,
 			1.0f, 0.0f, 1, 1,
@@ -85,7 +89,7 @@ public class BattleEngine {
 
 	private void attackEnemy() {
 		this.enemy.changeHealth(-1 * Game.player.getAttack());
-		this.textbox.setTexts(new String[]{"You attack!"});
+		this.textbox.setTexts(new String[]{"You attack!", "The monster took  " + Game.player.getAttack() + " damage!"});
 		this.textbox.open(this::nextTurn);
 	}
 
@@ -114,6 +118,12 @@ public class BattleEngine {
 		}else {
 			this.menu.render();
 		}
+
+		// Render player stats
+		new Text("" + Game.player.getHealth(), new Vector2i(25, 162)).render();
+		new Text("" + Game.player.getMagic(), new Vector2i(25, 150)).render();
+		HEALTH_ICON.render();
+		MANA_ICON.render();
 	}
 
 	public void moveCursor(int ammount) {
