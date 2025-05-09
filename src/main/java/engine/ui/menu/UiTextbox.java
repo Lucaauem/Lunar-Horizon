@@ -13,6 +13,7 @@ public class UiTextbox {
 	private Text currentText;
 	private boolean open = false;
 	private Controller currentController;
+	private Runnable onClose;
 
 	public UiTextbox(String[] texts, Vector2i position) {
 		this.texts = new Stack<>();
@@ -25,11 +26,21 @@ public class UiTextbox {
 		this.currentController = Game.getController();
 		Game.setController(new TextboxController(this));
 		this.open = true;
+		this.onClose = null;
+	}
+
+	public void open(Runnable onClose) {
+		this.open();
+		this.onClose = onClose;
 	}
 
 	public void close() {
 		this.open = false;
 		Game.setController(currentController);
+
+		if(this.onClose != null) {
+			this.onClose.run();
+		}
 	}
 
 	public boolean isOpen() {

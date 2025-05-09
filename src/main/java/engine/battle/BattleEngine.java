@@ -85,7 +85,8 @@ public class BattleEngine {
 
 	private void attackEnemy() {
 		this.enemy.changeHealth(-1 * Game.player.getAttack());
-		this.nextTurn();
+		this.textbox.setTexts(new String[]{"You attack!"});
+		this.textbox.open(this::nextTurn);
 	}
 
 	public void render() {
