@@ -70,7 +70,7 @@ public class BattleEngine {
 			new UiButton("Items", new Vector2i(120, 35), this::openInventory),
 			new UiButton("Status", new Vector2i(120, 15), () -> System.out.println(1)), 	// TODO
 			new UiButton("Block", new Vector2i(220, 35), () -> System.out.println(1)),  	// TODO
-			new UiButton("Flee", new Vector2i(220, 15), () -> System.out.println(1))		// TODO
+			new UiButton("Flee", new Vector2i(220, 15), this::flee)
 		});
 
 		this.textbox.open();
@@ -102,6 +102,12 @@ public class BattleEngine {
 		this.enemy.changeHealth(-1 * Game.player.getAttack());
 		this.textbox.setTexts(new String[]{"You attack!", "The monster took  " + Game.player.getAttack() + " damage!"});
 		this.textbox.open(this::nextTurn);
+	}
+
+	private void flee() {
+		// TODO: Cancel flee with some random value
+		this.textbox.setTexts(new String[]{"You flee!"});
+		this.textbox.open(this::endBattle);
 	}
 
 	private void winBattle() {
