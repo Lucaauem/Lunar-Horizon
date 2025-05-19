@@ -7,6 +7,7 @@ public class BattleMenu {
 	private UiButton[] buttons;
 	private UiButton currentButton;
 	private int currentIndex = 0;
+	private boolean isVisible = false;
 
 	public void setButtons(UiButton[] buttons) {
 		this.buttons = buttons;
@@ -26,6 +27,14 @@ public class BattleMenu {
 
 	public void clickButton() {
 		this.buttons[this.currentIndex].click();
+	}
+
+	public void setVisibility(boolean visible) {
+		this.isVisible = visible;
+	}
+
+	public boolean isVisible() {
+		return this.isVisible;
 	}
 
 	public void render() {

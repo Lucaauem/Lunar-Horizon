@@ -10,6 +10,8 @@ import engine.ui.BattleMenu;
 import engine.ui.Text;
 import engine.ui.UiButton;
 import engine.ui.UiElement;
+import engine.ui.menu.BattleList;
+import engine.ui.menu.ListElement;
 import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
@@ -43,7 +45,9 @@ public class BattleEngine {
 
 	private final Enemy enemy;
 	private final BattleMenu menu = new BattleMenu();
+	private final BattleList submenu = new BattleList(new Vector2i(225, 150));
 	private final UiTextbox textbox = new UiTextbox(new String[0], new Vector2i(10, 10));
+	private BattleMenu activeMenu = menu;
 	private boolean isPlayerTurn = false; // TODO: Maybe calculate based on speed attribute?
 
 	public BattleEngine() {
@@ -59,11 +63,11 @@ public class BattleEngine {
 		// TODO: Show on player turn
 		this.menu.setButtons(new UiButton[]{
 			new UiButton("Attack", new Vector2i(20, 35), this::attackEnemy),
-			new UiButton("Magic", new Vector2i(20, 15), () -> System.out.println(1)),
-			new UiButton("Items", new Vector2i(120, 35), () -> System.out.println(1)),
-			new UiButton("Status", new Vector2i(120, 15), () -> System.out.println(1)),
-			new UiButton("Block", new Vector2i(220, 35), () -> System.out.println(1)),
-			new UiButton("Flee", new Vector2i(220, 15), () -> System.out.println(1))
+			new UiButton("Magic", new Vector2i(20, 15), () -> System.out.println(1)),   	// TODO
+			new UiButton("Items", new Vector2i(120, 35), this::openInventory),
+			new UiButton("Status", new Vector2i(120, 15), () -> System.out.println(1)), 	// TODO
+			new UiButton("Block", new Vector2i(220, 35), () -> System.out.println(1)),  	// TODO
+			new UiButton("Flee", new Vector2i(220, 15), () -> System.out.println(1))		// TODO
 		});
 
 		this.textbox.open();
@@ -108,6 +112,27 @@ public class BattleEngine {
 		System.exit(0);
 	}
 
+	// region UI ELEMENTS
+
+	private void openInventory() {
+		this.submenu.setItems(new ListElement[]{
+				new ListElement("Test item", () -> System.out.println("Test item")),
+				new ListElement("Test 2", () -> System.out.println("Test 2")),
+		});
+		this.submenu.setVisibility(true);
+		this.activeMenu = submenu;
+	}
+
+	public void moveCursor(int ammount) {
+		this.activeMenu.moveCursor(ammount);
+	}
+
+	public void clickButton() {
+		this.activeMenu.clickButton();
+	}
+
+	// endregion
+
 	public void render() {
 		Matrix4f proj = new Matrix4f().ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
 		Game.shader.setUniformMat4f("u_MVP", proj);
@@ -133,18 +158,14 @@ public class BattleEngine {
 			this.menu.render();
 		}
 
+		if(this.submenu.isVisible()) {
+			this.submenu.render();
+		}
+
 		// Render player stats
 		new Text("" + Game.player.getHealth(), new Vector2i(25, 158)).render();
 		new Text("" + Game.player.getMagic(), new Vector2i(25, 145)).render();
 		HEALTH_ICON.render();
 		MANA_ICON.render();
-	}
-
-	public void moveCursor(int ammount) {
-		this.menu.moveCursor(ammount);
-	}
-
-	public void clickButton() {
-		this.menu.clickButton();
 	}
 }
