@@ -26,7 +26,9 @@ public class BattleMenu {
 	}
 
 	public void clickButton() {
-		this.buttons[this.currentIndex].click();
+		if(this.currentIndex != 0) {
+			this.buttons[this.currentIndex].click();
+		}
 	}
 
 	public void setVisibility(boolean visible) {

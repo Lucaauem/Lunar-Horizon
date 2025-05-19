@@ -6,6 +6,7 @@ import engine.controls.BattleController;
 import engine.graphics.Model;
 import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
+import engine.mechanics.items.Item;
 import engine.ui.BattleMenu;
 import engine.ui.Text;
 import engine.ui.UiButton;
@@ -15,6 +16,8 @@ import engine.ui.menu.ListElement;
 import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
+
+import java.util.ArrayList;
 
 public class BattleEngine {
 	private static final Texture BACKGROUND_TEXTURE = new Texture("ui/battle/background/debug.png");
@@ -112,13 +115,23 @@ public class BattleEngine {
 		System.exit(0);
 	}
 
+	private void useItem(Item item) {
+		this.submenu.setVisibility(false);
+		this.activeMenu = this.menu;
+		item.use();
+		this.textbox.setTexts(new String[]{"You use " + item.getName() + "!"});
+		this.textbox.open(this::nextTurn);
+	}
+
 	// region UI ELEMENTS
 
 	private void openInventory() {
-		this.submenu.setItems(new ListElement[]{
-				new ListElement("Test item", () -> System.out.println("Test item")),
-				new ListElement("Test 2", () -> System.out.println("Test 2")),
-		});
+		ArrayList<ListElement> items = new ArrayList<>();
+		for(Item playerItem : Game.player.getInventory()) {
+			items.add(new ListElement(playerItem.getName(), () -> { this.useItem(playerItem); }));
+		}
+		this.submenu.setItems(items.toArray(new ListElement[0]));
+
 		this.submenu.setVisibility(true);
 		this.activeMenu = submenu;
 	}
