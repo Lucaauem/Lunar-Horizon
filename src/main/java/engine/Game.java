@@ -11,6 +11,7 @@ import engine.scenes.SceneManager;
 import engine.ui.UiManager;
 import engine.ui.menu.UiMenu;
 import util.Time;
+import java.util.Objects;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
@@ -42,14 +43,15 @@ public class Game {
 	}
 
 	public static void changeState(GameState newState) {
+		if (Objects.requireNonNull(newState) == GameState.OVERWORLD) {
+			Game.controller = new PlayerController();
+		}
+
 		Game.state = newState;
 	}
 
 	public void start() {
 		this.init();
-
-		// DEBUG
-		Game.battleEngine = new BattleEngine();
 
 		float lastTime = Time.getTime();
 		while (!glfwWindowShouldClose(window)) {
@@ -77,7 +79,10 @@ public class Game {
 	private void update(float dt) {
 		//System.out.println((1.0f / dt) + "FPS");
 		controller.checkInputs(dt);
-		//player.update();
+
+		if (Game.state == GameState.OVERWORLD) {
+			player.update();
+		}
 
 	}
 
@@ -94,9 +99,7 @@ public class Game {
 
 				UiManager.getInstance().render();
 			}
-			case BATTLE -> {
-				Game.battleEngine.render();
-			}
+			case BATTLE -> Game.battleEngine.render();
 		}
 	}
 

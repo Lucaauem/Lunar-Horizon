@@ -99,18 +99,6 @@ public class BattleEngine {
 		}
 	}
 
-	private void attackEnemy() {
-		this.enemy.changeHealth(-1 * Game.player.getAttack());
-		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + Game.player.getAttack()));
-		this.textbox.open(this::nextTurn);
-	}
-
-	private void flee() {
-		// TODO: Cancel flee with some random value
-		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_FLED");
-		this.textbox.open(this::endBattle);
-	}
-
 	private void winBattle() {
 		// TODO: EXP
 		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED");
@@ -118,8 +106,16 @@ public class BattleEngine {
 	}
 
 	private void endBattle() {
-		// TODO
-		System.exit(0);
+		Game.changeState(GameState.OVERWORLD);
+	}
+
+
+	// region PLAYER ACTIONS
+
+	private void attackEnemy() {
+		this.enemy.changeHealth(-1 * Game.player.getAttack());
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + Game.player.getAttack()));
+		this.textbox.open(this::nextTurn);
 	}
 
 	private void useItem(Item item) {
@@ -129,6 +125,14 @@ public class BattleEngine {
 		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_USED_ITEM", Map.of("ITEM", item.getName()));
 		this.textbox.open(this::nextTurn);
 	}
+
+	private void flee() {
+		// TODO: Cancel flee with some random value
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_FLED");
+		this.textbox.open(this::endBattle);
+	}
+
+	// endregion
 
 	// region UI ELEMENTS
 
