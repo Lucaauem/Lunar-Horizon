@@ -3,8 +3,10 @@ package engine.ui.menu;
 import engine.Game;
 import engine.controls.Controller;
 import engine.controls.TextboxController;
-import engine.ui.Text;
+import engine.ui.text.Text;
+import engine.ui.text.TextLoader;
 import org.joml.Vector2i;
+import java.util.Map;
 import java.util.Stack;
 
 public class UiTextbox {
@@ -15,11 +17,9 @@ public class UiTextbox {
 	private Controller currentController;
 	private Runnable onClose;
 
-	public UiTextbox(String[] texts, Vector2i position) {
+	public UiTextbox(Vector2i position) {
 		this.texts = new Stack<>();
 		this.position = position;
-
-		this.setTexts(texts);
 	}
 
 	public void open() {
@@ -47,7 +47,17 @@ public class UiTextbox {
 		return this.open;
 	}
 
-	public void setTexts(String[] texts) {
+	public void setTexts(String section, String textId) {
+		String[] texts = new TextLoader(section).loadText(textId);
+		this.texts.clear();
+		for(int i=texts.length-1; i>=0; i--) {
+			this.texts.push(texts[i]);
+		}
+		this.next();
+	}
+
+	public void setTexts(String section, String textId, Map<String, String> variables) {
+		String[] texts = new TextLoader(section).loadTemplateText(textId, variables);
 		this.texts.clear();
 		for(int i=texts.length-1; i>=0; i--) {
 			this.texts.push(texts[i]);

@@ -1,6 +1,7 @@
-package engine.ui;
+package engine.ui.text;
 
 import engine.graphics.Texture;
+import engine.ui.UiElement;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import java.util.ArrayList;

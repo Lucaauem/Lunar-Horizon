@@ -26,7 +26,7 @@ public class BattleMenu {
 	}
 
 	public void clickButton() {
-		if(this.currentIndex != 0) {
+		if(this.currentIndex > -1) {
 			this.buttons[this.currentIndex].click();
 		}
 	}

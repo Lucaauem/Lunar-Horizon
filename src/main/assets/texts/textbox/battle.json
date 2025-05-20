@@ -1,0 +1,8 @@
+{
+    "MONSTER_APPEARED" : ["A monster appears!"],
+    "PLAYER_FLED" : ["You flee!"],
+    "MONSTER_ATTACKED" : ["The monster attacks!"],
+    "MONSTER_DEFEATED" : ["You defeated the monster!"],
+    "PLAYER_ATTACKED" : ["You attack!", "The monster took {{ DMG }} damage!"],
+    "PLAYER_USED_ITEM" : ["You use {{ ITEM }}!"]
+}

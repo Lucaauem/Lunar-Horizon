@@ -3,7 +3,7 @@ package engine.ui.menu;
 import engine.GameWindow;
 import engine.graphics.Texture;
 import engine.objects.GameObject;
-import engine.ui.Text;
+import engine.ui.text.Text;
 import engine.ui.UiElement;
 import org.joml.Vector2i;
 import java.util.ArrayList;

@@ -8,7 +8,7 @@ import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
 import engine.mechanics.items.Item;
 import engine.ui.BattleMenu;
-import engine.ui.Text;
+import engine.ui.text.Text;
 import engine.ui.UiButton;
 import engine.ui.UiElement;
 import engine.ui.menu.BattleList;
@@ -16,10 +16,11 @@ import engine.ui.menu.ListElement;
 import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 public class BattleEngine {
+	private static final String TEXT_SOURCE = "textbox/battle";
 	private static final Texture BACKGROUND_TEXTURE = new Texture("ui/battle/background/debug.png");
 	private static final Texture STATUS_BOX_MODEL_TEXTURE = new Texture("ui/battle/status_box.png");
 	private static final Texture GROUND_TEXTURE = new Texture("ui/battle/ground/debug.png");
@@ -49,7 +50,7 @@ public class BattleEngine {
 	private final Enemy enemy;
 	private final BattleMenu menu = new BattleMenu();
 	private final BattleList submenu = new BattleList(new Vector2i(225, 150));
-	private final UiTextbox textbox = new UiTextbox(new String[0], new Vector2i(10, 10));
+	private final UiTextbox textbox = new UiTextbox(new Vector2i(10, 10));
 	private BattleMenu activeMenu = menu;
 	private boolean isPlayerTurn = false; // TODO: Maybe calculate based on speed attribute?
 
@@ -57,7 +58,7 @@ public class BattleEngine {
 		// Init game state
 		Game.changeState(GameState.BATTLE);
 		Game.setController(new BattleController(this));
-		this.textbox.setTexts(new String[] {"A monster appears!"});
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED");
 
 		// Load monster data
 		// TODO: Randomly choose monster based on certain parameters
@@ -93,26 +94,26 @@ public class BattleEngine {
 			// TODO: Wait for user input
 		} else {
 			// TODO: Generate move
-			this.textbox.setTexts(new String[]{"The monster attacks!"});
+			this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_ATTACKED");
 			this.textbox.open(() -> { this.enemy.attack(); this.nextTurn(); });
 		}
 	}
 
 	private void attackEnemy() {
 		this.enemy.changeHealth(-1 * Game.player.getAttack());
-		this.textbox.setTexts(new String[]{"You attack!", "The monster took  " + Game.player.getAttack() + " damage!"});
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + Game.player.getAttack()));
 		this.textbox.open(this::nextTurn);
 	}
 
 	private void flee() {
 		// TODO: Cancel flee with some random value
-		this.textbox.setTexts(new String[]{"You flee!"});
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_FLED");
 		this.textbox.open(this::endBattle);
 	}
 
 	private void winBattle() {
 		// TODO: EXP
-		this.textbox.setTexts(new String[]{"You defeated the monster!"});
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED");
 		this.textbox.open(this::endBattle);
 	}
 
@@ -125,7 +126,7 @@ public class BattleEngine {
 		this.submenu.setVisibility(false);
 		this.activeMenu = this.menu;
 		item.use();
-		this.textbox.setTexts(new String[]{"You use " + item.getName() + "!"});
+		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_USED_ITEM", Map.of("ITEM", item.getName()));
 		this.textbox.open(this::nextTurn);
 	}
 
@@ -134,7 +135,7 @@ public class BattleEngine {
 	private void openInventory() {
 		ArrayList<ListElement> items = new ArrayList<>();
 		for(Item playerItem : Game.player.getInventory()) {
-			items.add(new ListElement(playerItem.getName(), () -> { this.useItem(playerItem); }));
+			items.add(new ListElement(playerItem.getName(), () -> this.useItem(playerItem)));
 		}
 		this.submenu.setItems(items.toArray(new ListElement[0]));
 
