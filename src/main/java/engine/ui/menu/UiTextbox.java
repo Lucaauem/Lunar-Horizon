@@ -10,12 +10,19 @@ import java.util.Map;
 import java.util.Stack;
 
 public class UiTextbox {
+	public static final Vector2i DEFAULT_POSITION = new Vector2i(10, 10);
+
 	private final Stack<String> texts;
 	private final Vector2i position;
 	private Text currentText;
 	private boolean open = false;
 	private Controller currentController;
 	private Runnable onClose;
+
+	public UiTextbox() {
+		this.texts = new Stack<>();
+		this.position = DEFAULT_POSITION;
+	}
 
 	public UiTextbox(Vector2i position) {
 		this.texts = new Stack<>();
