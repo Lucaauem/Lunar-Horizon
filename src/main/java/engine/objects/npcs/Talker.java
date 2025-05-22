@@ -9,6 +9,7 @@ public class Talker extends Npc {
 
 	private final String text;
 	private UiTextbox textbox = null;
+
 	public Talker(Vector2f position, String text) {
 		super(TEXTURE_PATH, position);
 		this.text = text;
