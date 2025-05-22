@@ -1,5 +1,7 @@
 package engine.scenes;
 
+import engine.objects.Entity;
+import engine.objects.EntityBuilder;
 import engine.objects.Tile;
 import engine.graphics.Tilemap;
 import engine.objects.trigger.SceneChangeTrigger;
@@ -14,10 +16,12 @@ public class Scene {
 	private static final String TILES_EXTENSION = "tiles.bin";
 	private static final String TRIGGER_EXTENSION = "trigger.bin";
 	private static final String CONFIG_EXTENSION = "conf.bin";
+	private static final String ENTITY_EXTENSION = "entities.bin";
 	private static final int SCENE_SIZE = 8;
 
 	private final Tilemap tilemap = new Tilemap();
 	private final Tile[] tiles;
+	private final Entity[] entities;
 	private final Vector2i spawn = new Vector2i();
 	private final String name;
 
@@ -27,6 +31,7 @@ public class Scene {
 		this.tiles = this.loadTiles();
 		this.loadConfig();
 		this.loadTrigger();
+		this.entities = this.loadEntities();
 	}
 
 	// region GENERATE TILES
@@ -112,6 +117,21 @@ public class Scene {
 
 	// endregion
 
+	private Entity[] loadEntities() {
+		byte[] rawEntityData = FileHandler.readBinary(SCENE_BASE_PATH + this.name + ENTITY_EXTENSION);
+		Entity[] entities = new Entity[rawEntityData.length / 4];
+
+		int entityIndex = 0;
+		for(int i=0; i<rawEntityData.length; i+=4) {
+			int type = rawEntityData[i];
+			int parameter = rawEntityData[i + 1];
+			Vector2f position = new Vector2f(rawEntityData[i + 2], rawEntityData[i + 3]);
+			entities[entityIndex++] = new EntityBuilder().buildEntity(type, parameter, position);
+		}
+
+		return entities;
+	}
+
 	public Vector2i getSpawn() {
 		return this.spawn;
 	}
@@ -138,6 +158,12 @@ public class Scene {
 		for(Tile tile : this.tiles) {
 			if(tile != null) {
 				tile.render();
+			}
+		}
+
+		for(Entity entity : this.entities) {
+			if(entity != null) {
+				entity.render();
 			}
 		}
 	}

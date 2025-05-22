@@ -4,7 +4,7 @@ import engine.ui.menu.UiTextbox;
 import org.joml.Vector2f;
 
 public class Talker extends Npc {
-	private static final String TEXT_SOURCE = "npc/talker";
+	public static final String TEXT_SOURCE = "npc/talker";
 	private static final String TEXTURE_PATH = "player/player_down.png";
 
 	private final String text;
