@@ -32,6 +32,7 @@ public class PlayerController extends Controller {
 
 	@Override
 	protected void onAction(float dt) {
-
+		Game.player.interact();
+		needReset = true;
 	}
 }

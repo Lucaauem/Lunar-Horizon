@@ -5,6 +5,7 @@ import engine.mechanics.items.Item;
 import engine.scenes.Scene;
 import engine.scenes.SceneManager;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 import java.util.ArrayList;
 
 public class Player extends Entity {
@@ -14,6 +15,7 @@ public class Player extends Entity {
 	private static final String PLAYER_TEXTURE_RIGHT = "player/player_right.png";
 
 	private final Vector2f lastValidPosition = new Vector2f();
+	private MoveDirection lookDirection = MoveDirection.DOWN;
 	private int level = 1;
 	private int maxHealth = 10;
 	private int health = maxHealth;
@@ -25,6 +27,25 @@ public class Player extends Entity {
 
 	public Player() {
 		super(PLAYER_TEXTURE_DOWN, new Vector2f(0, 0));
+	}
+
+	public void interact() {
+		Vector2i targetPosition = new Vector2i((int) this.position.x, (int) this.position.y);
+
+		switch (this.lookDirection) {
+			case UP    -> targetPosition.y += DEFAULT_TILE_SIZE;
+			case DOWN  -> targetPosition.y -= DEFAULT_TILE_SIZE;
+			case LEFT  -> targetPosition.x -= DEFAULT_TILE_SIZE;
+			case RIGHT -> targetPosition.x += DEFAULT_TILE_SIZE;
+		}
+
+		for(Entity entity : SceneManager.getInstance().getCurrentScene().getEntities()) {
+			Vector2i entityPosition = new Vector2i((int) entity.position.x, (int) entity.position.y);
+			if(entity instanceof Interactable && entityPosition.equals(targetPosition)) {
+				((Interactable) entity).onInteract();
+				return;
+			}
+		}
 	}
 
 	public Vector2f getLastValidPosition() { return lastValidPosition; }
@@ -67,6 +88,8 @@ public class Player extends Entity {
 
 	@Override
 	public void move(MoveDirection direction) {
+		this.lookDirection = direction;
+
 		switch(direction) {
 			case UP    -> this.texture = new Texture(PLAYER_TEXTURE_UP);
 			case DOWN  -> this.texture = new Texture(PLAYER_TEXTURE_DOWN);

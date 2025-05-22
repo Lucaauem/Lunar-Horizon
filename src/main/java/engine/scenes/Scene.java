@@ -143,6 +143,10 @@ public class Scene {
 		return this.tiles[tileIndexY * SCENE_SIZE + tileIndexX];
 	}
 
+	public Entity[] getEntities() {
+		return this.entities;
+	}
+
 	public String getName() {
 		return this.name;
 	}
