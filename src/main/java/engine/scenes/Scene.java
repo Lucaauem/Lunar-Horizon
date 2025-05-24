@@ -1,5 +1,6 @@
 package engine.scenes;
 
+import engine.Game;
 import engine.objects.Entity;
 import engine.objects.EntityBuilder;
 import engine.objects.Tile;

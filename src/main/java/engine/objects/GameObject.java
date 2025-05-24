@@ -14,13 +14,16 @@ public class GameObject {
 	protected Model model;
 	protected Texture texture;
 	protected final Vector2f position = new Vector2f();
+	protected Hitbox hitbox;
+	private final boolean isSolid;
 
-	public GameObject(String texturePath, Vector2f position) {
+	public GameObject(String texturePath, Vector2f position, boolean isSolid) {
 		if(position != null) {
-			this.position.set(position);
+			this.setPosition(position);
 		}
 
 		this.texture = new Texture(texturePath);
+		this.isSolid = isSolid;
 		this.model = new Model(new float[] {
 				0.0f,              0.0f,              0, 1, // 0
 				DEFAULT_TILE_SIZE, 0.0f,              1, 1, // 1
@@ -33,8 +36,17 @@ public class GameObject {
 		return new Vector2f(this.position.x, this.position.y);
 	}
 
+	public boolean isColliding(GameObject other) {
+		return this.hitbox.isColliding(other.hitbox);
+	}
+
+	public boolean isSolid() {
+		return this.isSolid;
+	}
+
 	public void setPosition(Vector2f position) {
 		this.position.set(position);
+		this.hitbox = new Hitbox(position.x, position.y, position.x + DEFAULT_TILE_SIZE, position.y + DEFAULT_TILE_SIZE);
 	}
 
 	public void render(){

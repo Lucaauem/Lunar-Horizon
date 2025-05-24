@@ -26,7 +26,7 @@ public class Player extends Entity {
 	private final ArrayList<Item> inventory = new ArrayList<>();
 
 	public Player() {
-		super(PLAYER_TEXTURE_DOWN, new Vector2f(0, 0));
+		super(PLAYER_TEXTURE_DOWN, new Vector2f(0, 0), false);
 	}
 
 	public void interact() {

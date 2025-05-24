@@ -9,8 +9,8 @@ public abstract class Entity extends GameObject {
 	protected MoveDirection direction = MoveDirection.DOWN;
 	private int remainingMoveSteps = 0;
 
-	public Entity(String texturePath, Vector2f position) {
-		super(texturePath, position);
+	public Entity(String texturePath, Vector2f position, boolean isSolid) {
+		super(texturePath, position, isSolid);
 	}
 
 	public void update() {
@@ -32,9 +32,19 @@ public abstract class Entity extends GameObject {
 		int targetX = (int) (this.position.x + moveVector.x * DEFAULT_TILE_SIZE);
 		int targetY = (int) (this.position.y + moveVector.y * DEFAULT_TILE_SIZE);
 
+		// Check if solid tile exists
 		if(SceneManager.getInstance().getCurrentScene().isInScene(targetX, targetY)) {
 			return !SceneManager.getInstance().getCurrentScene().getTile(targetX, targetY).isSolid();
 		}
+
+		// Check if solid object exists
+		for(Entity entity : SceneManager.getInstance().getCurrentScene().getEntities()) {
+			Hitbox nextHitbox = new Hitbox(targetX, targetY, targetX + DEFAULT_TILE_SIZE, targetY + DEFAULT_TILE_SIZE);
+			if(!this.equals(entity) && entity.isSolid() && nextHitbox.isColliding(entity.hitbox)) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 

@@ -6,12 +6,13 @@ import org.joml.Vector2f;
 public class Talker extends Npc {
 	public static final String TEXT_SOURCE = "npc/talker";
 	private static final String TEXTURE_PATH = "player/player_down.png";
+	private static final boolean IS_SOLID = true;
 
 	private final String text;
 	private UiTextbox textbox = null;
 
 	public Talker(Vector2f position, String text) {
-		super(TEXTURE_PATH, position);
+		super(TEXTURE_PATH, position, IS_SOLID);
 		this.text = text;
 	}
 
