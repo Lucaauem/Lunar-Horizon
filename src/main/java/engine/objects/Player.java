@@ -48,24 +48,6 @@ public class Player extends Entity {
 		}
 	}
 
-	public Vector2f getLastValidPosition() { return lastValidPosition; }
-
-	public int getLevel() { return this.level;}
-
-	public int getHealth() { return this.health; }
-
-	public int getMaxHealth() { return this.maxHealth; }
-
-	public int getAttack() { return this.attack; }
-
-	public int getMagic() { return this.magic; }
-
-	public int getMaxMagic() { return this.magic; }
-
-	public int getExperience() { return this.experience; }
-
-	public Item[] getInventory() { return this.inventory.toArray(new Item[0]); }
-
 	public void addToInventory(Item item) {
 		this.inventory.add(item);
 	}
@@ -115,4 +97,26 @@ public class Player extends Entity {
 
 		this.lastValidPosition.set(this.position.x, this.position.y);
 	}
+
+	// region GETTER AND SETTER
+
+	public Vector2f getLastValidPosition() { return lastValidPosition; }
+
+	public int getLevel() { return this.level;}
+
+	public int getHealth() { return this.health; }
+
+	public int getMaxHealth() { return this.maxHealth; }
+
+	public int getAttack() { return this.attack; }
+
+	public int getMagic() { return this.magic; }
+
+	public int getMaxMagic() { return this.magic; }
+
+	public int getExperience() { return this.experience; }
+
+	public Item[] getInventory() { return this.inventory.toArray(new Item[0]); }
+
+	// endregion
 }
