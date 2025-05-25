@@ -1,0 +1,21 @@
+canvas {
+  image-rendering: pixelated;
+}
+
+#tilemap > canvas, #sceneContainer > canvas {
+    transition: all 0.05s;
+}
+
+#tilemap > canvas:hover {
+    cursor: pointer;
+    scale: 1.2;
+}
+
+#sceneContainer > canvas:hover {
+    cursor: pointer;
+    scale: 1.1;
+}
+
+#sceneContainer > canvas:active {
+    scale: 1.05;
+}
