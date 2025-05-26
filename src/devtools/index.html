@@ -8,11 +8,20 @@
         <link rel="stylesheet" href="./css/editor.css">
     </head>
     <body>
-        <div id="tilemap"></div>
-        <p>Selected Tile: <span id="tilePreview"></span></p>
-        <div id="sceneContainer"></div>
-        <button onclick="generateBitmap()">Speichern</button>
-
+        <div class="main-container">
+            <div class="sub-container">
+                <h1>Scene</h1>
+                <p>Selected Tile: <span id="tilePreview"></span></p>
+                <div id="sceneContainer" class="tiles scene-preview"></div>
+            </div>
+            <div class="sub-container">
+                <div id="tilemap" class="tiles"></div>
+                <div>
+                    <input type="checkbox" id="cb_modifierCollision" onclick="setCollision(event)">
+                </div>
+                <button onclick="generateBitfield()">Speichern</button>
+            </div>
+        </div>
 
         <script src="./scripts/Tile.js"></script>
         <script src="./scripts/editor.js"></script>

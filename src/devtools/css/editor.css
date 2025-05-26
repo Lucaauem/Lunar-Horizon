@@ -1,5 +1,39 @@
+:root {
+    --scene-size : 8
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.sub-container {
+    border: 1px solid black;
+    width: 47.5%;
+}
+
+h1 {
+    margin: 0;
+}
+
 canvas {
   image-rendering: pixelated;
+  box-sizing: border-box;
+}
+
+.tiles {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.scene-preview {
+    display: grid;
+    grid-template-columns: repeat(var(--scene-size), 1fr);
+    grid-template-rows: repeat(var(--scene-size), 1fr);
 }
 
 #tilemap > canvas, #sceneContainer > canvas {

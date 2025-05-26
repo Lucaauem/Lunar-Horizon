@@ -7,6 +7,7 @@ const TILE_SIZE = 16
 let tilemap = new Image()
 let selectedIndex = -1
 let tiles = []
+let selectedModifier = 0b00000000
 
 async function readScene(scene) {
     const req = await fetch(`../main/assets/scenes/${scene}/tiles.bin`)
@@ -14,12 +15,12 @@ async function readScene(scene) {
     const bytes = new Uint8Array(buffer)
 
     for(let i=0; i<bytes.length; i+=2) {
-        const tile = new Tile(bytes[i])
+        const tile = new Tile(bytes[i], bytes[i + 1])
 
         tile.onclick = () => {
             if(selectedIndex == -1) { return }
             
-            tile.changeIndex(selectedIndex)
+            tile.changeIndex(selectedIndex, selectedModifier)
             renderScene()
         }
 
@@ -34,6 +35,14 @@ function renderScene() {
     tiles.forEach(tile => {
         SCENE_CONTAINER.appendChild(tile.canvas)
     })
+}
+
+function setCollision(e) {
+    if(e.target.checked) {
+        selectedModifier = selectedModifier | 0b10000000
+    } else {
+        selectedModifier = selectedModifier & 0b01111111
+    }
 }
 
 async function loadTilemap() {
@@ -54,12 +63,12 @@ async function loadTilemap() {
     }
 }
 
-function generateBitmap() {
+function generateBitfield() {
     const buffer = new Uint8Array(tiles.length * 2)
 
     tiles.forEach((tile, i) => {
         buffer[i * 2] = tile.index
-        buffer[i * 2 + 1] = 0x00
+        buffer[i * 2 + 1] = tile.modifier
     })
 
     const blob = new Blob([buffer], { type: 'application/octet-stream' })
@@ -74,8 +83,8 @@ function generateBitmap() {
 }
 
 async function init() {
-    SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * TILE_SIZE}px`
-    TILEMAP_IMAGE.style.maxWidth = `${TILEMAP_SIZE * TILEMAP_SIZE}px`
+    SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * TILE_SIZE * Tile.SCALE}px`
+    TILEMAP_IMAGE.style.maxWidth = `${TILEMAP_SIZE * TILEMAP_SIZE * Tile.SCALE}px`
     await loadTilemap()
     await readScene('town')
 }

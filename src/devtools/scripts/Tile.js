@@ -1,20 +1,27 @@
 class Tile {
+    static SCALE = 2.5
     #index = -1
     #canvas = null
     #onclick = null
+    #modifier = 0b00000000
 
-    constructor(index) {
-        this.changeIndex(index)
+    constructor(index, modifier) {
+        this.changeIndex(index, modifier)
     }
 
-    changeIndex(index) {
+    changeIndex(index, modifier) {
         this.#index = index
+        this.#modifier = modifier
         this.#canvas = this.#getTile(index)
         this.#canvas.onclick = this.#onclick
     }
 
     get canvas() {
         return this.#canvas
+    }
+
+    get modifier() {
+        return this.#modifier
     }
     
     get index() {
@@ -24,6 +31,10 @@ class Tile {
     set onclick(func) {
         this.#canvas.onclick = func
         this.#onclick = func
+    }
+
+    toggleCollision() {
+        this.#modifier = this.#modifier ^ 0b10000000
     }
 
     #getTile(index) {
@@ -38,10 +49,17 @@ class Tile {
 
         const tileCanvas = document.createElement('canvas')
         const ctx = tileCanvas.getContext('2d')
-        tileCanvas.width = tileWidth
-        tileCanvas.height = tileHeight
+        tileCanvas.width = tileWidth * Tile.SCALE
+        tileCanvas.height = tileHeight * Tile.SCALE
+        
+        ctx.imageSmoothingEnabled = false
+        ctx.drawImage(tilemap, sx, sy, tileWidth, tileHeight, 0, 0, tileWidth * Tile.SCALE, tileHeight * Tile.SCALE)
 
-        ctx.drawImage(tilemap, sx, sy, tileWidth, tileHeight, 0, 0, tileWidth, tileHeight)
+        // Add modifier formatting
+        if(this.#modifier & 0b10000000) {
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+            ctx.fillRect(0, 0, tileCanvas.width, tileCanvas.height);
+        }
 
         return tileCanvas
     }
