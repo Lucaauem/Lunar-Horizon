@@ -37,6 +37,11 @@ class Tile {
         this.#modifier = this.#modifier ^ 0b10000000
     }
 
+    setRotations(times) {
+        this.#modifier = this.#modifier & 0b11111100
+        this.#modifier = this.#modifier | times
+    }
+
     #getTile(index) {
         const tileCount = TILEMAP_SIZE
         const tileWidth = tilemap.width / tileCount
@@ -56,6 +61,8 @@ class Tile {
         ctx.drawImage(tilemap, sx, sy, tileWidth, tileHeight, 0, 0, tileWidth * Tile.SCALE, tileHeight * Tile.SCALE)
 
         // Add modifier formatting
+        const rotations = this.modifier & 0b00000011
+        tileCanvas.classList.add(`rotate-${rotations}`)
         if(this.#modifier & 0b10000000) {
             ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
             ctx.fillRect(0, 0, tileCanvas.width, tileCanvas.height);

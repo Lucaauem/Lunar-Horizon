@@ -45,6 +45,16 @@ function setCollision(e) {
     }
 }
 
+function setRotations(e) {
+    if((e.target.value < 0) || (e.target.value > 3)) {
+        e.target.value = selectedModifier & 0b00000011
+        return
+    }
+
+    selectedModifier = selectedModifier & 0b11111100
+    selectedModifier = selectedModifier | e.target.value
+}
+
 async function loadTilemap() {
     tilemap.src = '../main/assets/textures/tiles.png'
     await tilemap.decode()
