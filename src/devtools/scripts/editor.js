@@ -2,12 +2,15 @@ const SCENE_CONTAINER = document.getElementById('sceneContainer')
 const TILEMAP_IMAGE = document.getElementById('tilemap')
 const SCENE_SIZE = 8
 const TILEMAP_SIZE = 16
-const TILE_SIZE = 16
+const ZOOM_LEVEL_MIN = 1
+const ZOOM_LEVEL_MAX = 3
+const ZOOM_FACTOR = 0.5
 
 let tilemap = new Image()
 let selectedIndex = -1
 let tiles = []
 let selectedModifier = 0b00000000
+let currentZoom = 1
 
 async function readScene(scene) {
     const req = await fetch(`../main/assets/scenes/${scene}/tiles.bin`)
@@ -93,10 +96,35 @@ function generateBitfield() {
 }
 
 async function init() {
-    SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * TILE_SIZE * Tile.SCALE}px`
+    const name = 'town'
+
+    SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * Tile.SIZE * Tile.SCALE}px`
     TILEMAP_IMAGE.style.maxWidth = `${TILEMAP_SIZE * TILEMAP_SIZE * Tile.SCALE}px`
     await loadTilemap()
-    await readScene('town')
+    await readScene(name)
+    fillSceneData(name)
+}
+
+function fillSceneData(name) {
+    document.getElementById('sceneDataName').innerText = name
+    document.getElementById('sceneDataSize').innerText = `${SCENE_SIZE}x${SCENE_SIZE}`
+}
+
+function zoom(direction) {
+    if(direction == 0) {
+        currentZoom = 1
+    } else {
+        currentZoom += direction * ZOOM_FACTOR
+        currentZoom = Math.min(ZOOM_LEVEL_MAX, currentZoom)
+        currentZoom = Math.max(ZOOM_LEVEL_MIN, currentZoom)
+    }
+
+    document.getElementById('btnZoomIn').toggleAttribute('disabled', currentZoom == ZOOM_LEVEL_MAX)
+    document.getElementById('btnZoomOut').toggleAttribute('disabled', currentZoom == ZOOM_LEVEL_MIN)
+    const container = document.getElementById('sceneContainer');
+    container.style.transform = `scale(${currentZoom})`;
+    container.style.transformOrigin = 'top left';
 }
 
 init()
+zoom(0)

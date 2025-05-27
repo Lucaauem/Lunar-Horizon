@@ -2,11 +2,22 @@
     --scene-size : 8
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 * {
     font-family: Arial, Helvetica, sans-serif;
+    scrollbar-width: thin;
 }
 
 .main-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
 }
@@ -14,6 +25,16 @@
 .sub-container {
     border: 1px solid black;
     width: 47.5%;
+    position: relative;
+}
+
+.sub-container:first-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-center {
+    text-align: center;
 }
 
 h1 {
@@ -36,6 +57,11 @@ canvas {
     grid-template-rows: repeat(var(--scene-size), 1fr);
 }
 
+.scene-wrapper {
+    overflow: scroll;
+    flex-grow: 1;
+}
+
 #tilemap > canvas, #sceneContainer > canvas {
     transition: all 0.05s;
 }
@@ -48,8 +74,49 @@ canvas {
 #sceneContainer > canvas:hover {
     cursor: pointer;
     scale: 1.1;
+    opacity: 0.7;
 }
 
 #sceneContainer > canvas:active {
     scale: 1.05;
+}
+
+.scene-data p {
+    margin: 3px;
+}
+
+.scene-data span {
+    font-style: italic;
+}
+
+.zoom-buttons {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    transform: translate(-50%, -50%);
+}
+
+.zoom-buttons button:first-child {
+    margin-right: 5px;
+}
+
+.zoom-buttons button {
+    color: black;
+    font-size: 1.25rem;
+    background-color: rgba(124, 124, 124, 0.454);
+    border: 1px solid rgb(115, 115, 115);
+    border-radius: 10px;
+    height: 35px;
+    width: 35px;
+    transition: scale 0.05s;
+}
+
+.zoom-buttons button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.zoom-buttons button:hover {
+    cursor: pointer;
+    scale: 1.1;
 }

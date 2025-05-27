@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html><html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +10,19 @@
     <body>
         <div class="main-container">
             <div class="sub-container">
-                <h1>Scene</h1>
+                <h1 class="text-center" id="sceneTitle">Scene</h1>
+                <div class="scene-data">
+                    <p>Name: <span id="sceneDataName"></span></p>
+                    <p>Size: <span id="sceneDataSize"></span></p>
+                </div>
                 <p>Selected Tile: <span id="tilePreview"></span></p>
-                <div id="sceneContainer" class="tiles scene-preview"></div>
+                <div class="scene-wrapper">
+                    <div id="sceneContainer" class="tiles scene-preview"></div>
+                </div>
+                <div class="zoom-buttons">
+                    <button onclick="zoom(1)" id="btnZoomIn">+</button>
+                    <button onclick="zoom(-1)" id="btnZoomOut">-</button>
+                </div>
             </div>
             <div class="sub-container">
                 <div id="tilemap" class="tiles"></div>

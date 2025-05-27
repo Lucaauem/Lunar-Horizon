@@ -1,5 +1,6 @@
 class Tile {
     static SCALE = 2.5
+    static SIZE = 16
     #index = -1
     #canvas = null
     #onclick = null
