@@ -5,6 +5,7 @@ const TILEMAP_SIZE = 16
 const ZOOM_LEVEL_MIN = 1
 const ZOOM_LEVEL_MAX = 3
 const ZOOM_FACTOR = 0.5
+const DEFAULT_SCENE = 'town'
 
 let tilemap = new Image()
 let selectedIndex = -1
@@ -16,6 +17,8 @@ async function readScene(scene) {
     const req = await fetch(`../main/assets/scenes/${scene}/tiles.bin`)
     const buffer = await req.arrayBuffer()
     const bytes = new Uint8Array(buffer)
+
+    SCENE_CONTAINER.innerHTML = ''
 
     for(let i=0; i<bytes.length; i+=2) {
         const tile = new Tile(bytes[i], bytes[i + 1])
@@ -96,13 +99,9 @@ function generateBitfield() {
 }
 
 async function init() {
-    const name = 'town'
-
     SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * Tile.SIZE * Tile.SCALE}px`
     TILEMAP_IMAGE.style.maxWidth = `${TILEMAP_SIZE * TILEMAP_SIZE * Tile.SCALE}px`
     await loadTilemap()
-    await readScene(name)
-    fillSceneData(name)
 }
 
 function fillSceneData(name) {
@@ -126,5 +125,11 @@ function zoom(direction) {
     container.style.transformOrigin = 'top left';
 }
 
+async function loadScene(name) {
+    await readScene(name)
+    fillSceneData(name)
+    zoom(0)
+}
+
 init()
-zoom(0)
+loadScene(DEFAULT_SCENE)

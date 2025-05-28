@@ -11,6 +11,10 @@
         <div class="main-container">
             <div class="sub-container">
                 <h1 class="text-center" id="sceneTitle">Scene</h1>
+                <div>
+                    <input type="text" id="inputSceneName" placeholder="Scenename">
+                    <button onclick="loadScene(document.getElementById('inputSceneName').value)">Load Scene</button>
+                </div>
                 <div class="scene-data">
                     <p>Name: <span id="sceneDataName"></span></p>
                     <p>Size: <span id="sceneDataSize"></span></p>
