@@ -1,5 +1,5 @@
 :root {
-    --scene-size : 8
+    --scene-size : 32
 }
 
 html, body {
@@ -26,6 +26,7 @@ html, body {
     border: 1px solid black;
     width: 47.5%;
     position: relative;
+    max-height: 75dvh;
 }
 
 .sub-container:first-child {

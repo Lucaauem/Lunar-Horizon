@@ -18,7 +18,7 @@ public class Scene {
 	private static final String TRIGGER_EXTENSION = "trigger.bin";
 	private static final String CONFIG_EXTENSION = "conf.bin";
 	private static final String ENTITY_EXTENSION = "entities.bin";
-	private static final int SCENE_SIZE = 8;
+	private static final int SCENE_SIZE = 32;
 
 	private final Tilemap tilemap = new Tilemap();
 	private final Tile[] tiles;

@@ -1,8 +1,8 @@
 const SCENE_CONTAINER = document.getElementById('sceneContainer')
 const TILEMAP_IMAGE = document.getElementById('tilemap')
-const SCENE_SIZE = 8
+const SCENE_SIZE = 32
 const TILEMAP_SIZE = 16
-const ZOOM_LEVEL_MIN = 1
+const ZOOM_LEVEL_MIN = 0.5
 const ZOOM_LEVEL_MAX = 3
 const ZOOM_FACTOR = 0.5
 const DEFAULT_SCENE = 'town'
@@ -17,7 +17,11 @@ async function readScene(scene) {
     const req = await fetch(`../main/assets/scenes/${scene}/tiles.bin`)
     const buffer = await req.arrayBuffer()
     const bytes = new Uint8Array(buffer)
+    
+    generateScene(bytes)
+}
 
+function generateScene(bytes) {
     SCENE_CONTAINER.innerHTML = ''
 
     for(let i=0; i<bytes.length; i+=2) {
@@ -98,10 +102,21 @@ function generateBitfield() {
     URL.revokeObjectURL(url)
 }
 
+function loadEmptyScene() {
+    const bytes = new Uint8Array(SCENE_SIZE * SCENE_SIZE * 2)
+    
+    for(let i=0; i<bytes.length; i++) {
+        bytes[i] = 0
+    }
+
+    generateScene(bytes)
+}
+
 async function init() {
     SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * Tile.SIZE * Tile.SCALE}px`
     TILEMAP_IMAGE.style.maxWidth = `${TILEMAP_SIZE * TILEMAP_SIZE * Tile.SCALE}px`
     await loadTilemap()
+    loadEmptyScene()
 }
 
 function fillSceneData(name) {
@@ -132,4 +147,3 @@ async function loadScene(name) {
 }
 
 init()
-loadScene(DEFAULT_SCENE)

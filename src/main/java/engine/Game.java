@@ -37,7 +37,7 @@ public class Game {
 	}
 
 	private void init() {
-		SceneManager.getInstance().switchScene("overworld");
+		SceneManager.getInstance().switchScene("town");
 		camera.fix(player);
 		UiManager.getInstance().addElement("overworld_menu", new UiMenu());
 	}
