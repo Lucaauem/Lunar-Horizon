@@ -33,9 +33,13 @@ public abstract class Entity extends GameObject {
 		int targetX = (int) (this.position.x + moveVector.x * DEFAULT_TILE_SIZE);
 		int targetY = (int) (this.position.y + moveVector.y * DEFAULT_TILE_SIZE);
 
+		if(!SceneManager.getInstance().getCurrentScene().isInScene(targetX, targetY)) {
+			return true;
+		}
+
 		// Check if solid tile exists
-		if(SceneManager.getInstance().getCurrentScene().isInScene(targetX, targetY)) {
-			return !SceneManager.getInstance().getCurrentScene().getTile(targetX, targetY).isSolid();
+		if(SceneManager.getInstance().getCurrentScene().getTile(targetX, targetY).isSolid()) {
+			return false;
 		}
 
 		// Check if solid object exists
