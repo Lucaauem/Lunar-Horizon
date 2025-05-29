@@ -1,13 +1,11 @@
 package engine.battle;
 
 import engine.Game;
-import engine.GameState;
-import engine.controls.BattleController;
 import engine.graphics.Model;
 import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
 import engine.mechanics.items.Item;
-import engine.ui.BattleMenu;
+import engine.scenes.MenuScene;
 import engine.ui.text.Text;
 import engine.ui.UiButton;
 import engine.ui.UiElement;
@@ -19,7 +17,7 @@ import org.joml.Vector2i;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class BattleEngine {
+public class BattleEngine extends MenuScene {
 	private static final String TEXT_SOURCE = "textbox/battle";
 	private static final Texture BACKGROUND_TEXTURE = new Texture("ui/battle/background/debug.png");
 	private static final Texture STATUS_BOX_MODEL_TEXTURE = new Texture("ui/battle/status_box.png");
@@ -48,16 +46,12 @@ public class BattleEngine {
 	});
 
 	private final Enemy enemy;
-	private final BattleMenu menu = new BattleMenu();
 	private final BattleList submenu = new BattleList(new Vector2i(225, 150));
 	private final UiTextbox textbox = new UiTextbox(new Vector2i(10, 10));
-	private BattleMenu activeMenu = menu;
 	private boolean isPlayerTurn = false; // TODO: Maybe calculate based on speed attribute?
 
 	public BattleEngine() {
-		// Init game state
-		Game.changeState(GameState.BATTLE);
-		Game.setController(new BattleController(this));
+		super();
 		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED");
 
 		// Load monster data
@@ -102,13 +96,8 @@ public class BattleEngine {
 	private void winBattle() {
 		// TODO: EXP
 		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED");
-		this.textbox.open(this::endBattle);
+		this.textbox.open(this::end);
 	}
-
-	private void endBattle() {
-		Game.changeState(GameState.OVERWORLD);
-	}
-
 
 	// region PLAYER ACTIONS
 
@@ -129,7 +118,7 @@ public class BattleEngine {
 	private void flee() {
 		// TODO: Cancel flee with some random value
 		this.textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_FLED");
-		this.textbox.open(this::endBattle);
+		this.textbox.open(this::end);
 	}
 
 	// endregion
@@ -147,16 +136,9 @@ public class BattleEngine {
 		this.activeMenu = submenu;
 	}
 
-	public void moveCursor(int ammount) {
-		this.activeMenu.moveCursor(ammount);
-	}
-
-	public void clickButton() {
-		this.activeMenu.clickButton();
-	}
-
 	// endregion
 
+	@Override
 	public void render() {
 		Matrix4f proj = new Matrix4f().ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
 		Game.shader.setUniformMat4f("u_MVP", proj);

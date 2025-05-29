@@ -1,12 +1,12 @@
 package engine;
 
-import engine.battle.BattleEngine;
 import engine.controls.*;
 import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
 import engine.mechanics.items.Potion;
 import engine.objects.Player;
+import engine.scenes.MenuScene;
 import engine.scenes.SceneManager;
 import engine.ui.UiManager;
 import engine.ui.menu.UiMenu;
@@ -24,7 +24,7 @@ public class Game {
 	public static final Player player = new Player();
 	private static Controller controller = new PlayerController();
 	private static GameState state = GameState.OVERWORLD;
-	private static BattleEngine battleEngine = null;
+	private static MenuScene battleEngine = null;
 
 	public Game(long window) {
 		this.window = window;

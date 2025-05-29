@@ -1,35 +1,35 @@
 package engine.controls;
 
-import engine.battle.BattleEngine;
+import engine.scenes.MenuScene;
 
 public class BattleController extends Controller {
-	private final BattleEngine battle;
+	private final MenuScene menuScene;
 
-	public BattleController(BattleEngine battle) {
-		this.battle = battle;
+	public BattleController(MenuScene battle) {
+		this.menuScene = battle;
 	}
 
 	@Override
 	protected void onUp(float dt) {
-		this.battle.moveCursor(-1);
+		this.menuScene.moveCursor(-1);
 		needReset = true;
 	}
 
 	@Override
 	protected void onDown(float dt) {
-		this.battle.moveCursor(1);
+		this.menuScene.moveCursor(1);
 		needReset = true;
 	}
 
 	@Override
 	protected void onLeft(float dt) {
-		this.battle.moveCursor(-2);
+		this.menuScene.moveCursor(-2);
 		needReset = true;
 	}
 
 	@Override
 	protected void onRight(float dt) {
-		this.battle.moveCursor(2);
+		this.menuScene.moveCursor(2);
 		needReset = true;
 	}
 
@@ -40,7 +40,7 @@ public class BattleController extends Controller {
 
 	@Override
 	protected void onAction(float dt) {
-		this.battle.clickButton();
+		this.menuScene.clickButton();
 		needReset = true;
 	}
 }
