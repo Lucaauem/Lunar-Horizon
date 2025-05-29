@@ -15,12 +15,13 @@ public class EntityBuilder {
 		this.position = position;
 
 		return switch (type) {
-			case 0 -> createTalker(parameter);
+			case 0 -> createTalker(parameter, "npc");
+			case 1 -> createTalker(parameter, "guard");
 			default -> null;
 		};
 	}
 
-	private Talker createTalker(int parameter) {
-		return new Talker(this.position, PARAMETERS.getString("" + parameter));
+	private Talker createTalker(int parameter, String texture) {
+		return new Talker(this.position, PARAMETERS.getString("" + parameter), texture);
 	}
 }
