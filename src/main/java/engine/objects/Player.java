@@ -70,8 +70,11 @@ public class Player extends Entity {
 
 	@Override
 	public void move(MoveDirection direction) {
-		this.lookDirection = direction;
+		if(this.remainingMoveSteps > 0) {
+			return;
+		}
 
+		this.lookDirection = direction;
 		switch(direction) {
 			case UP    -> this.texture = new Texture(PLAYER_TEXTURE_UP);
 			case DOWN  -> this.texture = new Texture(PLAYER_TEXTURE_DOWN);

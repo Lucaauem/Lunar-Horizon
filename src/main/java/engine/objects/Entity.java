@@ -7,7 +7,7 @@ public abstract class Entity extends GameObject {
 	private static final int MOVE_TIME = 10;
 
 	protected MoveDirection direction = MoveDirection.DOWN;
-	private int remainingMoveSteps = 0;
+	protected int remainingMoveSteps = 0;
 
 	public Entity(String texturePath, Vector2f position, boolean isSolid) {
 		super(texturePath, position, isSolid);
@@ -20,9 +20,10 @@ public abstract class Entity extends GameObject {
 	}
 
 	public void move(MoveDirection direction) {
-		if((this.remainingMoveSteps > 0) || (!this.canMove(direction))) {
+		if(!this.canMove(direction)) {
 			return;
 		}
+
 		this.direction = direction;
 		this.remainingMoveSteps = MOVE_TIME;
 	}
