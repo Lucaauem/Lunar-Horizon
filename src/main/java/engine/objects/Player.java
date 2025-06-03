@@ -23,6 +23,7 @@ public class Player extends Entity {
 	private int maxMagic = 15;
 	private int magic = maxMagic;
 	private int experience = 0;
+	private int money = 100;
 	private final ArrayList<Item> inventory = new ArrayList<>();
 
 	public Player() {
@@ -63,6 +64,8 @@ public class Player extends Entity {
 	public void reduceHealth(int damage) {
 		this.health -= damage;
 	}
+
+	public void changeMoney(int ammount) { this.money += ammount; }
 
 	public void heal(int amount) {
 		this.health = Math.min(maxHealth, this.health + amount);
@@ -118,6 +121,8 @@ public class Player extends Entity {
 	public int getMaxMagic() { return this.magic; }
 
 	public int getExperience() { return this.experience; }
+
+	public int getMoney() { return this.money; }
 
 	public Item[] getInventory() { return this.inventory.toArray(new Item[0]); }
 

@@ -1,0 +1,4 @@
+{
+    "ITEM_BOUGHT" : ["You bought a {{ ITEM }}!"],
+    "ITEM_NOT_BOUGHT" : ["Too expensive!"]
+}
