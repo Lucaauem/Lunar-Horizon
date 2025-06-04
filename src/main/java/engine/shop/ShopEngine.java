@@ -31,6 +31,7 @@ public class ShopEngine extends MenuScene {
 		super();
 		this.loadItems(config);
 		this.activeMenu = this.shopItems;
+		this.shopItems.setVisibility(true);
 	}
 
 	private void loadItems(String config) {
@@ -54,7 +55,11 @@ public class ShopEngine extends MenuScene {
 			}));
 		}
 
-		this.shopItems.setItems(listItems.toArray(new ListElement[0]));
+		this.shopItems.setItems(listItems.toArray(new ListElement[0]), () -> {
+			this.shopItems.setVisibility(false);
+			this.textbox.setTexts(ShopEngine.TEXT_SOURCE, "SHOP_EXIT");
+			this.textbox.open(this::end);
+		});
 	}
 
 	@Override
@@ -65,7 +70,9 @@ public class ShopEngine extends MenuScene {
 		BACKGROUND_TEXTURE.bind();
 		Renderer.getInstance().draw(BACKGROUND_MODEL.getVertexArray(), BACKGROUND_MODEL.getIndexBuffer(), Game.shader);
 
-		this.shopItems.render();
+		if(this.shopItems.isVisible()) {
+			this.shopItems.render();
+		}
 
 		if(this.textbox.isOpen()) {
 			this.textbox.render();

@@ -128,7 +128,7 @@ public class BattleEngine extends MenuScene {
 		for(Item playerItem : Game.player.getInventory()) {
 			items.add(new ListElement(playerItem.getName(), () -> this.useItem(playerItem)));
 		}
-		this.submenu.setItems(items.toArray(new ListElement[0]));
+		this.submenu.setItems(items.toArray(new ListElement[0]), () -> this.submenu.setVisibility(false));
 
 		this.submenu.setVisibility(true);
 		this.activeMenu = submenu;
