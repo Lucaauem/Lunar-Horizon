@@ -4,9 +4,11 @@ import engine.Game;
 import engine.GameState;
 import engine.controls.BattleController;
 import engine.ui.BattleMenu;
+import engine.ui.menu.UiTextbox;
 
 public abstract class MenuScene {
 	protected final BattleMenu menu = new BattleMenu();
+	protected final UiTextbox textbox = new UiTextbox();
 	protected BattleMenu activeMenu = menu;
 
 	public MenuScene() {

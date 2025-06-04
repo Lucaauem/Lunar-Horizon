@@ -24,11 +24,6 @@ public class UiTextbox {
 		this.position = DEFAULT_POSITION;
 	}
 
-	public UiTextbox(Vector2i position) {
-		this.texts = new Stack<>();
-		this.position = position;
-	}
-
 	public void open() {
 		this.currentController = Game.getController();
 		Game.setController(new TextboxController(this));

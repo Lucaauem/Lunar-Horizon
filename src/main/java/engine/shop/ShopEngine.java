@@ -7,9 +7,7 @@ import engine.graphics.renderer.Renderer;
 import engine.scenes.MenuScene;
 import engine.ui.menu.BattleList;
 import engine.ui.menu.ListElement;
-import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
-import org.joml.Vector2i;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.FileHandler;
@@ -27,8 +25,7 @@ public class ShopEngine extends MenuScene {
 			0.0f, 1.0f, 0, 0
 	});
 
-	private final BattleList shopItems = new BattleList(new Vector2i(100,50));
-	private final UiTextbox textbox = new UiTextbox(new Vector2i(10, 10));
+	private final BattleList shopItems = new BattleList();
 
 	public ShopEngine(String config) {
 		super();

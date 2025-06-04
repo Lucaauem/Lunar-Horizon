@@ -11,7 +11,6 @@ import engine.ui.UiButton;
 import engine.ui.UiElement;
 import engine.ui.menu.BattleList;
 import engine.ui.menu.ListElement;
-import engine.ui.menu.UiTextbox;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
 import java.util.ArrayList;
@@ -46,8 +45,7 @@ public class BattleEngine extends MenuScene {
 	});
 
 	private final Enemy enemy;
-	private final BattleList submenu = new BattleList(new Vector2i(225, 150));
-	private final UiTextbox textbox = new UiTextbox(new Vector2i(10, 10));
+	private final BattleList submenu = new BattleList();
 	private boolean isPlayerTurn = false; // TODO: Maybe calculate based on speed attribute?
 
 	public BattleEngine() {

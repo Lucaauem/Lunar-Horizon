@@ -6,11 +6,12 @@ import org.joml.Vector2i;
 
 public class BattleList extends BattleMenu {
 	private static final int TEXT_PADDING = 15;
+	private static final Vector2i DEFAULT_POSITION = new Vector2i(225, 150);
 
 	private final Vector2i position;
 
-	public BattleList(Vector2i position) {
-		this.position = position;
+	public BattleList() {
+		this.position = DEFAULT_POSITION;
 	}
 
 	public void setItems(ListElement[] items) {
