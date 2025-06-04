@@ -43,7 +43,8 @@ public class ShopEngine extends MenuScene {
 			JSONArray shopItemData = shopItems.getJSONArray(i);
 			ShopItem shopItem = new ShopItem(shopItemData.getString(0), shopItemData.getInt(1));
 
-			listItems.add(new ListElement(shopItemData.getString(0), () -> {
+			String itemDisplay = shopItemData.getInt(1) + "\" " + shopItemData.getString(0);
+			listItems.add(new ListElement(itemDisplay, () -> {
 				boolean bought = shopItem.buy();
 
 				if(bought) {
