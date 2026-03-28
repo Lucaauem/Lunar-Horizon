@@ -8,6 +8,7 @@ import engine.mechanics.items.Potion;
 import engine.objects.Player;
 import engine.scenes.MenuScene;
 import engine.scenes.SceneManager;
+import engine.shop.ShopEngine;
 import engine.ui.UiManager;
 import engine.ui.menu.UiMenu;
 import util.Time;

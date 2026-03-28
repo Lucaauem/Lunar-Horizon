@@ -5,6 +5,7 @@ import engine.objects.EntityBuilder;
 import engine.objects.Tile;
 import engine.graphics.Tilemap;
 import engine.objects.trigger.SceneChangeTrigger;
+import engine.objects.trigger.ShopTrigger;
 import engine.objects.trigger.Trigger;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -80,6 +81,7 @@ public class Scene {
 	private void createTrigger(Vector2i triggerPos, JSONObject triggerData) {
 		Trigger trigger = switch (triggerData.getString("type")) {
 			case "SCENE_CHANGE" -> new SceneChangeTrigger();
+			case "OPEN_SHOP" -> new ShopTrigger();
 			default -> null;
 		};
 

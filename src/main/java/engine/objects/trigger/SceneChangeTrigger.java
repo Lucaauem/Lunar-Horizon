@@ -9,7 +9,6 @@ public class SceneChangeTrigger extends Trigger {
 			SceneManager.getInstance().returnToLastScene();
 			return;
 		}
-
 		SceneManager.getInstance().switchScene(this.parameter.toLowerCase());
 	}
 }

@@ -85,6 +85,6 @@
 
   ],
   "trigger" : [
-    { "pos":  [12, 11], "type": "SCENE_CHANGE", "parameter": "TOWN" }
+    { "pos":  [12, 11], "type": "OPEN_SHOP", "parameter": "SHOP_TOWN" }
   ]
 }
