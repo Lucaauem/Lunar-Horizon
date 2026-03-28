@@ -17,8 +17,8 @@ public abstract class MenuScene {
 		Game.setController(new BattleController(this));
 	}
 
-	public void moveCursor(int ammount) {
-		this.activeMenu.moveCursor(ammount);
+	public void moveCursor(int amount) {
+		this.activeMenu.moveCursor(amount);
 	}
 
 	public void clickButton() {
