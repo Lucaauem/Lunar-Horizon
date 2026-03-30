@@ -8,6 +8,5 @@ target/
 *.iws
 out/
 
-.idea/codeStyleConfig.xml
-.idea/misc.xml
-.idea/project_default.xml
+.idea/codeStyles/codeStyleConfig.xml
+.idea/inspectionProfiles/Project_Default.xml
