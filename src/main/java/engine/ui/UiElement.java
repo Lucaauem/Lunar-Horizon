@@ -52,11 +52,11 @@ public class UiElement {
 	public void render(){
 		this.texture.bind();
 
-		Matrix4f proj = new Matrix4f().ortho(0.0f, GameWindow.RESOLUTION.x, 0.0f, GameWindow.RESOLUTION.y, -1.0f, 1.0f);
+		Matrix4f proj = Renderer.PROJECTION_MATRIX;
 		Matrix4f model = new Matrix4f().identity();
 		model.translate(this.position.x, this.position.y, 0);
 
-		Matrix4f mvp = proj.mul(model);
+		Matrix4f mvp = new Matrix4f(proj).mul(model);
 		Game.shader.setUniformMat4f("u_MVP", mvp);
 
 		Renderer.getInstance().draw(this.model.getVertexArray(), this.model.getIndexBuffer(), Game.shader);
