@@ -7,3 +7,7 @@ target/
 *.iml
 *.iws
 out/
+
+.idea/codeStyleConfig.xml
+.idea/misc.xml
+.idea/project_default.xml
