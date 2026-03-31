@@ -1,7 +1,6 @@
 package engine.ui;
 
 import engine.Game;
-import engine.GameWindow;
 import engine.graphics.Model;
 import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
@@ -58,6 +57,7 @@ public class UiElement {
 
 		Matrix4f mvp = new Matrix4f(proj).mul(model);
 		Game.shader.setUniformMat4f("u_MVP", mvp);
+    Game.shader.setUniform1i("u_UseTexture", 1);
 
 		Renderer.getInstance().draw(this.model.getVertexArray(), this.model.getIndexBuffer(), Game.shader);
 	}

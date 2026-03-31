@@ -86,6 +86,7 @@ public class Tile {
 
 		Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
 		Game.shader.setUniformMat4f("u_MVP", mvp);
+    Game.shader.setUniform1i("u_UseTexture", 1);
 
 		Renderer.getInstance().draw(this.model.getVertexArray(), this.model.getIndexBuffer(), Game.shader);
 	}

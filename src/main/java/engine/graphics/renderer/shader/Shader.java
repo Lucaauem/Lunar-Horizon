@@ -1,6 +1,7 @@
 package engine.graphics.renderer.shader;
 
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import util.FileHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,10 @@ public class Shader {
 	public void setUniform4f(String name, float v0, float v1, float v2, float v3) {
 		glUniform4f(getUniformLocation(name), v0, v1, v2, v3);
 	}
+
+  public void setUniform4f(String name, Vector4f v) {
+    glUniform4f(getUniformLocation(name), v.x, v.y, v.z, v.w);
+  }
 
 	public void setUniformMat4f(String name, Matrix4f mat) {
 		float[] matrix = {
