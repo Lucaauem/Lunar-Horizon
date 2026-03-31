@@ -3,10 +3,12 @@
 .project
 target/
 
-.idea/
 *.iml
 *.iws
 out/
 
-.idea/codeStyles/codeStyleConfig.xml
-.idea/inspectionProfiles/Project_Default.xml
+.idea/codeStyles/
+.idea/inspectionProfiles/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
