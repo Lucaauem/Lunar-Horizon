@@ -1,8 +1,12 @@
 package engine.ui_new;
 
+import org.joml.Vector2f;
+
 public class Offset {
-  public float left = 0;
-  public float right = 0;
-  public float top = 0;
-  public float bottom = 0;
+  public float horizontal = 0;
+  public float vertical = 0;
+
+  public Vector2f asVector() {
+    return new Vector2f(horizontal, vertical);
+  }
 }
