@@ -1,7 +1,14 @@
 package engine.ui_new;
 
+import engine.Game;
 import engine.GameWindow;
+import engine.graphics.Model;
+import engine.graphics.renderer.Renderer;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector4f;
+
 import java.util.ArrayList;
 
 public abstract class UIElement {
@@ -17,12 +24,16 @@ public abstract class UIElement {
   }
 
   public UIElement() {
-    this(0, 0, 0, 0);
+    this(0.0f, 0.0f, 1.0f, 1.0f);
   }
 
   public void setParent(UIElement parent) {
     this.parent = parent;
     parent.addChild(this);
+  }
+
+  public void setAnchor(float x0, float y0, float x1, float y1) {
+    this.anchor = new Anchor(x0, y0, x1, y1);
   }
 
   protected UIElement[] getChildren() {
@@ -34,8 +45,11 @@ public abstract class UIElement {
   }
 
   public Vector2f getScreenSize() {
-    float width = (this.anchor.max.x - this.anchor.min.x) * GameWindow.RESOLUTION.x + this.offset.left + this.offset.right;
-    float height = (this.anchor.max.y - this.anchor.min.y) * GameWindow.RESOLUTION.y + this.offset.top + this.offset.bottom;
+    Vector2f parentSize = this.parent == null ? new Vector2f(GameWindow.RESOLUTION) : this.parent.getScreenSize();
+
+    float width = (this.anchor.max.x - this.anchor.min.x) * parentSize.x - this.offset.left - this.offset.right;
+    float height = (this.anchor.max.y - this.anchor.min.y) * parentSize.y - this.offset.top - this.offset.bottom;
+
     return new Vector2f(width, height);
   }
 
