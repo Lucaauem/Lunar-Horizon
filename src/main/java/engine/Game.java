@@ -8,10 +8,10 @@ import engine.mechanics.items.Potion;
 import engine.objects.Player;
 import engine.scenes.MenuScene;
 import engine.scenes.SceneManager;
-import engine.shop.ShopEngine;
-import engine.ui.UiManager;
-import engine.ui.menu.UiMenu;
+import engine.ui_new.UIManager;
+import engine.ui_new.screen.OverworldUI;
 import util.Time;
+import java.util.HashMap;
 import java.util.Objects;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -26,6 +26,7 @@ public class Game {
 	private static Controller controller = new PlayerController();
 	private static GameState state = GameState.OVERWORLD;
 	private static MenuScene battleEngine = null;
+  public static final HashMap<String, Controller> controllers = new HashMap<>();
 
 	public Game(long window) {
 		this.window = window;
@@ -40,7 +41,8 @@ public class Game {
 	private void init() {
 		SceneManager.getInstance().switchScene("town");
 		camera.fix(player);
-		UiManager.getInstance().addElement("overworld_menu", new UiMenu());
+
+    UIManager.getInstance().setUI(new OverworldUI());
 	}
 
 	public static void changeState(GameState newState) {
@@ -91,14 +93,13 @@ public class Game {
 		GameWindow.setScale();
 		this.renderer.clear();
 
-
 		switch (state) {
 			case OVERWORLD -> {
 				camera.update();
 				SceneManager.getInstance().getCurrentScene().render();
 				player.render();
 
-				UiManager.getInstance().render();
+        UIManager.getInstance().render();
 			}
 			case BATTLE -> Game.battleEngine.render();
 		}
@@ -113,12 +114,12 @@ public class Game {
 	}
 
 	public static void toggleMenu() {
-		UiManager.getInstance().getElement("overworld_menu").toggle();
+    UIManager.getInstance().getUI().toggle();
 
-		if(controller instanceof PlayerController) {
-			controller = new MenuController((UiMenu) UiManager.getInstance().getElement("overworld_menu"));
+		if(Game.controller instanceof PlayerController) {
+			Game.controller = Game.controllers.get("OVERWORLD_MENU");
 			return;
 		}
-		controller = new PlayerController();
+    Game.controller = new PlayerController();
 	}
 }

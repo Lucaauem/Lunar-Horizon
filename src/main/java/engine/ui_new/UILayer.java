@@ -14,7 +14,7 @@ public class UILayer {
       this.visible = !this.visible;
     }
 
-    protected boolean isVisible() {
+    public boolean isVisible() {
       return this.visible;
     }
 

@@ -1,13 +1,11 @@
 package engine.ui_new;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
+import engine.ui_new.screen.UIScreen;
 
 public class UIManager {
   private static UIManager instance;
 
-  private final HashMap<String, UILayer> layers = new HashMap<>();
+  private UIScreen activeUI;
 
   private UIManager() {}
 
@@ -18,29 +16,15 @@ public class UIManager {
     return UIManager.instance;
   }
 
-  public void addLayer(String id, UILayer layer) {
-    if (this.layers.containsKey(id)) {
-      throw new IllegalArgumentException("UIElement id already exists!");
-    }
-    this.layers.put(id, layer);
+  public void setUI(UIScreen ui) {
+    this.activeUI = ui;
   }
 
-  public UILayer getLayer(String id) {
-    return this.layers.get(id);
-  }
-
-  public UIElement getElement(String id) {
-    return null;
+  public UIScreen getUI() {
+    return this.activeUI;
   }
 
   public void render() {
-    UILayer[] sortedLayers = this.layers.values().toArray(new UILayer[0]);
-    Arrays.sort(sortedLayers, Comparator.comparingInt(UILayer::getZ));
-
-    for(UILayer layer: sortedLayers) {
-      if(layer.isVisible()) {
-        layer.render();
-      }
-    }
+    this.activeUI.render();
   }
 }
