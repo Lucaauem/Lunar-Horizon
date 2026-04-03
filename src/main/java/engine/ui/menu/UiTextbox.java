@@ -1,7 +1,7 @@
 package engine.ui.menu;
 
-import engine.Game;
 import engine.controls.Controller;
+import engine.controls.InputManager;
 import engine.controls.TextboxController;
 import engine.ui.text.Text;
 import engine.ui.text.TextLoader;
@@ -25,8 +25,8 @@ public class UiTextbox {
 	}
 
 	public void open() {
-		this.currentController = Game.getController();
-		Game.setController(new TextboxController(this));
+		this.currentController = InputManager.getInstance().getController();
+		InputManager.getInstance().setController(new TextboxController(this));
 		this.open = true;
 		this.onClose = null;
 	}
@@ -38,7 +38,7 @@ public class UiTextbox {
 
 	public void close() {
 		this.open = false;
-		Game.setController(currentController);
+		InputManager.getInstance().setController(currentController);
 
 		if(this.onClose != null) {
 			this.onClose.run();

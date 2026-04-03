@@ -3,6 +3,7 @@ package engine.scenes;
 import engine.Game;
 import engine.GameState;
 import engine.controls.BattleController;
+import engine.controls.InputManager;
 import engine.ui.BattleMenu;
 import engine.ui.menu.UiTextbox;
 
@@ -14,7 +15,7 @@ public abstract class MenuScene {
 	public MenuScene() {
 		// Init game state
 		Game.changeState(GameState.BATTLE);
-		Game.setController(new BattleController(this));
+		InputManager.getInstance().setController(new BattleController(this));
 	}
 
 	public void moveCursor(int amount) {

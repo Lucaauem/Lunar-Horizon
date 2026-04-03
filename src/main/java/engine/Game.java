@@ -6,7 +6,6 @@ import engine.graphics.renderer.Renderer;
 import engine.graphics.renderer.shader.Shader;
 import engine.mechanics.items.Potion;
 import engine.objects.Player;
-import engine.scenes.MenuScene;
 import engine.scenes.SceneManager;
 import engine.ui_new.UIManager;
 import engine.ui_new.screen.OverworldUI;
@@ -23,9 +22,7 @@ public class Game {
 	private final Renderer renderer;
 	public static Camera camera = new Camera();
 	public static final Player player = new Player();
-	private static Controller controller = new PlayerController();
 	private static GameState state = GameState.OVERWORLD;
-	private static MenuScene battleEngine = null;
   public static final HashMap<String, Controller> controllers = new HashMap<>();
 
 	public Game(long window) {
@@ -39,6 +36,7 @@ public class Game {
 	}
 
 	private void init() {
+    InputManager.getInstance().setController(new PlayerController());
 		SceneManager.getInstance().switchScene("town");
 		camera.fix(player);
 
@@ -47,7 +45,7 @@ public class Game {
 
 	public static void changeState(GameState newState) {
 		if (Objects.requireNonNull(newState) == GameState.OVERWORLD) {
-			Game.controller = new PlayerController();
+			InputManager.getInstance().setController(new PlayerController());
 		}
 
 		Game.state = newState;
@@ -81,7 +79,7 @@ public class Game {
 
 	private void update(float dt) {
 		//System.out.println((1.0f / dt) + "FPS");
-		controller.checkInputs(dt);
+		InputManager.getInstance().update(dt);
 
 		if (Game.state == GameState.OVERWORLD) {
 			player.update();
@@ -101,25 +99,17 @@ public class Game {
 
         UIManager.getInstance().render();
 			}
-			case BATTLE -> Game.battleEngine.render();
+			case BATTLE -> { /* TODO */ }
 		}
-	}
-
-	public static void setController(Controller controller) {
-		Game.controller = controller;
-	}
-
-	public static Controller getController() {
-		return Game.controller;
 	}
 
 	public static void toggleMenu() {
     UIManager.getInstance().getUI().toggle();
 
-		if(Game.controller instanceof PlayerController) {
-			Game.controller = Game.controllers.get("OVERWORLD_MENU");
+		if(InputManager.getInstance().getController() instanceof PlayerController) {
+      InputManager.getInstance().setController(Game.controllers.get("OVERWORLD_MENU"));
 			return;
 		}
-    Game.controller = new PlayerController();
+    InputManager.getInstance().setController(new PlayerController());
 	}
 }
