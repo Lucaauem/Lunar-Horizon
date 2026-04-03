@@ -16,7 +16,6 @@ public abstract class UIScreen {
   public abstract void init();
   public void onUpdate() {}
   public void onExit() {}
-  public void update() {}
 
   public void render() {
     UILayer[] sortedLayers = this.layers.toArray(new UILayer[0]);
