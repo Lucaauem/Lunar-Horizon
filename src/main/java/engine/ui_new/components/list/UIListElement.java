@@ -16,6 +16,10 @@ public class UIListElement extends UIElement implements Clickable {
     this.action = action;
   }
 
+  public UIText getLabel() {
+    return this.label;
+  }
+
   @Override
   public void click() {
     this.action.run();

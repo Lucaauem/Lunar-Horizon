@@ -1,30 +1,30 @@
 package engine.controls;
 
 import engine.Game;
-import engine.ui.menu.UiMenu;
+import engine.ui_new.components.list.UIList;
 
 public class MenuController extends Controller {
-	private final UiMenu menu;
+	private final UIList list;
 
-	public MenuController(UiMenu menu) {
-		this.menu = menu;
+	public MenuController(UIList list) {
+		this.list = list;
 	}
 
 	@Override
 	protected void onUp(float dt) {
-		menu.moveCursor(-1);
+		this.list.moveCursorUp();
 		needReset = true;
 	}
 
 	@Override
 	protected void onDown(float dt) {
-		menu.moveCursor(1);
+		this.list.moveCursorDown();
 		needReset = true;
 	}
 
 	@Override
 	protected void onLeft(float dt) {
-		menu.goPageBack();
+		// TODO
 		needReset = true;
 	}
 
@@ -41,7 +41,7 @@ public class MenuController extends Controller {
 
 	@Override
 	protected void onAction(float dt) {
-		menu.toggleEvent();
+		this.list.selectElement();
 		needReset = true;
 	}
 }

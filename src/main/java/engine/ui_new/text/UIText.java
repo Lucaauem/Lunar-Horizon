@@ -15,17 +15,33 @@ public class UIText extends UIElement {
 
 	private final ArrayList<UITextCharacter> characters;
 	private final String originalString;
+  private String prefix = "";
 
 	public UIText(String text, UIElement parent) {
 		this.setParent(parent);
     this.characters = new ArrayList<>();
 		this.originalString = text;
 
-		for(int i=0; i<text.length(); i++) {
-			if(text.charAt(i) == ' ') { continue; }
-			this.loadCharacter(i, text.charAt(i));
-		}
+    this.loadText();
 	}
+
+  private void loadText() {
+    this.characters.clear();
+
+    for(int i=0; i<this.prefix.length(); i++) {
+      if(this.prefix.charAt(i) == ' ') { continue; }
+      this.loadCharacter(i, this.prefix.charAt(i));
+    }
+    for(int i=0; i<this.originalString.length(); i++) {
+      if(this.originalString.charAt(i) == ' ') { continue; }
+      this.loadCharacter(i + this.prefix.length(), this.originalString.charAt(i));
+    }
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
+    this.loadText();
+  }
 
 	private void loadCharacter(int i, char character) {
 		Vector4f uv = this.getLetterUv(character);

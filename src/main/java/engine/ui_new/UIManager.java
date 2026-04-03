@@ -29,6 +29,10 @@ public class UIManager {
     return this.layers.get(id);
   }
 
+  public UIElement getElement(String id) {
+    return null;
+  }
+
   public void render() {
     UILayer[] sortedLayers = this.layers.values().toArray(new UILayer[0]);
     Arrays.sort(sortedLayers, Comparator.comparingInt(UILayer::getZ));
