@@ -22,8 +22,12 @@ public class UIList extends UIElement {
   public void render() {
     for (int i=0; i<this.content.size(); i++) {
       UIListElement element = this.content.get(i);
-      element.setOffset(0, 0, 0, i * (UIText.CHARACTER_HEIGHT + ELEMENTS_GAP_PX));
-      element.render();
+
+      element.setOffset(0, -(i * (UIText.CHARACTER_HEIGHT + UIList.ELEMENTS_GAP_PX)));
+
+      if(element.isInsideAnchor()) {
+        element.render();
+      }
     }
   }
 }

@@ -1,7 +1,6 @@
 package engine.ui_new.text;
 
 import engine.graphics.Texture;
-import engine.ui_new.Anchor;
 import engine.ui_new.Offset;
 import engine.ui_new.UIElement;
 import org.joml.Vector4f;
@@ -19,7 +18,7 @@ public class UIText extends UIElement {
 
 	public UIText(String text, UIElement parent) {
 		this.setParent(parent);
-		this.characters = new ArrayList<>();
+    this.characters = new ArrayList<>();
 		this.originalString = text;
 
 		for(int i=0; i<text.length(); i++) {
@@ -31,7 +30,8 @@ public class UIText extends UIElement {
 	private void loadCharacter(int i, char character) {
 		Vector4f uv = this.getLetterUv(character);
     Offset offset = new Offset();
-    offset.left = (i * CHARACTER_WIDTH);
+    offset.horizontal = (i * CHARACTER_WIDTH);
+    offset.vertical -= 1;  // TODO: Check how to fix the 1 pixel offset
 
     UITextCharacter letter = new UITextCharacter(uv, offset, this);
 

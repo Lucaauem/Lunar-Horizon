@@ -9,14 +9,12 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-class UITextCharacter {
-  private final Offset offset;
-  private final UIElement parent;
+class UITextCharacter extends UIElement {
   private final Model model;
 
   protected UITextCharacter(Vector4f uv, Offset offset, UIElement parent) {
     this.offset = offset;
-    this.parent = parent;
+    this.setParent(parent);
 
     this.model = new Model(new float[] {
        0.0f, 0.0f, uv.x, uv.y,
@@ -26,10 +24,10 @@ class UITextCharacter {
     });
   }
 
-  protected void render() {
+  public void render() {
     Vector2f size = new Vector2f(UIText.CHARACTER_WIDTH, UIText.CHARACTER_HEIGHT);
-    Vector2f parentPosition = this.parent.getScreenPosition();
-    Vector2f position = parentPosition.add(new Vector2f(offset.left, offset.top));
+    Vector2f parentPosition = this.getParent().getScreenPosition();
+    Vector2f position = parentPosition.add(new Vector2f(offset.horizontal, offset.vertical));
 
     Matrix4f model = new Matrix4f().identity();
     model.translate(position.x, position.y, 0);
