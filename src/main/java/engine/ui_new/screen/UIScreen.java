@@ -10,7 +10,6 @@ public abstract class UIScreen {
 
   public UIScreen() {
     this.layers = new ArrayList<>();
-    this.init();
   }
 
   public abstract void init();

@@ -9,6 +9,11 @@ import engine.ui_new.components.list.UIList;
 import engine.ui_new.components.list.UIListElement;
 
 public class OverworldUI extends UIScreen {
+  public OverworldUI() {
+    super();
+    this.init();
+  }
+
   @Override
   public void init() {
     UIPanel menuPanel = new UIPanel(0.65f, 0.05f, 0.95f, 0.95f);
