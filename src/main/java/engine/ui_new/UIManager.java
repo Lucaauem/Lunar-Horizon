@@ -1,19 +1,31 @@
 package engine.ui_new;
 
 import engine.ui_new.screen.UIScreen;
+import java.util.ArrayList;
 
 public class UIManager {
   private static UIManager instance;
 
   private UIScreen activeUI;
+  private final ArrayList<UIElement> additionalElements;
 
-  private UIManager() {}
+  private UIManager() {
+    this.additionalElements = new ArrayList<>();
+  }
 
   public static UIManager getInstance() {
     if(UIManager.instance == null) {
       UIManager.instance = new UIManager();
     }
     return UIManager.instance;
+  }
+
+  public void addElement(UIElement element) {
+    this.additionalElements.add(element);
+  }
+
+  public void removeElement(UIElement element) {
+    this.additionalElements.remove(element);
   }
 
   public void setUI(UIScreen ui) {
@@ -26,5 +38,9 @@ public class UIManager {
 
   public void render() {
     this.activeUI.render();
+
+    for(UIElement additionalElement: this.additionalElements) {
+      additionalElement.render();
+    }
   }
 }

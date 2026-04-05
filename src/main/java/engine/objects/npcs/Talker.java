@@ -1,6 +1,6 @@
 package engine.objects.npcs;
 
-import engine.ui.menu.UiTextbox;
+import engine.ui_new.components.UITextbox;
 import org.joml.Vector2f;
 
 public class Talker extends Npc {
@@ -9,7 +9,6 @@ public class Talker extends Npc {
 	private static final boolean IS_SOLID = true;
 
 	private final String text;
-	private UiTextbox textbox = null;
 
 	public Talker(Vector2f position, String text, String texture) {
 		super(TEXTURE_PATH + texture + ".png", position, IS_SOLID);
@@ -18,17 +17,13 @@ public class Talker extends Npc {
 
 	@Override
 	public void onInteract() {
-		this.textbox = new UiTextbox();
-		this.textbox.setTexts(TEXT_SOURCE, this.text);
-		this.textbox.open(() -> this.textbox = null);
+    UITextbox textbox = new UITextbox();
+    textbox.setTexts(TEXT_SOURCE, this.text);
+    textbox.open();
 	}
 
 	@Override
 	public void render() {
 		super.render();
-
-		if(this.textbox != null) {
-			this.textbox.render();
-		}
 	}
 }

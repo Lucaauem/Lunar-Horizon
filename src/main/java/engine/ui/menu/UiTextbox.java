@@ -26,7 +26,7 @@ public class UiTextbox {
 
 	public void open() {
 		this.currentController = InputManager.getInstance().getController();
-		InputManager.getInstance().setController(new TextboxController(this));
+		//InputManager.getInstance().setController(new TextboxController(this));
 		this.open = true;
 		this.onClose = null;
 	}

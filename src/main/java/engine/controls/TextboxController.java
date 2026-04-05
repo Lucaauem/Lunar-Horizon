@@ -1,11 +1,11 @@
 package engine.controls;
 
-import engine.ui.menu.UiTextbox;
+import engine.ui_new.components.UITextbox;
 
 public class TextboxController extends Controller{
-	private final UiTextbox textbox;
+	private final UITextbox textbox;
 
-	public TextboxController(UiTextbox textbox) {
+	public TextboxController(UITextbox textbox) {
 		this.textbox = textbox;
 	}
 
