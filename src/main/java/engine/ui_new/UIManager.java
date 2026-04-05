@@ -17,12 +17,7 @@ public class UIManager {
   }
 
   public void setUI(UIScreen ui) {
-    if (this.activeUI != null) {
-      this.activeUI.toggle();
-    }
-
     this.activeUI = ui;
-    this.activeUI.toggle();
   }
 
   public UIScreen getUI() {
