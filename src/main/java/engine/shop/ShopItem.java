@@ -35,4 +35,6 @@ public class ShopItem {
 	public String getName() {
 		return this.item.getName();
 	}
+
+  public int getCosts() { return this.costs; }
 }

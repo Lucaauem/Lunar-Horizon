@@ -28,6 +28,10 @@ public class UIManager {
     this.additionalElements.remove(element);
   }
 
+  public boolean isAdditionalElement(UIElement element) {
+    return this.additionalElements.contains(element);
+  }
+
   public void setUI(UIScreen ui) {
     this.activeUI = ui;
   }

@@ -1,7 +1,6 @@
 package engine.ui_new.components;
 
 import engine.controls.InputManager;
-import engine.controls.PlayerController;
 import engine.controls.TextboxController;
 import engine.ui.text.TextLoader;
 import engine.ui_new.Anchor;
@@ -22,6 +21,7 @@ public class UITextbox extends UIElement {
   private final Stack<String> texts;
   private UIText currentText;
   private Runnable onClose;
+  private boolean isOpen = false;
 
   public UITextbox() {
     super();
@@ -45,14 +45,17 @@ public class UITextbox extends UIElement {
   }
 
   public void open() {
+    this.isOpen = true;
     this.next();
     InputManager.getInstance().setController(new TextboxController(this));
-    UIManager.getInstance().addElement(this);
   }
 
   public void close() {
-    UIManager.getInstance().removeElement(this);
-    InputManager.getInstance().setController(new PlayerController());
+    if (UIManager.getInstance().isAdditionalElement(this)) {
+      UIManager.getInstance().removeElement(this);
+    } else {
+      this.isOpen = false;
+    }
 
     if(this.onClose != null) {
       this.onClose.run();
@@ -73,6 +76,10 @@ public class UITextbox extends UIElement {
 
   @Override
   public void render() {
+    if (!this.isOpen) {
+      return;
+    }
+
     this.drawRectangle(this.getScreenPosition().sub(new Vector2f(BORDER_SIZE)), this.getScreenSize().add(new Vector2f(BORDER_SIZE * 2)), BORDER_COLOR);
     this.drawRectangle(this.getScreenPosition(), this.getScreenSize(), BOX_COLOR);
     this.currentText.render();

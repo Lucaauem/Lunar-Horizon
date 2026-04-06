@@ -1,8 +1,9 @@
 package engine.controls;
 
 public class InputManager {
-  private Controller activeController;
   private static InputManager instance;
+  private Controller activeController;
+  private Controller previousController;
 
   private InputManager() {}
 
@@ -14,11 +15,16 @@ public class InputManager {
   }
 
   public void setController(Controller controller) {
+    this.previousController = this.activeController;
     this.activeController = controller;
   }
 
   public Controller getController() {
     return this.activeController;
+  }
+
+  public void setToPreviousController() {
+    this.setController(this.previousController);
   }
 
   public void update(float dt) {

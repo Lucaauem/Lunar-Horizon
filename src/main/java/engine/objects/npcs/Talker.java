@@ -1,5 +1,7 @@
 package engine.objects.npcs;
 
+import engine.controls.InputManager;
+import engine.ui_new.UIManager;
 import engine.ui_new.components.UITextbox;
 import org.joml.Vector2f;
 
@@ -19,6 +21,8 @@ public class Talker extends Npc {
 	public void onInteract() {
     UITextbox textbox = new UITextbox();
     textbox.setTexts(TEXT_SOURCE, this.text);
+    textbox.setOnClose(() -> InputManager.getInstance().setToPreviousController());
+    UIManager.getInstance().addElement(textbox);
     textbox.open();
 	}
 
