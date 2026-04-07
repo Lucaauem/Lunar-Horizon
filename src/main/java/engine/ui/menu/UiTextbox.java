@@ -2,7 +2,6 @@ package engine.ui.menu;
 
 import engine.controls.Controller;
 import engine.controls.InputManager;
-import engine.controls.TextboxController;
 import engine.ui.text.Text;
 import engine.ui.text.TextLoader;
 import org.joml.Vector2i;

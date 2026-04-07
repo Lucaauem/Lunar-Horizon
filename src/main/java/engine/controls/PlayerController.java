@@ -2,6 +2,8 @@ package engine.controls;
 
 import engine.Game;
 import engine.objects.MoveDirection;
+import engine.ui_new.UIManager;
+import engine.ui_new.screen.OverworldUI;
 
 public class PlayerController extends Controller {
 	@Override
@@ -26,7 +28,14 @@ public class PlayerController extends Controller {
 
 	@Override
 	protected void onStart(float dt) {
-		Game.toggleMenu();
+    OverworldUI ui = new OverworldUI();
+    InputManager.getInstance().setController(new MenuController(ui.getMenu()).withCustomStart(() -> {
+      ui.toggle();
+      InputManager.getInstance().setController(new PlayerController());
+      needReset = true;
+    }));
+    UIManager.getInstance().setUI(ui);
+    UIManager.getInstance().getUI().toggle();
 		needReset = true;
 	}
 

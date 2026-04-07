@@ -1,6 +1,5 @@
 package engine.controls;
 
-import engine.Game;
 import engine.ui_new.components.list.UIList;
 
 public class MenuController extends Controller {
@@ -35,8 +34,7 @@ public class MenuController extends Controller {
 
 	@Override
 	protected void onStart(float dt) {
-		Game.toggleMenu();
-		needReset = true;
+
 	}
 
 	@Override

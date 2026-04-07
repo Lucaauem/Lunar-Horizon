@@ -10,7 +10,6 @@ import engine.scenes.SceneManager;
 import engine.ui_new.UIManager;
 import engine.ui_new.screen.OverworldUI;
 import util.Time;
-import java.util.HashMap;
 import java.util.Objects;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -23,7 +22,6 @@ public class Game {
 	public static Camera camera = new Camera();
 	public static final Player player = new Player();
 	private static GameState state = GameState.OVERWORLD;
-  public static final HashMap<String, Controller> controllers = new HashMap<>();
 
 	public Game(long window) {
 		this.window = window;
@@ -101,15 +99,5 @@ public class Game {
 			}
 			case BATTLE -> { /* TODO */ }
 		}
-	}
-
-	public static void toggleMenu() {
-    UIManager.getInstance().getUI().toggle();
-
-		if(InputManager.getInstance().getController() instanceof PlayerController) {
-      InputManager.getInstance().setController(Game.controllers.get("OVERWORLD_MENU"));
-			return;
-		}
-    InputManager.getInstance().setController(new PlayerController());
 	}
 }
