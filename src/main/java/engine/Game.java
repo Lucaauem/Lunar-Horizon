@@ -35,7 +35,7 @@ public class Game {
 
 	private void init() {
     InputManager.getInstance().setController(new PlayerController());
-		SceneManager.getInstance().switchScene("town");
+		SceneManager.getInstance().switchScene("town/main");
 		camera.fix(player);
 
     UIManager.getInstance().setUI(new OverworldUI());

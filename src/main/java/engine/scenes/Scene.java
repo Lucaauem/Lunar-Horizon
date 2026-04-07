@@ -25,9 +25,9 @@ public class Scene {
 	private int sceneSize = 0;
 
 	public Scene(String name) {
-		this.name = name + "/";
+		this.name = name;
 
-		JSONObject sceneData = FileHandler.readJSON(SCENE_BASE_PATH + this.name + "scene.json");
+		JSONObject sceneData = FileHandler.readJSON(SCENE_BASE_PATH + this.name + ".json");
 
 		this.loadConfig(sceneData.getJSONObject("config"));
 		this.tiles = this.loadTiles(sceneData.getJSONObject("tiles"));
