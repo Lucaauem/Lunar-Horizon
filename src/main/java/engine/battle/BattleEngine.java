@@ -43,6 +43,7 @@ public class BattleEngine {
   }
 
 	public void nextTurn() {
+    this.ui.getActionMenu().setVisibility(false);
     InputManager.getInstance().setController(null);
 		this.isPlayerTurn = !this.isPlayerTurn;
 
@@ -55,6 +56,7 @@ public class BattleEngine {
 		}
 
 		if (this.isPlayerTurn) {
+      this.ui.getActionMenu().setVisibility(true);
       InputManager.getInstance().setController(new GridController(this.ui.getActionMenu()));
 		} else {
 			// TODO: Generate move
@@ -67,6 +69,7 @@ public class BattleEngine {
 
   // TODO: EXP
 	private void winBattle() {
+    this.ui.getActionMenu().setVisibility(false);
     UITextbox textbox = this.ui.getTextbox();
 		textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED");
     textbox.setOnClose(this::endBattle);
@@ -74,6 +77,7 @@ public class BattleEngine {
 	}
 
   public void attackEnemy() {
+    this.ui.getActionMenu().setVisibility(false);
 		this.enemy.changeHealth(-1 * Game.player.getAttack());
 
     UITextbox textbox = this.ui.getTextbox();
@@ -84,8 +88,6 @@ public class BattleEngine {
 
   // TODO
   public void useItem(Item item) {
-		//this.submenu.setVisibility(false);
-		//this.activeMenu = this.menu;
 		//item.use();
 
     UITextbox textbox = this.ui.getTextbox();
@@ -96,6 +98,7 @@ public class BattleEngine {
 
   // TODO: Cancel flee with some random value
   public void flee() {
+    this.ui.getActionMenu().setVisibility(false);
     UITextbox textbox = this.ui.getTextbox();
     textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_FLED");
     textbox.setOnClose(this::endBattle);

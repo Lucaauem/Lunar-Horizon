@@ -24,6 +24,7 @@ public class UITextbox extends UIElement {
 
   public UITextbox() {
     super();
+    this.setVisibility(false);
     this.anchor = UITextbox.DEFAULT_ANCHOR;
     this.texts = new Stack<>();
   }
@@ -82,6 +83,7 @@ public class UITextbox extends UIElement {
   public void renderSelf() {
     this.drawRectangle(this.getScreenPosition().sub(new Vector2f(BORDER_SIZE)), this.getScreenSize().add(new Vector2f(BORDER_SIZE * 2)), BORDER_COLOR);
     this.drawRectangle(this.getScreenPosition(), this.getScreenSize(), BOX_COLOR);
+
     this.currentText.render();
   }
 }

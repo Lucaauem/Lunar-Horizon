@@ -67,6 +67,7 @@ public class BattleUI extends UIScreen {
     });
     this.actionMenu.setParent(menuBackground);
     this.actionMenu.setAnchor(0.10f, 0.1f, 0.9f, 0.9f);
+    this.actionMenu.setVisibility(false);
 
     // Player Stats
     UIPanel playerStats = new UIPanel(0.025f, 0.85f, 0.20f, 0.975f);
