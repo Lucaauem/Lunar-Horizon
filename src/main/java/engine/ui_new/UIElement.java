@@ -114,10 +114,6 @@ public abstract class UIElement {
     }
 
     this.renderSelf();
-
-    for (UIElement child : this.children) {
-      child.render();
-    }
   }
 
   protected abstract void renderSelf();
