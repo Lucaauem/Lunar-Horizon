@@ -2,7 +2,7 @@ package engine.ui_new.components;
 
 import engine.controls.InputManager;
 import engine.controls.TextboxController;
-import engine.ui.text.TextLoader;
+import engine.ui_new.text.TextLoader;
 import engine.ui_new.Anchor;
 import engine.ui_new.UIElement;
 import engine.ui_new.UIManager;

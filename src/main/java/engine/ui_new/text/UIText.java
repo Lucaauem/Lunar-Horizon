@@ -14,7 +14,7 @@ public class UIText extends UIElement {
 	public static final int CHARACTER_HEIGHT = 8;
 
 	private final ArrayList<UITextCharacter> characters;
-	private final String originalString;
+	private String originalString;
   private String prefix = "";
 
 	public UIText(String text, UIElement parent) {
@@ -24,6 +24,11 @@ public class UIText extends UIElement {
 
     this.loadText();
 	}
+
+  public void setTextRaw(String text) {
+    this.originalString = text;
+    this.loadText();
+  }
 
   private void loadText() {
     this.characters.clear();

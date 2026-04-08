@@ -1,5 +1,6 @@
 package engine;
 
+import engine.battle.BattleEngine;
 import engine.controls.*;
 import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
@@ -39,6 +40,8 @@ public class Game {
 		camera.fix(player);
 
     UIManager.getInstance().setUI(new OverworldUI());
+
+    new BattleEngine().startBattle();
 	}
 
 	public static void changeState(GameState newState) {
