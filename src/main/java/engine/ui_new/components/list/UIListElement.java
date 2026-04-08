@@ -26,7 +26,7 @@ public class UIListElement extends UIElement implements Clickable {
   }
 
   @Override
-  public void render() {
+  public void renderSelf() {
     label.render();
   }
 }

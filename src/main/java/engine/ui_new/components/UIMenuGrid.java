@@ -63,7 +63,7 @@ public class UIMenuGrid extends UIElement {
   }
 
   @Override
-  public void render() {
+  public void renderSelf() {
     for (int i=0; i<this.elements.length; i++) {
       for (int j=0; j<this.elements[i].length; j++) {
         UIListElement element = this.elements[i][j];

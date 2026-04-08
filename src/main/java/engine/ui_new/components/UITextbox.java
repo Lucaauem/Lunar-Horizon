@@ -21,7 +21,6 @@ public class UITextbox extends UIElement {
   private final Stack<String> texts;
   private UIText currentText;
   private Runnable onClose;
-  private boolean isOpen = false;
 
   public UITextbox() {
     super();
@@ -45,7 +44,7 @@ public class UITextbox extends UIElement {
   }
 
   public void open() {
-    this.isOpen = true;
+    this.setVisibility(true);
     this.next();
     InputManager.getInstance().setController(new TextboxController(this));
   }
@@ -54,7 +53,7 @@ public class UITextbox extends UIElement {
     if (UIManager.getInstance().isAdditionalElement(this)) {
       UIManager.getInstance().removeElement(this);
     } else {
-      this.isOpen = false;
+      this.setVisibility(false);
     }
 
     if(this.onClose != null) {
@@ -67,6 +66,11 @@ public class UITextbox extends UIElement {
   }
 
   public void next() {
+    if (this.currentText != null) {
+      this.currentText.setParent(null);
+      this.currentText = null;
+    }
+
     if(this.texts.isEmpty()) {
       this.close();
     } else {
@@ -75,11 +79,7 @@ public class UITextbox extends UIElement {
   }
 
   @Override
-  public void render() {
-    if (!this.isOpen) {
-      return;
-    }
-
+  public void renderSelf() {
     this.drawRectangle(this.getScreenPosition().sub(new Vector2f(BORDER_SIZE)), this.getScreenSize().add(new Vector2f(BORDER_SIZE * 2)), BORDER_COLOR);
     this.drawRectangle(this.getScreenPosition(), this.getScreenSize(), BOX_COLOR);
     this.currentText.render();

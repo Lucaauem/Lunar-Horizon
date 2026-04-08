@@ -31,6 +31,9 @@ public class UIText extends UIElement {
   }
 
   private void loadText() {
+    for (UITextCharacter character : this.characters) {
+      character.setParent(null);
+    }
     this.characters.clear();
 
     for(int i=0; i<this.prefix.length(); i++) {
@@ -90,7 +93,7 @@ public class UIText extends UIElement {
 		return this.originalString;
 	}
 
-	public void render() {
+	public void renderSelf() {
     UIText.FONT_TEXTURE.bind();
 
 		for(UITextCharacter character : characters) {

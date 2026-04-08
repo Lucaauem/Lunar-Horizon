@@ -62,7 +62,7 @@ public class UIList extends UIElement implements Scrollable {
   }
 
   @Override
-  public void render() {
+  public void renderSelf() {
     this.pageSize = 0;
     for (int i=this.scrollOffset; i<this.content.size(); i++) {
       UIListElement element = this.content.get(i);

@@ -17,7 +17,7 @@ public class UIPanel extends UIElement {
   }
 
   @Override
-  public void render() {
+  public void renderSelf() {
     this.drawRectangle(this.getScreenPosition(), this.getScreenSize(), this.color == null ? UIPanel.BACKGROUND_COLOR : this.color);
 
     for (UIElement child: this.getChildren()) {

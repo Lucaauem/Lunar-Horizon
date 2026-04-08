@@ -13,8 +13,9 @@ import java.util.ArrayList;
 public abstract class UIElement {
   protected Anchor anchor;
   protected Offset offset;
-  private UIElement parent = null;
   private final ArrayList<UIElement> children;
+  private UIElement parent = null;
+  private boolean visible = true;
 
   public UIElement(float x0, float y0, float x1, float y1) {
     this.anchor = new Anchor(x0, y0, x1, y1);
@@ -31,8 +32,15 @@ public abstract class UIElement {
       this.parent.children.remove(this);
     }
 
+    if (parent != null) {
+      parent.addChild(this);
+    }
+
     this.parent = parent;
-    parent.addChild(this);
+  }
+
+  public void setVisibility(boolean visible) {
+    this.visible = visible;
   }
 
   public UIElement getParent() {
@@ -100,7 +108,19 @@ public abstract class UIElement {
     this.offset.vertical = vertical;
   }
 
-  public abstract void render();
+  public final void render() {
+    if (!this.visible) {
+      return;
+    }
+
+    this.renderSelf();
+
+    for (UIElement child : this.children) {
+      child.render();
+    }
+  }
+
+  protected abstract void renderSelf();
 
   protected void drawRectangle(Vector2f position, Vector2f size, Vector3f color) {
     this.drawRectangle(position, size, new Vector4f(color.x, color.y, color.z, 1));

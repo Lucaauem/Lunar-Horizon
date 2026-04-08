@@ -24,7 +24,7 @@ class UITextCharacter extends UIElement {
     });
   }
 
-  public void render() {
+  public void renderSelf() {
     Vector2f size = new Vector2f(UIText.CHARACTER_WIDTH, UIText.CHARACTER_HEIGHT);
     Vector2f parentPosition = this.getParent().getScreenPosition();
     Vector2f position = parentPosition.add(new Vector2f(offset.horizontal, offset.vertical));
