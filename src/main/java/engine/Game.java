@@ -11,7 +11,6 @@ import engine.scenes.SceneManager;
 import engine.ui_new.UIManager;
 import engine.ui_new.screen.OverworldUI;
 import util.Time;
-import java.util.Objects;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
@@ -45,11 +44,18 @@ public class Game {
 	}
 
 	public static void changeState(GameState newState) {
-		if (Objects.requireNonNull(newState) == GameState.OVERWORLD) {
-			InputManager.getInstance().setController(new PlayerController());
-		}
-
 		Game.state = newState;
+
+    switch (Game.state) {
+      case OVERWORLD -> {
+        UIManager.getInstance().setUI(new OverworldUI());
+        InputManager.getInstance().setController(new PlayerController());
+      }
+      case BATTLE -> {
+        UIManager.getInstance().getUI().toggle();
+        InputManager.getInstance().setController(null);
+      }
+    }
 	}
 
 	public void start() {
@@ -100,7 +106,7 @@ public class Game {
 
         UIManager.getInstance().render();
 			}
-			case BATTLE -> { /* TODO */ }
+			case BATTLE -> UIManager.getInstance().render();
 		}
 	}
 }

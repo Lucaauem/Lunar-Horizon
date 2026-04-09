@@ -1,6 +1,7 @@
 package engine.battle;
 
 import engine.Game;
+import engine.GameState;
 import engine.controls.GridController;
 import engine.controls.InputManager;
 import engine.controls.PlayerController;
@@ -28,8 +29,7 @@ public class BattleEngine {
 
   public void startBattle() {
     UIManager.getInstance().setUI(this.ui);
-    UIManager.getInstance().getUI().toggle();
-    InputManager.getInstance().setController(null);
+    Game.changeState(GameState.BATTLE);
 
     UITextbox textbox = this.ui.getTextbox();
     textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED");
@@ -38,8 +38,7 @@ public class BattleEngine {
   }
 
   private void endBattle() {
-    UIManager.getInstance().setUI(new OverworldUI());
-    InputManager.getInstance().setController(new PlayerController());
+    Game.changeState(GameState.OVERWORLD);
   }
 
 	public void nextTurn() {
