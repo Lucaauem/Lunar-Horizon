@@ -4,6 +4,7 @@ import engine.Game;
 import engine.battle.BattleEngine;
 import engine.ui_new.UIElement;
 import engine.ui_new.UILayer;
+import engine.ui_new.components.UIImage;
 import engine.ui_new.components.UIMenuGrid;
 import engine.ui_new.components.UIPanel;
 import engine.ui_new.components.UITextbox;
@@ -15,6 +16,7 @@ public class BattleUI extends UIScreen {
   private static final Vector3f COLOR_GROUND = new Vector3f(0, 0.5f, 0);
   private static final Vector3f COLOR_GROUND_2 = new Vector3f(0.4f, 0.4f, 0.4f);
   private static final Vector3f COLOR_SKY = new Vector3f(0.5f, 0.8f, 0.9f);
+  private static final float ICON_GAP = 5;
 
   private UITextbox textbox;
   private UIMenuGrid actionMenu;
@@ -75,6 +77,13 @@ public class BattleUI extends UIScreen {
     this.playerHealth.setAnchor(0.0f, 0.5f, 1.0f, 1.0f);
     this.playerMana = new UIText("", playerStats);
     this.playerMana.setAnchor(0.0f, 0.0f, 1.0f, 0.5f);
+    UIImage healthIcon = new UIImage(0, 0.5f, 1.0f, 1.0f, "ui/battle/health_icon.png");
+    healthIcon.setParent(playerStats);
+    UIImage manaIcon = new UIImage(0, 0, 1.0f, 0.5f, "ui/battle/mana_icon.png");
+    manaIcon.setParent(playerStats);
+
+    this.playerHealth.setOffset(healthIcon.getSize().x + ICON_GAP, 0);
+    this.playerMana.setOffset(healthIcon.getSize().x + ICON_GAP, 0);
     this.updatePlayerStats();
 
     this.layers.add(new UILayer(-1, new UIElement[] { background }));

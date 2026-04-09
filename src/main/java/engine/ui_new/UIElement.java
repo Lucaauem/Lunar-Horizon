@@ -3,6 +3,7 @@ package engine.ui_new;
 import engine.Game;
 import engine.GameWindow;
 import engine.graphics.Model;
+import engine.graphics.Texture;
 import engine.graphics.renderer.Renderer;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -124,21 +125,46 @@ public abstract class UIElement {
 
   protected void drawRectangle(Vector2f position, Vector2f size, Vector4f color) {
     Model model = new Model(new float[] {
-      0.0f, 0.0f, 0, 0,
-      1.0f, 0.0f, 0, 0,
-      1.0f, 1.0f, 0, 0,
-      0.0f, 1.0f, 0, 0
+            0.0f, 0.0f, 0, 0,
+            1.0f, 0.0f, 0, 0,
+            1.0f, 1.0f, 0, 0,
+            0.0f, 1.0f, 0, 0
     });
 
+    this.renderElement(position, size, color, null, model);
+  }
+
+  protected void drawTexture(Vector2f position, Vector2f size, Texture texture, Model model) {
+    this.renderElement(position, size, new Vector4f(0, 0, 0, 0), texture, model);
+  }
+
+  protected void drawTexture(Vector2f position, Vector2f size, Texture texture) {
+    Model model = new Model(new float[] {
+            0.0f, 0.0f, 0, 1,
+            1.0f, 0.0f, 1, 1,
+            1.0f, 1.0f, 1, 0,
+            0.0f, 1.0f, 0, 0
+    });
+
+    this.renderElement(position, size, new Vector4f(0, 0, 0, 0), texture, model);
+  }
+
+  private void renderElement(Vector2f position, Vector2f size, Vector4f color, Texture texture, Model model) {
     Matrix4f modelMatrix = new Matrix4f().identity();
     modelMatrix.translate(position.x , position.y, 0);
     modelMatrix.scale(size.x, size.y, 1);
 
     Matrix4f mvp = new Matrix4f(Renderer.PROJECTION_MATRIX).mul(modelMatrix);
     Game.shader.setUniformMat4f("u_MVP", mvp);
-
     Game.shader.setUniform4f("u_Color", color);
-    Game.shader.setUniform1i("u_UseTexture", 0);
+
+    if (texture != null) {
+      texture.bind();
+      Game.shader.setUniform1i("u_UseTexture", 1);
+    } else {
+      Game.shader.setUniform1i("u_UseTexture", 0);
+    }
+
     Renderer.getInstance().draw(model.getVertexArray(), model.getIndexBuffer());
   }
 
