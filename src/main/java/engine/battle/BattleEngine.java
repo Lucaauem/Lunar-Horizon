@@ -4,12 +4,11 @@ import engine.Game;
 import engine.GameState;
 import engine.controls.GridController;
 import engine.controls.InputManager;
-import engine.controls.PlayerController;
 import engine.mechanics.items.Item;
-import engine.ui_new.UIManager;
-import engine.ui_new.components.UITextbox;
-import engine.ui_new.screen.BattleUI;
-import engine.ui_new.screen.OverworldUI;
+import engine.ui.UIManager;
+import engine.ui.components.UITextbox;
+import engine.ui.screen.BattleUI;
+
 import java.util.Map;
 
 public class BattleEngine {

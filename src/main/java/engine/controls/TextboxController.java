@@ -1,6 +1,6 @@
 package engine.controls;
 
-import engine.ui_new.components.UITextbox;
+import engine.ui.components.UITextbox;
 
 public class TextboxController extends Controller{
 	private final UITextbox textbox;

@@ -1,6 +1,6 @@
 package engine.controls;
 
-import engine.ui_new.components.UIMenuGrid;
+import engine.ui.components.UIMenuGrid;
 
 public class GridController extends Controller {
   private final UIMenuGrid menu;

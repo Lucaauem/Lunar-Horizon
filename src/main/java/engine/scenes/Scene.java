@@ -1,7 +1,7 @@
 package engine.scenes;
 
-import engine.objects.Entity;
-import engine.objects.EntityBuilder;
+import engine.objects.entities.Entity;
+import engine.objects.entities.EntityBuilder;
 import engine.objects.Tile;
 import engine.graphics.Tilemap;
 import engine.objects.trigger.SceneChangeTrigger;

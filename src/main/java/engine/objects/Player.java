@@ -2,6 +2,7 @@ package engine.objects;
 
 import engine.graphics.Texture;
 import engine.mechanics.items.Item;
+import engine.objects.entities.Entity;
 import engine.scenes.Scene;
 import engine.scenes.SceneManager;
 import org.joml.Vector2f;

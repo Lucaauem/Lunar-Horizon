@@ -1,7 +1,6 @@
 package engine.objects;
 
 import engine.Game;
-import engine.GameWindow;
 import engine.graphics.Model;
 import engine.graphics.Tilemap;
 import engine.graphics.renderer.Renderer;
@@ -85,9 +84,9 @@ public class Tile {
 		model.translate((this.position.x * TILE_SIZE) + TILE_SIZE, (this.position.y * TILE_SIZE) + TILE_SIZE, 0);
 
 		Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
-		Game.shader.setUniformMat4f("u_MVP", mvp);
-    Game.shader.setUniform1i("u_UseTexture", 1);
+    Renderer.getShader().setUniformMat4f("u_MVP", mvp);
+    Renderer.getShader().setUniform1i("u_UseTexture", 1);
 
-		Renderer.getInstance().draw(this.model.getVertexArray(), this.model.getIndexBuffer(), Game.shader);
+		Renderer.draw(this.model.getVertexArray(), this.model.getIndexBuffer());
 	}
 }

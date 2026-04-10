@@ -1,6 +1,6 @@
 package engine.controls;
 
-import engine.ui_new.components.list.UIList;
+import engine.ui.components.list.UIList;
 
 public class MenuController extends Controller {
 	private final UIList list;

@@ -1,8 +1,8 @@
 package engine.shop;
 
-import engine.ui_new.UIManager;
-import engine.ui_new.screen.ShopUI;
-import engine.ui_new.screen.UIScreen;
+import engine.ui.UIManager;
+import engine.ui.screen.ShopUI;
+import engine.ui.screen.UIScreen;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.FileHandler;

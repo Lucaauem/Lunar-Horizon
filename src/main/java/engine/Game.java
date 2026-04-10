@@ -1,33 +1,27 @@
 package engine;
 
-import engine.battle.BattleEngine;
 import engine.controls.*;
 import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
-import engine.graphics.renderer.shader.Shader;
 import engine.mechanics.items.Potion;
 import engine.objects.Player;
 import engine.scenes.SceneManager;
-import engine.ui_new.UIManager;
-import engine.ui_new.screen.OverworldUI;
+import engine.ui.UIManager;
+import engine.ui.screen.OverworldUI;
 import util.Time;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
-	private static final int FPS_CAP = 60;
+	public static final int FPS_CAP = 60;
 
 	private final long window;
-	public static Shader shader = new Shader("src/main/assets/shaders/Basic.glsl");
-	private final Renderer renderer;
 	public static Camera camera = new Camera();
 	public static final Player player = new Player();
 	private static GameState state = GameState.OVERWORLD;
 
 	public Game(long window) {
 		this.window = window;
-		Game.shader.bind();
-
-		this.renderer = Renderer.getInstance();
+		Renderer.getShader().bind();
 
 		player.addToInventory(new Potion());
 		player.addToInventory(new Potion());
@@ -39,8 +33,6 @@ public class Game {
 		camera.fix(player);
 
     UIManager.getInstance().setUI(new OverworldUI());
-
-    new BattleEngine().startBattle();
 	}
 
 	public static void changeState(GameState newState) {
@@ -60,43 +52,36 @@ public class Game {
 
 	public void start() {
 		this.init();
+    Time.init();
 
-		float lastTime = Time.getTime();
 		while (!glfwWindowShouldClose(window)) {
 			if(KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)){
 				System.exit(0);
 			}
 
-			float currentTime = Time.getTime();
-			float dt = currentTime - lastTime;
+      if (!Time.update()) {
+        continue;
+      }
 
-			if(dt < 1.0f / (float) FPS_CAP) {
-				continue;
-			}
-
-			lastTime = currentTime;
-
-			this.update(dt);
-
+			this.update();
 			this.render();
+
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}
 	}
 
-	private void update(float dt) {
-		//System.out.println((1.0f / dt) + "FPS");
-		InputManager.getInstance().update(dt);
+	private void update() {
+		// System.out.println((1.0f / Time.deltaTime()) + "FPS");
+		InputManager.getInstance().update(Time.deltaTime());
 
 		if (Game.state == GameState.OVERWORLD) {
 			player.update();
 		}
-
 	}
 
 	private void render() {
-		GameWindow.setScale();
-		this.renderer.clear();
+		Renderer.clear();
 
 		switch (state) {
 			case OVERWORLD -> {

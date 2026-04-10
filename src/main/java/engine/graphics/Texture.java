@@ -1,6 +1,6 @@
 package engine.graphics;
 
-import engine.Game;
+import engine.graphics.renderer.Renderer;
 import org.lwjgl.BufferUtils;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -66,7 +66,7 @@ public class Texture {
 	public void bind(int slot) {
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, this.id);
-		Game.shader.setUniform1i("u_Texture", slot);
+		Renderer.getShader().setUniform1i("u_Texture", slot);
 	}
 
 	public void unbind() {
