@@ -1,9 +1,9 @@
 package engine.objects;
 
 import engine.mechanics.items.Item;
+import engine.objects.components.MovementComponent;
 import engine.objects.components.RenderComponent;
 import engine.objects.entities.Entity;
-import engine.scenes.Scene;
 import engine.scenes.SceneManager;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -15,7 +15,6 @@ public class Player extends Entity {
 	private static final String PLAYER_TEXTURE_LEFT = "player/player_left.png";
 	private static final String PLAYER_TEXTURE_RIGHT = "player/player_right.png";
 
-	private final Vector2f lastValidPosition = new Vector2f();
 	private MoveDirection lookDirection = MoveDirection.DOWN;
 	private int level = 1;
 	private int maxHealth = 10;
@@ -74,9 +73,9 @@ public class Player extends Entity {
 		this.health = Math.min(maxHealth, this.health + amount);
 	}
 
-	@Override
 	public void move(MoveDirection direction) {
-		if(this.remainingMoveSteps > 0) {
+    MovementComponent movementComponent = this.getComponent(MovementComponent.class);
+		if(movementComponent.getRemainingMoveSteps() > 0) {
 			return;
 		}
 
@@ -89,31 +88,12 @@ public class Player extends Entity {
 		};
     this.getComponent(RenderComponent.class).changeTexture(newTexture);
 
-		super.move(direction);
-	}
-
-	@Override
-	protected void onStepEnd() {
-		super.onStepEnd();
-
-    Vector2f position = this.getTransform().getPosition();
-		Scene scene = SceneManager.getInstance().getCurrentScene();
-		if(!scene.isInScene(position.x, position.y)) { return; }
-
-		Tile currentTile = scene.getTile(position.x, position.y);
-
-		if(currentTile.hasTrigger()) {
-			currentTile.activateTrigger();
-		}
-
-		this.lastValidPosition.set(position.x, position.y);
+    movementComponent.move(direction);
 	}
 
 	// region GETTER AND SETTER
 
-	public Vector2f getLastValidPosition() { return lastValidPosition; }
-
-	public int getLevel() { return this.level;}
+	public int getLevel() { return this.level; }
 
 	public int getHealth() { return this.health; }
 

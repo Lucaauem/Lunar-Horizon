@@ -5,11 +5,16 @@ import engine.objects.core.Component;
 import org.joml.Vector2f;
 import static engine.objects.core.GameObject.DEFAULT_TILE_SIZE;
 
-public class HitboxComponent extends Component {
+public class ColliderComponent extends Component {
   private Hitbox hitbox;
+  private final boolean isSolid;
 
-  public HitboxComponent() {
-    this.update();
+  public ColliderComponent(boolean isSolid) {
+    this.isSolid = isSolid;
+  }
+
+  public boolean isColliding(ColliderComponent other) {
+    return this.hitbox.isColliding(other.hitbox);
   }
 
   private Hitbox createObjectHitbox() {
@@ -17,12 +22,20 @@ public class HitboxComponent extends Component {
     return new Hitbox(position.x, position.y, position.x + DEFAULT_TILE_SIZE, position.y + DEFAULT_TILE_SIZE);
   }
 
-  public Hitbox getHitbox() {
-    return this.hitbox;
-  }
-
   @Override
   public void update() {
     this.hitbox = this.createObjectHitbox();
   }
+
+  // region GETTER AND SETTER
+
+  public Hitbox getHitbox() {
+    return this.hitbox;
+  }
+
+  public boolean isSolid() {
+    return this.isSolid;
+  }
+
+  // endregion
 }

@@ -1,16 +1,8 @@
 package engine.objects.core;
 
+import engine.objects.components.RenderComponent;
 import org.joml.Vector2f;
 import java.util.ArrayList;
-
-/*
-TODO
-public class GameObject {
-	public boolean isColliding(GameObject other) {
-		return this.hitbox.isColliding(other.hitbox);
-	}
-}
- */
 
 public class GameObject {
   public static final int DEFAULT_TILE_SIZE = 16;
@@ -29,6 +21,16 @@ public class GameObject {
 
   public void update() {
     for (Component component : this.components) {
+      if (!(component instanceof RenderComponent)) {
+        component.update();
+      }
+    }
+  }
+
+  public void render() {
+    RenderComponent component = this.getComponent(RenderComponent.class);
+
+    if (component != null) {
       component.update();
     }
   }

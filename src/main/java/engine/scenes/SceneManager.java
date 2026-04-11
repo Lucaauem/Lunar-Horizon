@@ -2,6 +2,8 @@ package engine.scenes;
 
 import engine.Game;
 import engine.objects.Tile;
+import engine.objects.components.MovementComponent;
+import engine.objects.entities.Entity;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import java.util.Stack;
@@ -20,7 +22,7 @@ public class SceneManager {
 
 	public void switchScene(String sceneName) {
 		if(this.currentScene != null) {
-			Vector2f lastValidPosition = new Vector2f(Game.player.getLastValidPosition().x, Game.player.getLastValidPosition().y);
+			Vector2f lastValidPosition = Game.player.getComponent(MovementComponent.class).getLastValidPosition();
 			SceneMemento sceneMemento = new SceneMemento(this.currentScene.getName(), lastValidPosition);
 			this.lastScenePosition.push(sceneMemento);
 		}
@@ -38,6 +40,12 @@ public class SceneManager {
 		this.switchScene(memento.getSceneName());
 		Game.player.getTransform().setPosition(memento.getPosition());
 	}
+
+  public void updateScene() {
+    for (Entity entity : this.currentScene.getEntities()) {
+      entity.update();
+    }
+  }
 
 	public Scene getCurrentScene() {
 		return this.currentScene;

@@ -18,6 +18,6 @@ public class Transform {
   }
 
   public Vector2f getPosition() {
-    return this.position;
+    return new Vector2f(this.position);
   }
 }
