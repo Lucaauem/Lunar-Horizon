@@ -1,6 +1,6 @@
 package engine.ui.screen;
 
-import engine.core.Game;
+import game.GameApplication;
 import game.battle.BattleEngine;
 import engine.ui.UIElement;
 import engine.ui.UILayer;
@@ -38,8 +38,8 @@ public class BattleUI extends UIScreen {
   }
 
   public void updatePlayerStats() {
-    this.playerHealth.setTextRaw("" + Game.player.getHealth());
-    this.playerMana.setTextRaw("" + Game.player.getMagic());
+    this.playerHealth.setTextRaw("" + GameApplication.player.getHealth());
+    this.playerMana.setTextRaw("" + GameApplication.player.getMagic());
   }
 
   @Override

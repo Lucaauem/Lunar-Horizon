@@ -1,5 +1,7 @@
-import engine.core.Game;
+import engine.core.Engine;
+import engine.core.GameImplementation;
 import engine.core.GameWindow;
+import game.GameApplication;
 
 public class Main {
 	public static void main(String[] args) {
@@ -7,8 +9,9 @@ public class Main {
 		gameWindow.create();
     GameWindow.setScale();
 
-		Game game = new Game(gameWindow.getWindow());
-		game.start();
+    GameImplementation game = new GameApplication();
+		Engine engine = new Engine(gameWindow.getWindow(), game);
+    engine.start();
 
 		gameWindow.destroy();
 	}

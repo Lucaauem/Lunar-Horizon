@@ -1,14 +1,13 @@
 package game.battle;
 
-import engine.core.Game;
 import engine.core.GameState;
 import engine.input.GridController;
 import engine.input.InputManager;
+import game.GameApplication;
 import game.mechanics.items.Item;
 import engine.ui.UIManager;
 import engine.ui.components.UITextbox;
 import engine.ui.screen.BattleUI;
-
 import java.util.Map;
 
 public class BattleEngine {
@@ -28,7 +27,7 @@ public class BattleEngine {
 
   public void startBattle() {
     UIManager.getInstance().setUI(this.ui);
-    Game.changeState(GameState.BATTLE);
+    GameApplication.changeState(GameState.BATTLE);
 
     UITextbox textbox = this.ui.getTextbox();
     textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED");
@@ -37,7 +36,7 @@ public class BattleEngine {
   }
 
   private void endBattle() {
-    Game.changeState(GameState.OVERWORLD);
+    GameApplication.changeState(GameState.OVERWORLD);
   }
 
 	public void nextTurn() {
@@ -46,7 +45,7 @@ public class BattleEngine {
 		this.isPlayerTurn = !this.isPlayerTurn;
 
 		// Check ending condition
-		if (Game.player.isDead()) {
+		if (GameApplication.player.isDead()) {
 			// TODO
 		} else if (this.enemy.isDead()) {
 			this.winBattle();
@@ -76,10 +75,10 @@ public class BattleEngine {
 
   public void attackEnemy() {
     this.ui.getActionMenu().setVisibility(false);
-		this.enemy.changeHealth(-1 * Game.player.getAttack());
+		this.enemy.changeHealth(-1 * GameApplication.player.getAttack());
 
     UITextbox textbox = this.ui.getTextbox();
-		textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + Game.player.getAttack()));
+		textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + GameApplication.player.getAttack()));
     textbox.setOnClose(this::nextTurn);
 		textbox.open();
 	}

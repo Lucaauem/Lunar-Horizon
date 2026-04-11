@@ -1,8 +1,8 @@
 package game.battle;
 
-import engine.core.Game;
 import engine.rendering.Model;
 import engine.rendering.Texture;
+import game.GameApplication;
 import org.json.JSONObject;
 import util.FileHandler;
 
@@ -29,7 +29,7 @@ public class Enemy {
 	}
 
 	public void attack() {
-		Game.player.reduceHealth(this.damage);
+    GameApplication.player.reduceHealth(this.damage);
 	}
 
 	public boolean isDead() {

@@ -1,29 +1,29 @@
 package engine.input;
 
-import engine.core.Game;
 import engine.objects.MoveDirection;
 import engine.ui.UIManager;
 import engine.ui.screen.OverworldUI;
+import game.GameApplication;
 
 public class PlayerController extends Controller {
 	@Override
 	protected void onUp(float dt) {
-		Game.player.move(MoveDirection.UP);
+		GameApplication.player.move(MoveDirection.UP);
 	}
 
 	@Override
 	protected void onDown(float dt) {
-		Game.player.move(MoveDirection.DOWN);
+		GameApplication.player.move(MoveDirection.DOWN);
 	}
 
 	@Override
 	protected void onLeft(float dt) {
-		Game.player.move(MoveDirection.LEFT);
+		GameApplication.player.move(MoveDirection.LEFT);
 	}
 
 	@Override
 	protected void onRight(float dt) {
-		Game.player.move(MoveDirection.RIGHT);
+		GameApplication.player.move(MoveDirection.RIGHT);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class PlayerController extends Controller {
 
 	@Override
 	protected void onAction(float dt) {
-		Game.player.interact();
+		GameApplication.player.interact();
 		needReset = true;
 	}
 }

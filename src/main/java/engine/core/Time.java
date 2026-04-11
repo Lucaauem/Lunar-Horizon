@@ -14,7 +14,7 @@ public class Time {
     float currentTime = getTime();
     Time.deltaTime = currentTime - Time.lastTime;
 
-    if (Time.deltaTime < 1.0f / (float) Game.FPS_CAP) {
+    if (Time.deltaTime < 1.0f / (float) Engine.FPS_CAP) {
       return false;
     }
 

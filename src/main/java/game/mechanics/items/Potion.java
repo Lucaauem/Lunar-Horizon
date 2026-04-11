@@ -1,6 +1,6 @@
 package game.mechanics.items;
 
-import engine.core.Game;
+import game.GameApplication;
 
 public class Potion extends Item {
 	private static final String POTION_NAME = "POTION";
@@ -12,7 +12,7 @@ public class Potion extends Item {
 
 	@Override
 	public void use() {
-		Game.player.heal(HEALING_POWER);
-		Game.player.removeFromInventory(this);
+		GameApplication.player.heal(HEALING_POWER);
+		GameApplication.player.removeFromInventory(this);
 	}
 }

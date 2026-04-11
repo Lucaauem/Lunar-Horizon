@@ -1,6 +1,6 @@
 package game.shop;
 
-import engine.core.Game;
+import game.GameApplication;
 import game.mechanics.items.Item;
 import java.lang.reflect.Constructor;
 
@@ -23,12 +23,12 @@ public class ShopItem {
 	}
 
 	public boolean buy() {
-		if(Game.player.getMoney() < this.costs) {
+		if(GameApplication.player.getMoney() < this.costs) {
 			return false;
 		}
 
-		Game.player.changeMoney(-this.costs);
-		Game.player.addToInventory(this.item);
+		GameApplication.player.changeMoney(-this.costs);
+		GameApplication.player.addToInventory(this.item);
 		return true;
 	}
 

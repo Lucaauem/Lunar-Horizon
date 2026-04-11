@@ -1,10 +1,10 @@
 package engine.ui.screen;
 
-import engine.core.Game;
 import engine.input.InputManager;
 import engine.input.MenuController;
 import engine.input.PlayerController;
 import engine.objects.MoveDirection;
+import game.GameApplication;
 import game.shop.ShopItem;
 import engine.ui.UIElement;
 import engine.ui.UILayer;
@@ -66,7 +66,7 @@ public class ShopUI extends UIScreen {
   @Override
   public void onExit() {
     UIManager.getInstance().setUI(new OverworldUI());
-    Game.player.move(MoveDirection.DOWN);
+    GameApplication.player.move(MoveDirection.DOWN);
     InputManager.getInstance().setController(new PlayerController());
   }
 }
