@@ -1,5 +1,6 @@
 package engine.scenes;
 
+import engine.objects.components.RenderComponent;
 import engine.objects.entities.Entity;
 import engine.objects.entities.EntityBuilder;
 import engine.objects.Tile;
@@ -144,7 +145,7 @@ public class Scene {
 
 		for(Entity entity : this.entities) {
 			if(entity != null) {
-				entity.render();
+				entity.getComponent(RenderComponent.class).update();
 			}
 		}
 	}

@@ -28,7 +28,7 @@ public class SceneManager {
 		this.currentScene = new Scene(sceneName);
 
 		Vector2i playerSpawn = this.currentScene.getSpawn();
-		Game.player.setPosition(new Vector2f(playerSpawn.x * Tile.TILE_SIZE, playerSpawn.y * Tile.TILE_SIZE));
+		Game.player.getTransform().setPosition(new Vector2f(playerSpawn.x * Tile.TILE_SIZE, playerSpawn.y * Tile.TILE_SIZE));
 	}
 
 	public void returnToLastScene() {
@@ -36,7 +36,7 @@ public class SceneManager {
 
 		SceneMemento memento = this.lastScenePosition.pop();
 		this.switchScene(memento.getSceneName());
-		Game.player.setPosition(memento.getPosition());
+		Game.player.getTransform().setPosition(memento.getPosition());
 	}
 
 	public Scene getCurrentScene() {

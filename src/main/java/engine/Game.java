@@ -5,6 +5,7 @@ import engine.graphics.Camera;
 import engine.graphics.renderer.Renderer;
 import engine.mechanics.items.Potion;
 import engine.objects.Player;
+import engine.objects.components.RenderComponent;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
 import engine.ui.screen.OverworldUI;
@@ -87,7 +88,7 @@ public class Game {
 			case OVERWORLD -> {
 				camera.update();
 				SceneManager.getInstance().getCurrentScene().render();
-				player.render();
+				player.getComponent(RenderComponent.class).update();
 
         UIManager.getInstance().render();
 			}

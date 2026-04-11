@@ -1,7 +1,7 @@
 package engine.objects;
 
-import engine.graphics.Texture;
 import engine.mechanics.items.Item;
+import engine.objects.components.RenderComponent;
 import engine.objects.entities.Entity;
 import engine.scenes.Scene;
 import engine.scenes.SceneManager;
@@ -32,7 +32,8 @@ public class Player extends Entity {
 	}
 
 	public void interact() {
-		Vector2i targetPosition = new Vector2i((int) this.position.x, (int) this.position.y);
+    Vector2f position = this.getTransform().getPosition();
+		Vector2i targetPosition = new Vector2i((int) position.x, (int) position.y);
 
 		switch (this.lookDirection) {
 			case UP    -> targetPosition.y += DEFAULT_TILE_SIZE;
@@ -42,7 +43,8 @@ public class Player extends Entity {
 		}
 
 		for(Entity entity : SceneManager.getInstance().getCurrentScene().getEntities()) {
-			Vector2i entityPosition = new Vector2i((int) entity.position.x, (int) entity.position.y);
+      Vector2f floatEntityPosition = entity.getTransform().getPosition();
+			Vector2i entityPosition = new Vector2i((int) floatEntityPosition.x, (int) floatEntityPosition.y);
 			if(entity instanceof Interactable && entityPosition.equals(targetPosition)) {
 				((Interactable) entity).onInteract();
 				return;
@@ -79,12 +81,13 @@ public class Player extends Entity {
 		}
 
 		this.lookDirection = direction;
-		switch(direction) {
-			case UP    -> this.texture = new Texture(PLAYER_TEXTURE_UP);
-			case DOWN  -> this.texture = new Texture(PLAYER_TEXTURE_DOWN);
-			case LEFT  -> this.texture = new Texture(PLAYER_TEXTURE_LEFT);
-			case RIGHT -> this.texture = new Texture(PLAYER_TEXTURE_RIGHT);
-		}
+		String newTexture = switch(direction) {
+			case UP    -> PLAYER_TEXTURE_UP;
+			case DOWN  -> PLAYER_TEXTURE_DOWN;
+			case LEFT  -> PLAYER_TEXTURE_LEFT;
+			case RIGHT -> PLAYER_TEXTURE_RIGHT;
+		};
+    this.getComponent(RenderComponent.class).changeTexture(newTexture);
 
 		super.move(direction);
 	}
@@ -93,16 +96,17 @@ public class Player extends Entity {
 	protected void onStepEnd() {
 		super.onStepEnd();
 
+    Vector2f position = this.getTransform().getPosition();
 		Scene scene = SceneManager.getInstance().getCurrentScene();
-		if(!scene.isInScene(this.position.x, this.position.y)) { return; }
+		if(!scene.isInScene(position.x, position.y)) { return; }
 
-		Tile currentTile = scene.getTile(this.position.x, this.position.y);
+		Tile currentTile = scene.getTile(position.x, position.y);
 
 		if(currentTile.hasTrigger()) {
 			currentTile.activateTrigger();
 		}
 
-		this.lastValidPosition.set(this.position.x, this.position.y);
+		this.lastValidPosition.set(position.x, position.y);
 	}
 
 	// region GETTER AND SETTER

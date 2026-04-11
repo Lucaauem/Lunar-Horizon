@@ -2,9 +2,8 @@ package engine.graphics;
 
 import engine.GameWindow;
 import engine.controls.KeyListener;
-import engine.objects.GameObject;
+import engine.objects.core.GameObject;
 import org.joml.*;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 
@@ -34,10 +33,12 @@ public class Camera {
 	}
 
 	public void update(){
+    Vector2f objectPosition = this.fixObj.getTransform().getPosition();
+
 		Matrix4f matrix = new Matrix4f().identity();
 		Vector2f fullOffset = new Vector2f(
-				GameObject.DEFAULT_TILE_SIZE + this.offset.x + this.fixObj.getPosition().x,
-				GameObject.DEFAULT_TILE_SIZE + this.offset.y + this.fixObj.getPosition().y
+				GameObject.DEFAULT_TILE_SIZE + this.offset.x + objectPosition.x,
+				GameObject.DEFAULT_TILE_SIZE + this.offset.y + objectPosition.y
 		);
 
 		matrix.translate(GameWindow.RESOLUTION.x / 2.0f, GameWindow.RESOLUTION.y / 2.0f, 0);
