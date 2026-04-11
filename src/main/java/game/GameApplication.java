@@ -4,10 +4,12 @@ import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
 import engine.input.PlayerController;
+import engine.objects.entities.EntityBuilder;
 import game.objects.Player;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
+import game.objects.npcs.TalkerTemplate;
 import game.ui.screens.OverworldUI;
 import game.mechanics.items.Potion;
 
@@ -18,6 +20,8 @@ public class GameApplication implements GameImplementation {
 
   @Override
   public void init() {
+    EntityBuilder.getInstance().addTemplate("TALKER", new TalkerTemplate());
+
     InputManager.getInstance().setController(new PlayerController());
     SceneManager.getInstance().switchScene("town/main");
     camera.fix(player);

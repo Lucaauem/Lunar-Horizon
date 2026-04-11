@@ -1,9 +1,8 @@
 package engine.scenes;
 
-import engine.objects.components.RenderComponent;
 import engine.objects.entities.Entity;
-import engine.objects.entities.EntityBuilder;
 import engine.objects.Tile;
+import engine.objects.entities.EntityBuilder;
 import engine.rendering.Tilemap;
 import engine.objects.trigger.SceneChangeTrigger;
 import engine.objects.trigger.ShopTrigger;
@@ -13,6 +12,7 @@ import org.joml.Vector2i;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.FileHandler;
+import static engine.objects.core.GameObject.DEFAULT_TILE_SIZE;
 
 public class Scene {
 	private static final String SCENE_BASE_PATH = "src/main/assets/scenes/";
@@ -99,10 +99,9 @@ public class Scene {
 			JSONObject entityData = entityArray.getJSONObject(i);
 			Vector2f position = new Vector2f(entityData.getJSONArray("pos").getInt(0), entityData.getJSONArray("pos").getInt(1));
 
-			entities[i] = new EntityBuilder().buildEntity(
-					entityData.getString("type"), entityData.getString("texture"),
-					entityData.getString("parameter"), position
-			);
+      entities[i] = EntityBuilder.getInstance().create(
+          entityData.getString("type"), entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getString("parameter")
+      );
 		}
 
 		return entities;
@@ -145,7 +144,7 @@ public class Scene {
 
 		for(Entity entity : this.entities) {
 			if(entity != null) {
-				entity.getComponent(RenderComponent.class).update();
+				entity.render();
 			}
 		}
 	}

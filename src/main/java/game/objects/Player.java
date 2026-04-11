@@ -1,7 +1,7 @@
 package game.objects;
 
-import engine.objects.Interactable;
 import engine.objects.MoveDirection;
+import engine.objects.components.interaction.InteractionComponent;
 import game.mechanics.items.Item;
 import engine.objects.components.MovementComponent;
 import engine.objects.components.RenderComponent;
@@ -46,8 +46,13 @@ public class Player extends Entity {
 		for(Entity entity : SceneManager.getInstance().getCurrentScene().getEntities()) {
       Vector2f floatEntityPosition = entity.getTransform().getPosition();
 			Vector2i entityPosition = new Vector2i((int) floatEntityPosition.x, (int) floatEntityPosition.y);
-			if(entity instanceof Interactable && entityPosition.equals(targetPosition)) {
-				((Interactable) entity).onInteract();
+
+      if (!entityPosition.equals(targetPosition)) {
+        continue;
+      }
+
+			if(entity.hasComponent(InteractionComponent.class)) {
+        entity.getComponent(InteractionComponent.class).onInteract();
 				return;
 			}
 		}

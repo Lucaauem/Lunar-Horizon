@@ -48,4 +48,8 @@ public class GameObject {
     }
     return null;
   }
+
+  public <T extends Component> boolean hasComponent(Class<T> type) {
+    return getComponent(type) != null;
+  }
 }
