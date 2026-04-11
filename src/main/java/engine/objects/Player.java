@@ -1,6 +1,6 @@
 package engine.objects;
 
-import engine.mechanics.items.Item;
+import game.mechanics.items.Item;
 import engine.objects.components.MovementComponent;
 import engine.objects.components.RenderComponent;
 import engine.objects.entities.Entity;

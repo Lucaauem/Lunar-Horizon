@@ -1,5 +1,5 @@
-import engine.Game;
-import engine.GameWindow;
+import engine.core.Game;
+import engine.core.GameWindow;
 
 public class Main {
 	public static void main(String[] args) {

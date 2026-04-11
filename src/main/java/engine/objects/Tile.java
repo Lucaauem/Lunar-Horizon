@@ -1,9 +1,9 @@
 package engine.objects;
 
-import engine.Game;
-import engine.graphics.Model;
-import engine.graphics.Tilemap;
-import engine.graphics.renderer.Renderer;
+import engine.core.Game;
+import engine.rendering.Model;
+import engine.rendering.Tilemap;
+import engine.rendering.renderer.Renderer;
 import engine.objects.trigger.Trigger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;

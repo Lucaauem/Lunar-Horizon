@@ -1,9 +1,9 @@
 package engine.ui;
 
-import engine.GameWindow;
-import engine.graphics.Model;
-import engine.graphics.Texture;
-import engine.graphics.renderer.Renderer;
+import engine.core.GameWindow;
+import engine.rendering.Model;
+import engine.rendering.Texture;
+import engine.rendering.renderer.Renderer;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;

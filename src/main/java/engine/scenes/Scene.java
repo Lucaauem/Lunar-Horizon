@@ -4,7 +4,7 @@ import engine.objects.components.RenderComponent;
 import engine.objects.entities.Entity;
 import engine.objects.entities.EntityBuilder;
 import engine.objects.Tile;
-import engine.graphics.Tilemap;
+import engine.rendering.Tilemap;
 import engine.objects.trigger.SceneChangeTrigger;
 import engine.objects.trigger.ShopTrigger;
 import engine.objects.trigger.Trigger;

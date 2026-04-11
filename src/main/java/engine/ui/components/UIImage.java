@@ -1,6 +1,6 @@
 package engine.ui.components;
 
-import engine.graphics.Texture;
+import engine.rendering.Texture;
 import engine.ui.UIElement;
 import org.joml.Vector2f;
 

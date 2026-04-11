@@ -1,6 +1,6 @@
 package engine.scenes;
 
-import engine.Game;
+import engine.core.Game;
 import engine.objects.Tile;
 import engine.objects.components.MovementComponent;
 import engine.objects.entities.Entity;

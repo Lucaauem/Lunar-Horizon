@@ -1,7 +1,7 @@
 package engine.ui.screen;
 
-import engine.Game;
-import engine.battle.BattleEngine;
+import engine.core.Game;
+import game.battle.BattleEngine;
 import engine.ui.UIElement;
 import engine.ui.UILayer;
 import engine.ui.components.*;

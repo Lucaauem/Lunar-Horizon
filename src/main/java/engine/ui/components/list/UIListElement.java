@@ -1,6 +1,6 @@
 package engine.ui.components.list;
 
-import engine.GameWindow;
+import engine.core.GameWindow;
 import engine.ui.Anchor;
 import engine.ui.UIElement;
 import engine.ui.interaction.Clickable;

@@ -1,11 +1,11 @@
 package engine.ui.screen;
 
-import engine.Game;
-import engine.controls.InputManager;
-import engine.controls.MenuController;
-import engine.controls.PlayerController;
+import engine.core.Game;
+import engine.input.InputManager;
+import engine.input.MenuController;
+import engine.input.PlayerController;
 import engine.objects.MoveDirection;
-import engine.shop.ShopItem;
+import game.shop.ShopItem;
 import engine.ui.UIElement;
 import engine.ui.UILayer;
 import engine.ui.UIManager;

@@ -1,6 +1,6 @@
 package engine.ui.text;
 
-import engine.graphics.Model;
+import engine.rendering.Model;
 import engine.ui.Offset;
 import engine.ui.UIElement;
 import org.joml.Vector2f;

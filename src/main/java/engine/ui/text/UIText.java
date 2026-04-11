@@ -1,6 +1,6 @@
 package engine.ui.text;
 
-import engine.graphics.Texture;
+import engine.rendering.Texture;
 import engine.ui.Offset;
 import engine.ui.UIElement;
 import org.joml.Vector4f;

@@ -1,6 +1,6 @@
 package engine.objects.entities.npcs;
 
-import engine.controls.InputManager;
+import engine.input.InputManager;
 import engine.ui.UIManager;
 import engine.ui.components.UITextbox;
 import org.joml.Vector2f;

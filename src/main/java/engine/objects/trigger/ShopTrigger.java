@@ -1,6 +1,6 @@
 package engine.objects.trigger;
 
-import engine.shop.ShopEngine;
+import game.shop.ShopEngine;
 
 public class ShopTrigger extends Trigger {
     @Override
