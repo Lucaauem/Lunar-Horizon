@@ -1,6 +1,5 @@
 package engine.ui;
 
-import engine.ui.screen.UIScreen;
 import java.util.ArrayList;
 
 public class UIManager {

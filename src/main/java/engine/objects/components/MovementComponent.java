@@ -2,7 +2,7 @@ package engine.objects.components;
 
 import engine.objects.Hitbox;
 import engine.objects.MoveDirection;
-import engine.objects.Player;
+import game.objects.Player;
 import engine.objects.Tile;
 import engine.objects.components.physics.ColliderComponent;
 import engine.objects.core.Component;

@@ -1,5 +1,7 @@
-package engine.objects;
+package game.objects;
 
+import engine.objects.Interactable;
+import engine.objects.MoveDirection;
 import game.mechanics.items.Item;
 import engine.objects.components.MovementComponent;
 import engine.objects.components.RenderComponent;

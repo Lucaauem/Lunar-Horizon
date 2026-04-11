@@ -1,8 +1,8 @@
 package game.shop;
 
 import engine.ui.UIManager;
-import engine.ui.screen.ShopUI;
-import engine.ui.screen.UIScreen;
+import game.ui.screens.ShopUI;
+import engine.ui.UIScreen;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.FileHandler;

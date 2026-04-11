@@ -1,5 +1,6 @@
-package engine.ui.screen;
+package game.ui.screens;
 
+import engine.ui.UIScreen;
 import game.GameApplication;
 import game.battle.BattleEngine;
 import engine.ui.UIElement;

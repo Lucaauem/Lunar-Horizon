@@ -2,7 +2,7 @@ package engine.input;
 
 import engine.objects.MoveDirection;
 import engine.ui.UIManager;
-import engine.ui.screen.OverworldUI;
+import game.ui.screens.OverworldUI;
 import game.GameApplication;
 
 public class PlayerController extends Controller {

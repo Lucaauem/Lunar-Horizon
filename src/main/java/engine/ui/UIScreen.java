@@ -1,6 +1,5 @@
-package engine.ui.screen;
+package engine.ui;
 
-import engine.ui.UILayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;

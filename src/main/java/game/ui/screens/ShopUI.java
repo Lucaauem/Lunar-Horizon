@@ -1,9 +1,10 @@
-package engine.ui.screen;
+package game.ui.screens;
 
 import engine.input.InputManager;
 import engine.input.MenuController;
 import engine.input.PlayerController;
 import engine.objects.MoveDirection;
+import engine.ui.UIScreen;
 import game.GameApplication;
 import game.shop.ShopItem;
 import engine.ui.UIElement;

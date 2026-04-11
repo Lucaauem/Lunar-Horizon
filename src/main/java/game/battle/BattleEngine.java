@@ -7,7 +7,7 @@ import game.GameApplication;
 import game.mechanics.items.Item;
 import engine.ui.UIManager;
 import engine.ui.components.UITextbox;
-import engine.ui.screen.BattleUI;
+import game.ui.screens.BattleUI;
 import java.util.Map;
 
 public class BattleEngine {

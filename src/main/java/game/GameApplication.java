@@ -4,11 +4,11 @@ import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
 import engine.input.PlayerController;
-import engine.objects.Player;
+import game.objects.Player;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
-import engine.ui.screen.OverworldUI;
+import game.ui.screens.OverworldUI;
 import game.mechanics.items.Potion;
 
 public class GameApplication implements GameImplementation {

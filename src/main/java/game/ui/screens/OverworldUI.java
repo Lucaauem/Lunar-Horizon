@@ -1,10 +1,11 @@
-package engine.ui.screen;
+package game.ui.screens;
 
 import engine.ui.UIElement;
 import engine.ui.UILayer;
 import engine.ui.components.UIPanel;
 import engine.ui.components.list.UIList;
 import engine.ui.components.list.UIListElement;
+import engine.ui.UIScreen;
 
 public class OverworldUI extends UIScreen {
   private UIList menu;
