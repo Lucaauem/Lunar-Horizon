@@ -4,7 +4,6 @@ import engine.rendering.Model;
 import engine.rendering.Tilemap;
 import engine.rendering.renderer.Renderer;
 import engine.objects.trigger.Trigger;
-import game.GameApplication;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -79,7 +78,7 @@ public class Tile {
 		this.tilemap.getTexture().bind();
 
 		Matrix4f proj = Renderer.PROJECTION_MATRIX;
-		Matrix4f view = GameApplication.camera.getMatrix();
+		Matrix4f view = Renderer.camera.getMatrix();
 		Matrix4f model = new Matrix4f().identity();
 		model.translate((this.position.x * TILE_SIZE) + TILE_SIZE, (this.position.y * TILE_SIZE) + TILE_SIZE, 0);
 

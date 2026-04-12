@@ -4,7 +4,6 @@ import engine.rendering.Model;
 import engine.rendering.Texture;
 import engine.rendering.renderer.Renderer;
 import engine.objects.core.Component;
-import game.GameApplication;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import static engine.objects.core.GameObject.DEFAULT_TILE_SIZE;
@@ -34,7 +33,7 @@ public class RenderComponent extends Component {
     Vector2f position = this.gameObject.getTransform().getPosition();
 
     Matrix4f proj = Renderer.PROJECTION_MATRIX;
-    Matrix4f view = GameApplication.camera.getMatrix();
+    Matrix4f view = Renderer.camera.getMatrix();
     Matrix4f model = new Matrix4f().identity();
     model.translate(position.x + DEFAULT_TILE_SIZE, position.y + DEFAULT_TILE_SIZE, 0);
 

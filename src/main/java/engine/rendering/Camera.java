@@ -3,6 +3,7 @@ package engine.rendering;
 import engine.core.GameWindow;
 import engine.input.KeyListener;
 import engine.objects.core.GameObject;
+import engine.rendering.renderer.Renderer;
 import org.joml.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
@@ -18,6 +19,10 @@ public class Camera {
 	public Camera() {
 		this.matrix = new Matrix4f().identity();
 		this.offset = new Vector2f();
+
+    if (Renderer.camera == null) {
+      Renderer.camera = this;
+    }
 	}
 
 	public void setOffset(float ox, float oy) {

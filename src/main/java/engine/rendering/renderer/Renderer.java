@@ -1,19 +1,20 @@
 package engine.rendering.renderer;
 
 import engine.core.GameWindow;
+import engine.rendering.Camera;
 import engine.rendering.renderer.buffers.IndexBuffer;
 import engine.rendering.renderer.buffers.VertexArray;
 import engine.rendering.renderer.shader.Shader;
 import org.joml.Matrix4f;
-
 import static org.lwjgl.opengl.GL11.*;
 
 public class Renderer {
   private static final String SHADER_PATH = "src/main/assets/shaders/Basic.glsl";
   public static final Matrix4f PROJECTION_MATRIX = new Matrix4f().ortho(0.0f, GameWindow.RESOLUTION.x, 0.0f, GameWindow.RESOLUTION.y, -1.0f, 1.0f);
+  private static final Shader shader = new Shader(SHADER_PATH);
 	public static final int PLAYER_RENDER_RADIUS = 15;
 
-  private static final Shader shader = new Shader(SHADER_PATH);
+  public static Camera camera = null;
 
 	private Renderer() { }
 
