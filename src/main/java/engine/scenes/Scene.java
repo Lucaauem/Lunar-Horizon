@@ -99,7 +99,7 @@ public class Scene {
 			JSONObject entityData = entityArray.getJSONObject(i);
 			Vector2f position = new Vector2f(entityData.getJSONArray("pos").getInt(0), entityData.getJSONArray("pos").getInt(1));
 
-      entities[i] = EntityBuilder.getInstance().create(
+      entities[i] = new EntityBuilder().create(
           entityData.getString("type"), entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getString("parameter")
       );
 		}
