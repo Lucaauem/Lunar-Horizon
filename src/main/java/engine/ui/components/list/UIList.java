@@ -2,10 +2,11 @@ package engine.ui.components.list;
 
 import engine.ui.UIElement;
 import engine.ui.interaction.Scrollable;
+import engine.ui.interaction.UIControllable;
 import engine.ui.text.UIText;
 import java.util.ArrayList;
 
-public class UIList extends UIElement implements Scrollable {
+public class UIList extends UIElement implements Scrollable, UIControllable {
   private static final int ELEMENTS_GAP_PX = 4;
   private static final String CURSOR_PREFIX = "-";
 
@@ -27,12 +28,21 @@ public class UIList extends UIElement implements Scrollable {
     }
   }
 
-  public void moveCursorUp() {
+  @Override
+  public void onUp() {
     this.updateCursor(-1);
   }
 
-  public void moveCursorDown() {
+  @Override
+  public void onDown() {
     this.updateCursor(1);
+  }
+
+  @Override
+  public void onAction() {
+    if (!this.content.isEmpty()) {
+      this.content.get(this.cursorIndex).click();
+    }
   }
 
   private void updateCursor(int dir) {
@@ -53,12 +63,6 @@ public class UIList extends UIElement implements Scrollable {
     }
 
     this.content.get(this.cursorIndex).getLabel().setPrefix(UIList.CURSOR_PREFIX);
-  }
-
-  public void selectElement() {
-    if (!this.content.isEmpty()) {
-      this.content.get(this.cursorIndex).click();
-    }
   }
 
   @Override

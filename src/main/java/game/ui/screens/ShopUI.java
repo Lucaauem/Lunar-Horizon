@@ -1,8 +1,7 @@
 package game.ui.screens;
 
+import engine.input.Controller;
 import engine.input.InputManager;
-import engine.input.MenuController;
-import engine.input.PlayerController;
 import engine.objects.MoveDirection;
 import engine.ui.UIScreen;
 import game.GameApplication;
@@ -28,7 +27,7 @@ public class ShopUI extends UIScreen {
     super();
     this.listItems = items;
     this.init();
-    InputManager.getInstance().setController(new MenuController(this.shopList));
+    InputManager.getInstance().pushController(Controller.forUI(this.shopList));
   }
 
   @Override
@@ -45,7 +44,6 @@ public class ShopUI extends UIScreen {
     shopList.setParent(menuPanel);
     this.shopList = shopList;
     UITextbox textbox = new UITextbox();
-    textbox.setOnClose(() -> InputManager.getInstance().setToPreviousController());
 
     for (ShopItem item : listItems) {
       String itemDisplayName = item.getCosts() + MONEY_SYMBOL + item.getName();
@@ -68,6 +66,6 @@ public class ShopUI extends UIScreen {
   public void onExit() {
     UIManager.getInstance().setUI(new OverworldUI());
     GameApplication.player.move(MoveDirection.DOWN);
-    InputManager.getInstance().setController(new PlayerController());
+    InputManager.getInstance().popController();
   }
 }

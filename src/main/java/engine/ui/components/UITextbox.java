@@ -1,7 +1,7 @@
 package engine.ui.components;
 
+import engine.input.Controller;
 import engine.input.InputManager;
-import engine.input.TextboxController;
 import engine.ui.text.TextLoader;
 import engine.ui.Anchor;
 import engine.ui.UIElement;
@@ -47,7 +47,9 @@ public class UITextbox extends UIElement {
   public void open() {
     this.setVisibility(true);
     this.next();
-    InputManager.getInstance().setController(new TextboxController(this));
+
+    Controller textboxController = new Controller().bindAction(this::next, true);
+    InputManager.getInstance().pushController(textboxController);
   }
 
   public void close() {
@@ -60,6 +62,8 @@ public class UITextbox extends UIElement {
     if(this.onClose != null) {
       this.onClose.run();
     }
+
+    InputManager.getInstance().popController();
   }
 
   public void setOnClose(Runnable action) {

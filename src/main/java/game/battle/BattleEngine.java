@@ -1,7 +1,7 @@
 package game.battle;
 
 import engine.core.GameState;
-import engine.input.GridController;
+import engine.input.Controller;
 import engine.input.InputManager;
 import game.GameApplication;
 import game.mechanics.items.Item;
@@ -28,6 +28,7 @@ public class BattleEngine {
   public void startBattle() {
     UIManager.getInstance().setUI(this.ui);
     GameApplication.changeState(GameState.BATTLE);
+    InputManager.getInstance().pushController(Controller.forUI(this.ui.getActionMenu()));
 
     UITextbox textbox = this.ui.getTextbox();
     textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED");
@@ -36,12 +37,13 @@ public class BattleEngine {
   }
 
   private void endBattle() {
+    InputManager.getInstance().popController();
     GameApplication.changeState(GameState.OVERWORLD);
   }
 
 	public void nextTurn() {
     this.ui.getActionMenu().setVisibility(false);
-    InputManager.getInstance().setController(null);
+    InputManager.getInstance().disableControlls();
 		this.isPlayerTurn = !this.isPlayerTurn;
 
 		// Check ending condition
@@ -54,13 +56,14 @@ public class BattleEngine {
 
 		if (this.isPlayerTurn) {
       this.ui.getActionMenu().setVisibility(true);
-      InputManager.getInstance().setController(new GridController(this.ui.getActionMenu()));
+      InputManager.getInstance().enableControlls();
 		} else {
 			// TODO: Generate move
       UITextbox textbox = this.ui.getTextbox();
 			textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_ATTACKED");
       textbox.setOnClose(() -> { this.enemy.attack(); this.ui.updatePlayerStats(); this.nextTurn(); });
 			textbox.open();
+      InputManager.getInstance().enableControlls();
 		}
 	}
 
@@ -71,6 +74,7 @@ public class BattleEngine {
 		textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED");
     textbox.setOnClose(this::endBattle);
 		textbox.open();
+    InputManager.getInstance().enableControlls();
 	}
 
   public void attackEnemy() {

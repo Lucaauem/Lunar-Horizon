@@ -1,11 +1,16 @@
 package engine.input;
 
+import java.util.Stack;
+
 public class InputManager {
+  private final Stack<Controller> controllerStack;
   private static InputManager instance;
   private Controller activeController;
-  private Controller previousController;
+  private boolean enabled = true;
 
-  private InputManager() {}
+  private InputManager() {
+    this.controllerStack = new Stack<>();
+  }
 
   public static InputManager getInstance() {
     if (instance == null) {
@@ -14,21 +19,28 @@ public class InputManager {
     return instance;
   }
 
-  public void setController(Controller controller) {
-    this.previousController = this.activeController;
-    this.activeController = controller;
+  public void enableControlls() {
+    this.enabled = true;
   }
 
-  public Controller getController() {
-    return this.activeController;
+  public void disableControlls() {
+    this.enabled = false;
   }
 
-  public void setToPreviousController() {
-    this.setController(this.previousController);
+  public void pushController(Controller controller) {
+    Controller.setGlobalResetFlag();
+    this.controllerStack.push(controller);
+    this.activeController = this.controllerStack.peek();
+  }
+
+  public void popController() {
+    Controller.setGlobalResetFlag();
+    this.controllerStack.pop();
+    this.activeController = this.controllerStack.peek();
   }
 
   public void update(float dt) {
-    if (activeController != null) {
+    if (this.enabled && (activeController != null)) {
       activeController.checkInputs(dt);
     }
   }

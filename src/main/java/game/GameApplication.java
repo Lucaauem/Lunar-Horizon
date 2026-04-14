@@ -3,13 +3,14 @@ package game;
 import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
-import engine.input.PlayerController;
 import engine.objects.entities.EntityBuilder;
+import game.battle.BattleEngine;
 import game.objects.Player;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
 import game.objects.npcs.TalkerTemplate;
+import game.setup.InputSetup;
 import game.ui.screens.OverworldUI;
 import game.mechanics.items.Potion;
 
@@ -20,9 +21,10 @@ public class GameApplication implements GameImplementation {
 
   @Override
   public void init() {
+    new InputSetup(GameApplication.player).setup();
+
     EntityBuilder.addTemplate("TALKER", new TalkerTemplate());
 
-    InputManager.getInstance().setController(new PlayerController());
     SceneManager.getInstance().switchScene("town/main");
     camera.fix(player);
 
@@ -30,6 +32,8 @@ public class GameApplication implements GameImplementation {
 
     player.addToInventory(new Potion());
     player.addToInventory(new Potion());
+
+    new BattleEngine().startBattle();
   }
 
   @Override
@@ -61,12 +65,9 @@ public class GameApplication implements GameImplementation {
     switch (GameApplication.state) {
       case OVERWORLD -> {
         UIManager.getInstance().setUI(new OverworldUI());
-        InputManager.getInstance().setController(new PlayerController());
+        InputManager.getInstance().enableControlls();
       }
-      case BATTLE -> {
-        UIManager.getInstance().getUI().toggle();
-        InputManager.getInstance().setController(null);
-      }
+      case BATTLE -> UIManager.getInstance().getUI().toggle();
     }
   }
 }

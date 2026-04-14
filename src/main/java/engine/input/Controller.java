@@ -1,82 +1,83 @@
 package engine.input;
 
+import engine.ui.interaction.UIControllable;
 import java.util.Map;
 import static org.lwjgl.glfw.GLFW.*;
 
-public abstract class Controller {
-	protected static boolean needReset = false;
+public class Controller {
+  private static boolean globalResetFlag = false; // TODO: Check for better solution
 
-  private Runnable customUp;
-  private Runnable customDown;
-  private Runnable customLeft;
-  private Runnable customRight;
-  private Runnable customStart;
-  private Runnable customAction;
-
-  private Runnable resolve(Runnable custom, Runnable fallback) {
-    return custom != null ? custom : fallback;
-  }
+  private KeyAction customUp = new KeyAction(() -> {}, false);
+  private KeyAction customDown = new KeyAction(() -> {}, false);
+  private KeyAction customLeft = new KeyAction(() -> {}, false);
+  private KeyAction customRight = new KeyAction(() -> {}, false);
+  private KeyAction customStart = new KeyAction(() -> {}, false);
+  private KeyAction customAction = new KeyAction(() -> {}, false);
 
 	public void checkInputs(float dt) {
-    Map<Integer, Runnable> keyActions = Map.of(
-      GLFW_KEY_W, resolve(this.customUp, () -> this.onUp(dt)),
-      GLFW_KEY_A, resolve(this.customLeft, () -> this.onLeft(dt)),
-      GLFW_KEY_S, resolve(this.customDown, () -> this.onDown(dt)),
-      GLFW_KEY_D, resolve(this.customRight, () -> this.onRight(dt)),
-      GLFW_KEY_E, resolve(this.customStart, () -> this.onStart(dt)),
-      GLFW_KEY_SPACE, resolve(this.customAction, () -> this.onAction(dt))
+    Map<Integer, KeyAction> keyActions = Map.of(
+      GLFW_KEY_W, customUp,
+      GLFW_KEY_A, customLeft,
+      GLFW_KEY_S, customDown,
+      GLFW_KEY_D, customRight,
+      GLFW_KEY_E, customStart,
+      GLFW_KEY_SPACE, customAction
     );
 
-		boolean keyPressed = false;
+    boolean anyKeyPressed = false;
 		for(var entry : keyActions.entrySet()) {
-			if (KeyListener.isKeyPressed(entry.getKey())) {
-				keyPressed = true;
-				if(!needReset) {
-					entry.getValue().run();
-				}
-				break;
+      boolean keyPressed = KeyListener.isKeyPressed(entry.getKey());
+			if (keyPressed && !Controller.globalResetFlag) {
+        entry.getValue().run();
 			}
+      entry.getValue().setResetFlag(!keyPressed);
+      anyKeyPressed = anyKeyPressed || keyPressed;
 		}
 
-		if(!keyPressed) {
-			needReset = false;
-		}
+    Controller.globalResetFlag = Controller.globalResetFlag && anyKeyPressed;
 	}
 
-	protected abstract void onUp(float dt);
-	protected abstract void onDown(float dt);
-	protected abstract void onLeft(float dt);
-	protected abstract void onRight(float dt);
-	protected abstract void onStart(float dt);
-	protected abstract void onAction(float dt);
+  public static void setGlobalResetFlag() {
+    Controller.globalResetFlag = true;
+  }
 
-  public Controller withCustomUp(Runnable action) {
-    this.customUp = action;
+  public Controller bindUp(Runnable action, boolean needReset) {
+    this.customUp = new KeyAction(action, needReset);
     return this;
   }
 
-  public Controller withCustomDown(Runnable action) {
-    this.customDown = action;
+  public Controller bindDown(Runnable action, boolean needReset) {
+    this.customDown = new KeyAction(action, needReset);
     return this;
   }
 
-  public Controller withCustomLeft(Runnable action) {
-    this.customLeft = action;
+  public Controller bindLeft(Runnable action, boolean needReset) {
+    this.customLeft = new KeyAction(action, needReset);
     return this;
   }
 
-  public Controller withCustomRight(Runnable action) {
-    this.customRight = action;
+  public Controller bindRight(Runnable action, boolean needReset) {
+    this.customRight = new KeyAction(action, needReset);
     return this;
   }
 
-  public Controller withCustomStart(Runnable action) {
-    this.customStart = action;
+  public Controller bindStart(Runnable action, boolean needReset) {
+    this.customStart = new KeyAction(action, needReset);
     return this;
   }
 
-  public Controller withCustomAction(Runnable action) {
-    this.customAction = action;
+  public Controller bindAction(Runnable action, boolean needReset) {
+    this.customAction = new KeyAction(action, needReset);
     return this;
+  }
+
+  public static Controller forUI(UIControllable ui) {
+    return new Controller()
+      .bindUp(ui::onUp, true)
+      .bindDown(ui::onDown, true)
+      .bindLeft(ui::onLeft, true)
+      .bindRight(ui::onRight, true)
+      .bindStart(ui::onStart, true)
+      .bindAction(ui::onAction, true);
   }
 }

@@ -1,6 +1,5 @@
 package engine.objects.components.interaction;
 
-import engine.input.InputManager;
 import engine.ui.UIManager;
 import engine.ui.components.UITextbox;
 
@@ -17,7 +16,6 @@ public class DialogueInteraction implements Interactable {
   public void onInteract() {
     UITextbox textbox = new UITextbox();
     textbox.setTexts(this.textSource, this.text);
-    textbox.setOnClose(() -> InputManager.getInstance().setToPreviousController());
     UIManager.getInstance().addElement(textbox);
     textbox.open();
   }

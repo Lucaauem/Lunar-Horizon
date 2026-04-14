@@ -2,8 +2,9 @@ package engine.ui.components;
 
 import engine.ui.UIElement;
 import engine.ui.components.list.UIListElement;
+import engine.ui.interaction.UIControllable;
 
-public class UIMenuGrid extends UIElement {
+public class UIMenuGrid extends UIElement implements UIControllable {
   private static final String CURSOR_PREFIX = "-";
   private static final int VERTICAL_SPACING_PX = 25;
   private static final int HORIZONTAL_SPACING_PX = 80;
@@ -31,14 +32,6 @@ public class UIMenuGrid extends UIElement {
     this.elements[0][0].getLabel().setPrefix(CURSOR_PREFIX);
   }
 
-  public void setElement(int indexX, int indexY, UIListElement newElement) {
-    this.elements[indexY][indexX] = newElement;
-  }
-
-  public void selectElement() {
-    this.elements[this.cursorIndexY][this.cursorIndexX].click();
-  }
-
   private void updateCursor(int dirX, int dirY) {
     this.elements[this.cursorIndexY][this.cursorIndexX].getLabel().setPrefix("");
     this.cursorIndexY = Math.min(Math.max(0, this.cursorIndexY + dirY), this.elements.length - 1);
@@ -46,20 +39,29 @@ public class UIMenuGrid extends UIElement {
     this.elements[this.cursorIndexY][this.cursorIndexX].getLabel().setPrefix(CURSOR_PREFIX);
   }
 
-  public void moveCursorLeft() {
-    this.updateCursor(-1, 0);
+  @Override
+  public void onAction() {
+    this.elements[this.cursorIndexY][this.cursorIndexX].click();
   }
 
-  public void moveCursorRight() {
+  @Override
+  public void onRight() {
     this.updateCursor(1, 0);
   }
 
-  public void moveCursorUp() {
-    this.updateCursor(0, -1);
+  @Override
+  public void onLeft() {
+    this.updateCursor(-1, 0);
   }
 
-  public void moveCursorDown() {
+  @Override
+  public void onDown() {
     this.updateCursor(0, 1);
+  }
+
+  @Override
+  public void onUp() {
+    this.updateCursor(0, -1);
   }
 
   @Override
