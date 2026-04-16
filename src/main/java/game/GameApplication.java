@@ -4,13 +4,13 @@ import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
 import engine.objects.entities.EntityBuilder;
-import game.battle.BattleEngine;
 import game.objects.Player;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
 import game.objects.npcs.TalkerTemplate;
 import game.setup.InputSetup;
+import game.setup.TriggerSetup;
 import game.ui.screens.OverworldUI;
 import game.mechanics.items.Potion;
 
@@ -22,6 +22,7 @@ public class GameApplication implements GameImplementation {
   @Override
   public void init() {
     new InputSetup(GameApplication.player).setup();
+    new TriggerSetup().setup();
 
     EntityBuilder.addTemplate("TALKER", new TalkerTemplate());
 
@@ -32,8 +33,6 @@ public class GameApplication implements GameImplementation {
 
     player.addToInventory(new Potion());
     player.addToInventory(new Potion());
-
-    new BattleEngine().startBattle();
   }
 
   @Override

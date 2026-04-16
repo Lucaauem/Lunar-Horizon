@@ -4,8 +4,6 @@ import engine.objects.entities.Entity;
 import engine.objects.Tile;
 import engine.objects.entities.EntityBuilder;
 import engine.rendering.Tilemap;
-import engine.objects.trigger.SceneChangeTrigger;
-import engine.objects.trigger.ShopTrigger;
 import engine.objects.trigger.Trigger;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -80,15 +78,17 @@ public class Scene {
 	}
 
 	private void createTrigger(Vector2i triggerPos, JSONObject triggerData) {
-		Trigger trigger = switch (triggerData.getString("type")) {
-			case "SCENE_CHANGE" -> new SceneChangeTrigger();
-			case "OPEN_SHOP" -> new ShopTrigger();
-			default -> null;
-		};
+    String triggerId = triggerData.getString("type");
+    Class<? extends Trigger> triggerClass = SceneManager.getInstance().triggerClasses.getOrDefault(triggerId, null);
 
-		if(trigger != null) {
-			trigger.setParameter(triggerData.getString("parameter"));
-			this.tiles[(this.sceneSize - triggerPos.y) * this.sceneSize + triggerPos.x].setTrigger(trigger);
+		if(triggerClass != null) {
+      try {
+        Trigger trigger = triggerClass.getDeclaredConstructor().newInstance();
+        trigger.setParameter(triggerData.getString("parameter"));
+        this.tiles[(this.sceneSize - triggerPos.y) * this.sceneSize + triggerPos.x].setTrigger(trigger);
+      } catch (Exception ignored) {
+        System.err.println("Trigger \"" + triggerId + "\" could not be spawned!");
+      }
 		}
 	}
 
