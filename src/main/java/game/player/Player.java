@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Player {
   private final PlayerEntity entity = new PlayerEntity();
-
   private int level = 1;
   private int maxHealth = 10;
   private int health = maxHealth;
@@ -36,10 +35,6 @@ public class Player {
 
   public void heal(int amount) {
     this.health = Math.min(maxHealth, this.health + amount);
-  }
-
-  public void update() {
-    this.entity.update();
   }
 
   // region GETTER AND SETTER

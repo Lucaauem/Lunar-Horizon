@@ -28,6 +28,10 @@ public class UIList extends UIElement implements Scrollable, UIControllable {
     }
   }
 
+  public void clearContent() {
+    this.content.clear();
+  }
+
   @Override
   public void onUp() {
     this.updateCursor(-1);

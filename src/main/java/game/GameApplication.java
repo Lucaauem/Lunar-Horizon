@@ -40,7 +40,7 @@ public class GameApplication implements GameImplementation {
     InputManager.getInstance().update(dt);
 
     if (GameApplication.state == GameState.OVERWORLD) {
-      player.update();
+      player.getEntity().update();
       SceneManager.getInstance().updateScene();
     }
   }
