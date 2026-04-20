@@ -1,6 +1,7 @@
 package game.objects;
 
 import engine.objects.MoveDirection;
+import engine.objects.PlayerControllable;
 import engine.objects.components.interaction.InteractionComponent;
 import game.mechanics.items.Item;
 import engine.objects.components.MovementComponent;
@@ -11,7 +12,7 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import java.util.ArrayList;
 
-public class Player extends Entity {
+public class Player extends Entity implements PlayerControllable {
 	private static final String PLAYER_TEXTURE_DOWN = "player/player_down.png";
 	private static final String PLAYER_TEXTURE_UP = "player/player_up.png";
 	private static final String PLAYER_TEXTURE_LEFT = "player/player_left.png";

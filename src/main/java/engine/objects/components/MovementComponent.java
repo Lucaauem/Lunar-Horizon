@@ -2,7 +2,7 @@ package engine.objects.components;
 
 import engine.objects.Hitbox;
 import engine.objects.MoveDirection;
-import game.objects.Player;
+import engine.objects.PlayerControllable;
 import engine.objects.Tile;
 import engine.objects.components.physics.ColliderComponent;
 import engine.objects.core.Component;
@@ -56,7 +56,7 @@ public class MovementComponent extends Component {
     Vector2f position = this.gameObject.getTransform().getPosition();
     this.gameObject.getTransform().setPosition(new Vector2f(position).round());
 
-    if (this.gameObject instanceof Player) {
+    if (this.gameObject instanceof PlayerControllable) {
       Scene scene = SceneManager.getInstance().getCurrentScene();
       if(!scene.isInScene(position.x, position.y)) { return; }
 
