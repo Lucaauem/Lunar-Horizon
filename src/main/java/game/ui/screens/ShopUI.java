@@ -65,7 +65,7 @@ public class ShopUI extends UIScreen {
   @Override
   public void onExit() {
     UIManager.getInstance().setUI(new OverworldUI());
-    GameApplication.player.move(MoveDirection.DOWN);
+    GameApplication.player.getEntity().move(MoveDirection.DOWN);
     InputManager.getInstance().popController();
   }
 }

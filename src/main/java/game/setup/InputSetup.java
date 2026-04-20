@@ -4,13 +4,13 @@ import engine.input.Controller;
 import engine.input.InputManager;
 import engine.objects.MoveDirection;
 import engine.ui.UIManager;
-import game.objects.Player;
+import game.player.PlayerEntity;
 import game.ui.screens.OverworldUI;
 
 public class InputSetup implements GameSetup {
-  private final Player player;
+  private final PlayerEntity player;
 
-  public InputSetup(Player player) {
+  public InputSetup(PlayerEntity player) {
     this.player = player;
   }
 

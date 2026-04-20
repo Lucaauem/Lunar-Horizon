@@ -4,11 +4,11 @@ import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
 import engine.objects.entities.EntityBuilder;
-import game.objects.Player;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
 import game.objects.npcs.TalkerTemplate;
+import game.player.Player;
 import game.setup.InputSetup;
 import game.setup.TriggerSetup;
 import game.ui.screens.OverworldUI;
@@ -16,18 +16,18 @@ import game.mechanics.items.Potion;
 
 public class GameApplication implements GameImplementation {
   public static Camera camera = new Camera();
-  public static final Player player = new Player(); // TODO: Change player access
+  public static final Player player = new Player();
   private static GameState state = GameState.OVERWORLD;
 
   @Override
   public void init() {
-    new InputSetup(GameApplication.player).setup();
+    new InputSetup(GameApplication.player.getEntity()).setup();
     new TriggerSetup().setup();
 
     EntityBuilder.addTemplate("TALKER", new TalkerTemplate());
 
     SceneManager.getInstance().switchScene("town/main");
-    camera.fix(player);
+    camera.fix(player.getEntity());
 
     UIManager.getInstance().setUI(new OverworldUI());
 
@@ -51,7 +51,7 @@ public class GameApplication implements GameImplementation {
       case OVERWORLD -> {
         camera.update();
         SceneManager.getInstance().getCurrentScene().render();
-        player.render();
+        player.getEntity().render();
         UIManager.getInstance().render();
       }
       case BATTLE -> UIManager.getInstance().render();
