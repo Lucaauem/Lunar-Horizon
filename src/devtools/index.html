@@ -30,17 +30,12 @@
             </div>
             <div class="sub-container">
                 <div id="tilemap" class="tiles"></div>
-                <div>
-                    <input type="checkbox" id="cb_modifierCollision" onclick="setCollision(event)">
-                    <label for="cb_modifierCollision">Is solid</label>
-                    <input type="number" id="modifierRotations" onchange="setRotations(event)">
-                    <label for="modifierRotations">Rotations (0-3)</label>
-                </div>
-                <button onclick="generateBitfield()">Speichern</button>
+                <button onclick="storeScene()">Speichern</button>
             </div>
         </div>
 
         <script src="./scripts/Tile.js"></script>
+        <script src="./scripts/Scene.js"></script>
         <script src="./scripts/editor.js"></script>
     </body>
 </html>

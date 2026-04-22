@@ -11,7 +11,6 @@ import engine.ui.components.list.UIList;
 import engine.ui.components.list.UIListElement;
 import engine.ui.UIScreen;
 import game.GameApplication;
-import game.battle.BattleEngine;
 import game.mechanics.items.Item;
 
 import java.util.Map;
@@ -36,7 +35,6 @@ public class OverworldUI extends UIScreen {
     menuList.setParent(menuPanel);
 
     menuList.addContent(new UIListElement("INVENTORY", this::openInventory));
-    menuList.addContent(new UIListElement("EQUIPMENT", () -> System.out.println(1)));
 
     this.menu = menuList;
     this.layers.add(new UILayer(0, new UIElement[]{menuPanel}));

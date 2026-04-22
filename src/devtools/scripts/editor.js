@@ -5,64 +5,44 @@ const TILEMAP_SIZE = 16
 const ZOOM_LEVEL_MIN = 0.5
 const ZOOM_LEVEL_MAX = 3
 const ZOOM_FACTOR = 0.5
-const DEFAULT_SCENE = 'town'
 
 let tilemap = new Image()
 let selectedIndex = -1
-let tiles = []
-let selectedModifier = 0b00000000
 let currentZoom = 1
+let loadedScene = null
 
 async function readScene(scene) {
-    const req = await fetch(`../main/assets/scenes/${scene}/tiles.bin`)
-    const buffer = await req.arrayBuffer()
-    const bytes = new Uint8Array(buffer)
-    
-    generateScene(bytes)
-}
+    const req = await fetch(`../main/assets/scenes/${scene}.json`)
+    const json = await req.json()
 
-function generateScene(bytes) {
     SCENE_CONTAINER.innerHTML = ''
-
-    for(let i=0; i<bytes.length; i+=2) {
-        const tile = new Tile(bytes[i], bytes[i + 1])
-
-        tile.onclick = () => {
-            if(selectedIndex == -1) { return }
-            
-            tile.changeIndex(selectedIndex, selectedModifier)
-            renderScene()
-        }
-
-        tiles.push(tile)
-        SCENE_CONTAINER.appendChild(tile.canvas)
-    }
+    loadedScene = new Scene(json)
+    return json
 }
 
 function renderScene() {
     SCENE_CONTAINER.innerHTML = ''
 
-    tiles.forEach(tile => {
-        SCENE_CONTAINER.appendChild(tile.canvas)
-    })
-}
+    const tiles = loadedScene.tiles
+    for (let i=0; i<tiles.length; i++) {
+        for (let j=0; j<tiles[i].length; j++) {
+            SCENE_CONTAINER.appendChild(tiles[i][j].canvas)
 
-function setCollision(e) {
-    if(e.target.checked) {
-        selectedModifier = selectedModifier | 0b10000000
-    } else {
-        selectedModifier = selectedModifier & 0b01111111
-    }
-}
-
-function setRotations(e) {
-    if((e.target.value < 0) || (e.target.value > 3)) {
-        e.target.value = selectedModifier & 0b00000011
-        return
+            if(loadedScene.colliders[i][j] !== 0) {
+                colorTile(tiles[i][j], 'rgba(255, 0, 0, 0.2)')
+            }
+        }
     }
 
-    selectedModifier = selectedModifier & 0b11111100
-    selectedModifier = selectedModifier | e.target.value
+    colorTile(loadedScene.spawnTile, 'rgba(0, 255, 0, 0.2)')
+}
+
+function colorTile(tile, color) {
+    const canvas = tile.canvas
+    const ctx = canvas.getContext('2d')
+
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 async function loadTilemap() {
@@ -77,55 +57,40 @@ async function loadTilemap() {
             tile.changeIndex(i)
             document.getElementById('tilePreview').innerHTML = ''
             document.getElementById('tilePreview').appendChild(tile.canvas)
+            loadedScene.selectedIndex = i
         }
 
         TILEMAP_IMAGE.appendChild(tile.canvas)
     }
 }
 
-function generateBitfield() {
-    const buffer = new Uint8Array(tiles.length * 2)
-
-    tiles.forEach((tile, i) => {
-        buffer[i * 2] = tile.index
-        buffer[i * 2 + 1] = tile.modifier
-    })
-
-    const blob = new Blob([buffer], { type: 'application/octet-stream' })
+function storeScene() {
+    const jsonString = JSON.stringify(loadedScene.toJSON(), null, 2)
+    const blob = new Blob([jsonString], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
-    
+
     const a = document.createElement('a')
     a.href = url
-    a.download = 'tiles.bin'
+    a.download = 'scene.json'
     a.click()
-    
+
     URL.revokeObjectURL(url)
-}
-
-function loadEmptyScene() {
-    const bytes = new Uint8Array(SCENE_SIZE * SCENE_SIZE * 2)
-    
-    for(let i=0; i<bytes.length; i++) {
-        bytes[i] = 0
-    }
-
-    generateScene(bytes)
 }
 
 async function init() {
     SCENE_CONTAINER.style.maxWidth = `${SCENE_SIZE * Tile.SIZE * Tile.SCALE}px`
     TILEMAP_IMAGE.style.maxWidth = `${TILEMAP_SIZE * TILEMAP_SIZE * Tile.SCALE}px`
     await loadTilemap()
-    loadEmptyScene()
+    await loadScene('town/main')
 }
 
-function fillSceneData(name) {
+function fillSceneData(name, json) {
     document.getElementById('sceneDataName').innerText = name
-    document.getElementById('sceneDataSize').innerText = `${SCENE_SIZE}x${SCENE_SIZE}`
+    document.getElementById('sceneDataSize').innerText = `${json.config.size}x${json.config.size}`
 }
 
 function zoom(direction) {
-    if(direction == 0) {
+    if(direction === 0) {
         currentZoom = 1
     } else {
         currentZoom += direction * ZOOM_FACTOR
@@ -133,17 +98,18 @@ function zoom(direction) {
         currentZoom = Math.max(ZOOM_LEVEL_MIN, currentZoom)
     }
 
-    document.getElementById('btnZoomIn').toggleAttribute('disabled', currentZoom == ZOOM_LEVEL_MAX)
-    document.getElementById('btnZoomOut').toggleAttribute('disabled', currentZoom == ZOOM_LEVEL_MIN)
+    document.getElementById('btnZoomIn').toggleAttribute('disabled', currentZoom === ZOOM_LEVEL_MAX)
+    document.getElementById('btnZoomOut').toggleAttribute('disabled', currentZoom === ZOOM_LEVEL_MIN)
     const container = document.getElementById('sceneContainer');
     container.style.transform = `scale(${currentZoom})`;
     container.style.transformOrigin = 'top left';
 }
 
 async function loadScene(name) {
-    await readScene(name)
-    fillSceneData(name)
+    const json = await readScene(name)
+    fillSceneData(name, json)
     zoom(0)
+    renderScene()
 }
 
 init()

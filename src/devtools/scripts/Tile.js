@@ -1,18 +1,17 @@
 class Tile {
     static SCALE = 2.5
     static SIZE = 16
+
     #index = -1
     #canvas = null
     #onclick = null
-    #modifier = 0b00000000
 
-    constructor(index, modifier) {
-        this.changeIndex(index, modifier)
+    constructor(index) {
+        this.changeIndex(index)
     }
 
-    changeIndex(index, modifier) {
+    changeIndex(index) {
         this.#index = index
-        this.#modifier = modifier
         this.#canvas = this.#getTile(index)
         this.#canvas.onclick = this.#onclick
     }
@@ -21,10 +20,6 @@ class Tile {
         return this.#canvas
     }
 
-    get modifier() {
-        return this.#modifier
-    }
-    
     get index() {
         return this.#index
     }
@@ -32,15 +27,6 @@ class Tile {
     set onclick(func) {
         this.#canvas.onclick = func
         this.#onclick = func
-    }
-
-    toggleCollision() {
-        this.#modifier = this.#modifier ^ 0b10000000
-    }
-
-    setRotations(times) {
-        this.#modifier = this.#modifier & 0b11111100
-        this.#modifier = this.#modifier | times
     }
 
     #getTile(index) {
@@ -60,14 +46,6 @@ class Tile {
         
         ctx.imageSmoothingEnabled = false
         ctx.drawImage(tilemap, sx, sy, tileWidth, tileHeight, 0, 0, tileWidth * Tile.SCALE, tileHeight * Tile.SCALE)
-
-        // Add modifier formatting
-        const rotations = this.modifier & 0b00000011
-        tileCanvas.classList.add(`rotate-${rotations}`)
-        if(this.#modifier & 0b10000000) {
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
-            ctx.fillRect(0, 0, tileCanvas.width, tileCanvas.height);
-        }
 
         return tileCanvas
     }
