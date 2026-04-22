@@ -74,17 +74,17 @@
     ]
   },
   "entities" : [
-    { "pos":  [14,  7], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [18,  7], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [0,  10], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [0,   9], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [18, 26], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [14, 26], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [1,  11], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" },
-    { "pos":  [3,  20], "type": "TALKER", "texture": "guard", "parameter": "DEFAULT" }
+    { "pos":  [14,  7], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [18,  7], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [0,  10], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [0,   9], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [18, 26], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [14, 26], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [1,  11], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [3,  20], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} }
 
   ],
   "trigger" : [
-    { "pos":  [12, 11], "type": "OPEN_SHOP", "parameter": "SHOP_TOWN" }
+    { "pos":  [12, 11], "type": "OPEN_SHOP", "parameters": { "shopId": "SHOP_TOWN"} }
   ]
 }

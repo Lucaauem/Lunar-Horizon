@@ -5,10 +5,12 @@ import engine.scenes.SceneManager;
 public class SceneChangeTrigger extends Trigger {
 	@Override
 	public void trigger() {
-		if(this.parameter.equals("PREVIOUS_SCENE")) {
+    String sceneParameter = (String) this.getParameter("scene");
+
+		if(sceneParameter.equals("PREVIOUS_SCENE")) {
 			SceneManager.getInstance().returnToLastScene();
 			return;
 		}
-		SceneManager.getInstance().switchScene(this.parameter.toLowerCase());
+		SceneManager.getInstance().switchScene(sceneParameter.toLowerCase());
 	}
 }

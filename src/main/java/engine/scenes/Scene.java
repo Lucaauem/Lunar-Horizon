@@ -84,7 +84,7 @@ public class Scene {
 		if(triggerClass != null) {
       try {
         Trigger trigger = triggerClass.getDeclaredConstructor().newInstance();
-        trigger.setParameter(triggerData.getString("parameter"));
+        trigger.setParameters(triggerData.getJSONObject("parameters"));
         this.tiles[(this.sceneSize - triggerPos.y) * this.sceneSize + triggerPos.x].setTrigger(trigger);
       } catch (Exception ignored) {
         System.err.println("Trigger \"" + triggerId + "\" could not be spawned!");
@@ -100,7 +100,7 @@ public class Scene {
 			Vector2f position = new Vector2f(entityData.getJSONArray("pos").getInt(0), entityData.getJSONArray("pos").getInt(1));
 
       entities[i] = new EntityBuilder().create(
-          entityData.getString("type"), entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getString("parameter")
+          entityData.getString("type"), entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getJSONObject("parameters")
       );
 		}
 
