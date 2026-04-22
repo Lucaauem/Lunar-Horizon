@@ -85,6 +85,7 @@
 
   ],
   "trigger" : [
-    { "pos":  [12, 11], "type": "OPEN_SHOP", "parameters": { "shopId": "SHOP_TOWN"} }
+    { "pos":  [12, 11], "type": "OPEN_SHOP", "parameters": { "shopId": "SHOP_TOWN"} },
+    { "pos":  [10, 20], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/guardhouse", "spawn":  [9, 2] } }
   ]
 }
