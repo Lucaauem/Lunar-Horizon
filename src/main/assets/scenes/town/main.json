@@ -1,6 +1,6 @@
 {
   "config" : {
-    "size"  : 32,
+    "size"  : [32, 32],
     "spawn" : [16, 4]
   },
   "tiles" : {
@@ -85,7 +85,10 @@
 
   ],
   "trigger" : [
-    { "pos":  [12, 11], "type": "OPEN_SHOP", "parameters": { "shopId": "SHOP_TOWN"} },
-    { "pos":  [10, 20], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/guardhouse", "spawn":  [9, 2] } }
+    { "pos":  [12, 10], "type": "OPEN_SHOP", "parameters": { "shopId": "SHOP_TOWN"} },
+    { "pos":  [10, 19], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/guardhouse", "spawn":  [9, 2] } },
+    { "pos":  [15, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [0, 0] } },
+    { "pos":  [16, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [0, 0] } },
+    { "pos":  [17, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [0, 0] } }
   ]
 }

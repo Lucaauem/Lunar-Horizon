@@ -3,6 +3,7 @@ package game;
 import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
+import engine.input.KeyListener;
 import engine.objects.entities.EntityBuilder;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
@@ -14,6 +15,8 @@ import game.setup.TriggerSetup;
 import game.ui.screens.OverworldUI;
 import game.mechanics.items.Potion;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 public class GameApplication implements GameImplementation {
   public static Camera camera = new Camera();
   public static final Player player = new Player();
@@ -21,12 +24,16 @@ public class GameApplication implements GameImplementation {
 
   @Override
   public void init() {
+    // REGION DEBUG
+    camera.setZoom(0.5f);
+    // ENDREGION
+
     new InputSetup(GameApplication.player.getEntity()).setup();
     new TriggerSetup().setup();
 
     EntityBuilder.addTemplate("TALKER", new TalkerTemplate());
 
-    SceneManager.getInstance().switchScene("town/guardhouse");
+    SceneManager.getInstance().switchScene("overworld/main");
     camera.fix(player.getEntity());
 
     UIManager.getInstance().setUI(new OverworldUI());
@@ -37,6 +44,12 @@ public class GameApplication implements GameImplementation {
 
   @Override
   public void update(float dt) {
+    // REGION DEBUG
+    if (KeyListener.isKeyPressed(GLFW_KEY_KP_ADD)) camera.setZoom(camera.getZoom() + 0.025f);
+    if (KeyListener.isKeyPressed(GLFW_KEY_KP_SUBTRACT)) camera.setZoom(camera.getZoom() - 0.025f);
+    // ENDREGION
+
+
     InputManager.getInstance().update(dt);
 
     if (GameApplication.state == GameState.OVERWORLD) {

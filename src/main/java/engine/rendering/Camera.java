@@ -57,6 +57,10 @@ public class Camera {
 		this.zoom = zoom;
 	}
 
+  public float getZoom() {
+    return this.zoom;
+  }
+
 	public void move() {
 		int osFactor = 10;
 

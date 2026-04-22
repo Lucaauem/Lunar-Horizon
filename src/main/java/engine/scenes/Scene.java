@@ -20,11 +20,11 @@ public class Scene {
 	private final Entity[] entities;
 	private final Vector2i spawn = new Vector2i();
 	private final String name;
-
-	private int sceneSize = 0;
+  private final Vector2i sceneSize;
 
 	public Scene(String name) {
 		this.name = name;
+    this.sceneSize = new Vector2i(0, 0);
 
 		JSONObject sceneData = FileHandler.readJSON(SCENE_BASE_PATH + this.name + ".json");
 
@@ -39,13 +39,13 @@ public class Scene {
 	private Tile[] loadTiles(JSONObject tileData) {
 		JSONArray tileIndices = tileData.getJSONArray("indices");
 		JSONArray solidTiles = tileData.getJSONArray("solid");
-		Tile[] tiles = new Tile[this.sceneSize * this.sceneSize];
+		Tile[] tiles = new Tile[this.sceneSize.x * this.sceneSize.y];
 
-		Vector2f tilePosition = new Vector2f(0, this.sceneSize);
+		Vector2f tilePosition = new Vector2f(0, this.sceneSize.y);
 		for(int i=0; i<tileIndices.length(); i++) {
 			tiles[i] = (this.generateTile(tileIndices.getInt(i), solidTiles.getInt(i) == 1, new Vector2f(tilePosition)));
 
-			if(++tilePosition.x >= this.sceneSize) {
+			if(++tilePosition.x >= this.sceneSize.x) {
 				tilePosition.x = 0;
 				tilePosition.y--;
 			}
@@ -61,8 +61,10 @@ public class Scene {
 
 	private void loadConfig(JSONObject config) {
 		JSONArray spawn = config.getJSONArray("spawn");
+    JSONArray size = config.getJSONArray("size");
 
-		this.sceneSize = config.getInt("size");
+    this.sceneSize.x = size.getInt(0);
+    this.sceneSize.y = size.getInt(1);
 
 		this.spawn.x = spawn.getInt(0);
 		this.spawn.y = spawn.getInt(1);
@@ -85,7 +87,8 @@ public class Scene {
       try {
         Trigger trigger = triggerClass.getDeclaredConstructor().newInstance();
         trigger.setParameters(triggerData.getJSONObject("parameters"));
-        this.tiles[(this.sceneSize - triggerPos.y) * this.sceneSize + triggerPos.x].setTrigger(trigger);
+        int index = (this.sceneSize.y - 1 - triggerPos.y) * this.sceneSize.x + triggerPos.x;
+        this.tiles[index].setTrigger(trigger);
       } catch (Exception ignored) {
         System.err.println("Trigger \"" + triggerId + "\" could not be spawned!");
       }
@@ -115,9 +118,9 @@ public class Scene {
 
 	public Tile getTile(float x, float y) {
 		int tileIndexX = (Math.round(x) / Tile.TILE_SIZE);
-		int tileIndexY = this.sceneSize - (Math.round(y) / Tile.TILE_SIZE);
+		int tileIndexY = this.sceneSize.y - (Math.round(y) / Tile.TILE_SIZE);
 
-		return this.tiles[tileIndexY * this.sceneSize + tileIndexX];
+		return this.tiles[tileIndexY * this.sceneSize.x + tileIndexX];
 	}
 
 	public Entity[] getEntities() {
@@ -132,7 +135,7 @@ public class Scene {
 		int tileIndexX = (Math.round(xPos) / Tile.TILE_SIZE);
 		int tileIndexY = (Math.round(yPos) / Tile.TILE_SIZE) - 1;
 
-		return (tileIndexX >= 0 && tileIndexX < this.sceneSize) && (tileIndexY >= 0 && tileIndexY < this.sceneSize);
+		return (tileIndexX >= 0 && tileIndexX < this.sceneSize.x) && (tileIndexY >= 0 && tileIndexY < this.sceneSize.y);
 	}
 
 	public void render() {

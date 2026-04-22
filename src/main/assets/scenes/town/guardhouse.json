@@ -1,6 +1,6 @@
 {
   "config" : {
-    "size"  : 12,
+    "size"  : [12, 12],
     "spawn" : [2, 7]
   },
   "tiles" : {
@@ -39,6 +39,6 @@
     { "pos":  [5,  2], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_0"} }
   ],
   "trigger" : [
-    { "pos":  [9, 1], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/main", "spawn":  [10, 19] } }
+    { "pos":  [9, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/main", "spawn":  [10, 19] } }
   ]
 }
