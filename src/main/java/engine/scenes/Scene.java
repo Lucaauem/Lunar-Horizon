@@ -114,8 +114,8 @@ public class Scene {
 	}
 
 	public Tile getTile(float x, float y) {
-		int tileIndexX = (int) (x / Tile.TILE_SIZE);
-		int tileIndexY = this.sceneSize - (int) (y / Tile.TILE_SIZE);
+		int tileIndexX = (Math.round(x) / Tile.TILE_SIZE);
+		int tileIndexY = this.sceneSize - (Math.round(y) / Tile.TILE_SIZE);
 
 		return this.tiles[tileIndexY * this.sceneSize + tileIndexX];
 	}
@@ -129,8 +129,8 @@ public class Scene {
 	}
 
 	public boolean isInScene(float xPos, float yPos) {
-		int tileIndexX = (int) (xPos / Tile.TILE_SIZE);
-		int tileIndexY = (int) (yPos / Tile.TILE_SIZE) - 1;
+		int tileIndexX = (Math.round(xPos) / Tile.TILE_SIZE);
+		int tileIndexY = (Math.round(yPos) / Tile.TILE_SIZE) - 1;
 
 		return (tileIndexX >= 0 && tileIndexX < this.sceneSize) && (tileIndexY >= 0 && tileIndexY < this.sceneSize);
 	}
