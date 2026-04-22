@@ -19,6 +19,6 @@ public abstract class Trigger {
 	}
 
   protected Object getParameter(String key) {
-    return this.parameters.get(key);
+    return this.parameters.getOrDefault(key, null);
   }
 }

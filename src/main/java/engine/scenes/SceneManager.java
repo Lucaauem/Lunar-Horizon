@@ -1,7 +1,6 @@
 package engine.scenes;
 
 import engine.objects.Tile;
-import engine.objects.components.MovementComponent;
 import engine.objects.entities.Entity;
 import engine.objects.trigger.SceneChangeTrigger;
 import engine.objects.trigger.Trigger;
@@ -9,12 +8,10 @@ import game.GameApplication;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class SceneManager {
 	private static final SceneManager instance = new SceneManager();
 
-	private final Stack<SceneMemento> lastScenePosition = new Stack<>();
   protected final HashMap<String, Class<? extends Trigger>> triggerClasses;
 	private Scene currentScene;
 
@@ -31,25 +28,22 @@ public class SceneManager {
     this.triggerClasses.put(id, triggerClass);
   }
 
-	public void switchScene(String sceneName) {
-		if(this.currentScene != null) {
-			Vector2f lastValidPosition = GameApplication.player.getEntity().getComponent(MovementComponent.class).getLastValidPosition();
-			SceneMemento sceneMemento = new SceneMemento(this.currentScene.getName(), lastValidPosition);
-			this.lastScenePosition.push(sceneMemento);
-		}
+  public void switchScene(String sceneName) {
+    this.switchScene(sceneName, null);
+  }
 
+	public void switchScene(String sceneName, Vector2f newScenePosition) {
 		this.currentScene = new Scene(sceneName);
 
-		Vector2i playerSpawn = this.currentScene.getSpawn();
-		GameApplication.player.getEntity().getTransform().setPosition(new Vector2f(playerSpawn.x * Tile.TILE_SIZE, playerSpawn.y * Tile.TILE_SIZE));
-	}
+    Vector2f newPosition;
+    if (newScenePosition == null) {
+		  Vector2i playerSpawn = this.currentScene.getSpawn();
+      newPosition = new Vector2f(playerSpawn.x * Tile.TILE_SIZE, playerSpawn.y * Tile.TILE_SIZE);
+    } else {
+      newPosition = new Vector2f(newScenePosition.x * Tile.TILE_SIZE, newScenePosition.y * Tile.TILE_SIZE);
+    }
 
-	public void returnToLastScene() {
-		if(this.lastScenePosition.isEmpty()) { return; }
-
-		SceneMemento memento = this.lastScenePosition.pop();
-		this.switchScene(memento.getSceneName());
-		GameApplication.player.getEntity().getTransform().setPosition(memento.getPosition());
+    GameApplication.player.getEntity().getTransform().setPosition(newPosition);
 	}
 
   public void updateScene() {
