@@ -16,7 +16,7 @@ public class Scene {
 	private static final String SCENE_BASE_PATH = "src/main/assets/scenes/";
 
 	private final Tilemap tilemap = new Tilemap();
-	private final Tile[] tiles;
+	private final Tile[][] tiles;
 	private final Entity[] entities;
 	private final Vector2i spawn = new Vector2i();
 	private final String name;
@@ -36,20 +36,22 @@ public class Scene {
 
 	// region CREATE SCENE
 
-	private Tile[] loadTiles(JSONObject tileData) {
+	private Tile[][] loadTiles(JSONObject tileData) {
 		JSONArray tileIndices = tileData.getJSONArray("indices");
 		JSONArray solidTiles = tileData.getJSONArray("solid");
-		Tile[] tiles = new Tile[this.sceneSize.x * this.sceneSize.y];
 
-		Vector2f tilePosition = new Vector2f(0, this.sceneSize.y);
-		for(int i=0; i<tileIndices.length(); i++) {
-			tiles[i] = (this.generateTile(tileIndices.getInt(i), solidTiles.getInt(i) == 1, new Vector2f(tilePosition)));
+    this.sceneSize.x = tileIndices.getJSONArray(0).length();
+    this.sceneSize.y = tileIndices.length();
 
-			if(++tilePosition.x >= this.sceneSize.x) {
-				tilePosition.x = 0;
-				tilePosition.y--;
-			}
-		}
+		Tile[][] tiles = new Tile[tileIndices.length()][tileIndices.getJSONArray(0).length()];
+
+    for (int j=0; j<tileIndices.length(); j++) {
+      JSONArray row = tileIndices.getJSONArray(j);
+      JSONArray solidsRow = solidTiles.getJSONArray(j);
+      for (int i=0; i<row.length(); i++) {
+        tiles[j][i] = (this.generateTile(row.getInt(i), solidsRow.getInt(i) == 1, new Vector2f(i, this.sceneSize.y - j)));
+      }
+    }
 
 		return tiles;
 	}
@@ -61,10 +63,6 @@ public class Scene {
 
 	private void loadConfig(JSONObject config) {
 		JSONArray spawn = config.getJSONArray("spawn");
-    JSONArray size = config.getJSONArray("size");
-
-    this.sceneSize.x = size.getInt(0);
-    this.sceneSize.y = size.getInt(1);
 
 		this.spawn.x = spawn.getInt(0);
 		this.spawn.y = spawn.getInt(1);
@@ -75,7 +73,7 @@ public class Scene {
 			JSONObject triggerData = triggerArray.getJSONObject(i);
 			int xIndex = triggerData.getJSONArray("pos").getInt(0);
 			int yIndex = triggerData.getJSONArray("pos").getInt(1);
-			this.createTrigger(new Vector2i(xIndex, yIndex), triggerData);
+			this.createTrigger(new Vector2i(xIndex, this.sceneSize.y - yIndex - 1), triggerData);
 		}
 	}
 
@@ -87,8 +85,7 @@ public class Scene {
       try {
         Trigger trigger = triggerClass.getDeclaredConstructor().newInstance();
         trigger.setParameters(triggerData.getJSONObject("parameters"));
-        int index = (this.sceneSize.y - 1 - triggerPos.y) * this.sceneSize.x + triggerPos.x;
-        this.tiles[index].setTrigger(trigger);
+        this.tiles[triggerPos.y][triggerPos.x].setTrigger(trigger);
       } catch (Exception ignored) {
         System.err.println("Trigger \"" + triggerId + "\" could not be spawned!");
       }
@@ -120,7 +117,7 @@ public class Scene {
 		int tileIndexX = (Math.round(x) / Tile.TILE_SIZE);
 		int tileIndexY = this.sceneSize.y - (Math.round(y) / Tile.TILE_SIZE);
 
-		return this.tiles[tileIndexY * this.sceneSize.x + tileIndexX];
+    return this.tiles[tileIndexY][tileIndexX];
 	}
 
 	public Entity[] getEntities() {
@@ -139,11 +136,13 @@ public class Scene {
 	}
 
 	public void render() {
-		for(Tile tile : this.tiles) {
-			if(tile != null) {
-				tile.render();
-			}
-		}
+    for (Tile[] row : this.tiles) {
+      for (Tile tile : row) {
+        if (tile != null) {
+          tile.render();
+        }
+      }
+    }
 
 		for(Entity entity : this.entities) {
 			if(entity != null) {
