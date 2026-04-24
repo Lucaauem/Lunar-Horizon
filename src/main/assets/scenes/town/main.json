@@ -73,14 +73,14 @@
     ]
   },
   "entities" : [
-    { "pos":  [14,  7], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
-    { "pos":  [18,  7], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
-    { "pos":  [0,  10], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [14,  6], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [18,  6], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
     { "pos":  [0,   9], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
-    { "pos":  [18, 26], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
-    { "pos":  [14, 26], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
-    { "pos":  [1,  11], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
-    { "pos":  [3,  20], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} }
+    { "pos":  [0,   8], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [18, 25], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [14, 25], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [1,  10], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} },
+    { "pos":  [3,  19], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT"} }
 
   ],
   "trigger" : [

@@ -33,7 +33,7 @@ public class GameApplication implements GameImplementation {
 
     EntityBuilder.addTemplate("TALKER", new TalkerTemplate());
 
-    SceneManager.getInstance().switchScene("town/main");
+    SceneManager.getInstance().switchScene("overworld/main");
     camera.fix(player.getEntity());
 
     UIManager.getInstance().setUI(new OverworldUI());

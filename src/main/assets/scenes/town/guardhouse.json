@@ -33,9 +33,9 @@
     ]
   },
   "entities" : [
-    { "pos":  [1,  2], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_0"} },
-    { "pos":  [4,  2], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_1"} },
-    { "pos":  [5,  2], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_0"} }
+    { "pos":  [1,  1], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_0"} },
+    { "pos":  [4,  1], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_1"} },
+    { "pos":  [5,  1], "type": "TALKER", "texture": "guard", "parameters": { "text": "GUARDHOUSE_INTRO_0"} }
   ],
   "trigger" : [
     { "pos":  [9, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/main", "spawn":  [10, 19] } }
