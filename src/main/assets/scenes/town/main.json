@@ -86,8 +86,8 @@
   "trigger" : [
     { "pos":  [12, 10], "type": "OPEN_SHOP", "parameters": { "shopId": "SHOP_TOWN"} },
     { "pos":  [10, 19], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/guardhouse", "spawn":  [9, 2] } },
-    { "pos":  [15, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [0, 0] } },
-    { "pos":  [16, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [0, 0] } },
-    { "pos":  [17, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [0, 0] } }
+    { "pos":  [15, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } },
+    { "pos":  [16, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } },
+    { "pos":  [17, 0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } }
   ]
 }
