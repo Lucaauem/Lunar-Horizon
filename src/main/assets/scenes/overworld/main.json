@@ -1,11 +1,13 @@
 {
   "config" : {
-    "spawn" : [0, 0],
-    "useAreas": true
+    "spawn" : [8, 23],
+    "useAreas": true,
+    "enemies" : [ "TODO" ]
   },
   "tiles" : {
     "indices" : [
-      ["a0"]
+      ["a0"],
+      ["a1"]
     ]
   }
 }

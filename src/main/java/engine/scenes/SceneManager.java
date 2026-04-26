@@ -1,5 +1,6 @@
 package engine.scenes;
 
+import engine.events.EventManager;
 import engine.objects.Tile;
 import engine.objects.entities.Entity;
 import engine.objects.trigger.SceneChangeTrigger;
@@ -44,6 +45,7 @@ public class SceneManager {
     }
 
     GameApplication.player.getEntity().getTransform().setPosition(newPosition);
+    EventManager.getInstance().publish("SCENE_CHANGE");
 	}
 
   public void updateScene() {

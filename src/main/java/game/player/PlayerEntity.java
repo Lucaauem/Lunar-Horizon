@@ -1,5 +1,6 @@
 package game.player;
 
+import engine.events.EventManager;
 import engine.objects.MoveDirection;
 import engine.objects.PlayerControllable;
 import engine.objects.components.MovementComponent;
@@ -64,5 +65,6 @@ public class PlayerEntity extends Entity implements PlayerControllable {
     this.getComponent(RenderComponent.class).changeTexture(newTexture);
 
     movementComponent.move(direction);
+    EventManager.getInstance().publish("PLAYER_MOVE");
   }
 }

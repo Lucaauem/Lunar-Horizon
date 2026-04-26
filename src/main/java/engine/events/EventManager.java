@@ -20,6 +20,10 @@ public class EventManager {
   }
 
   public void publish(String event) {
+    if (!this.subscriptions.containsKey(event)) {
+      return;
+    }
+
     for (Runnable func : this.subscriptions.get(event)) {
       func.run();
     }

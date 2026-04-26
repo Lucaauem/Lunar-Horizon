@@ -1,7 +1,6 @@
 package util;
 
 import org.json.JSONObject;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,7 +28,7 @@ public class FileHandler {
 
 			return lines.toArray(new String[0]);
 		} catch (Exception e){
-			System.out.println("ERROR READING FILE: " + fileName);
+			System.err.println("ERROR READING FILE: " + fileName);
 			return new String[0];
 		}
 	}
@@ -46,7 +45,7 @@ public class FileHandler {
 
 			return fileNames;
 		} catch (Exception e){
-			System.out.println("ERROR READING SCENES");
+			System.err.println("ERROR READING SCENES");
 			return new String[0];
 		}
 	}
@@ -68,7 +67,7 @@ public class FileHandler {
 
 			return data;
 		} catch (Exception e){
-			System.out.println("ERROR READING FILE: " + path);
+			System.err.println("ERROR READING FILE: " + path);
 			return new String[0][0];
 		}
 	}
@@ -79,7 +78,7 @@ public class FileHandler {
 			writer.write(content);
 			writer.close();
 		} catch (Exception e){
-			System.out.println("ERROR WRITING FILE: " + path);
+			System.err.println("ERROR WRITING FILE: " + path);
 		}
 	}
 
@@ -89,10 +88,10 @@ public class FileHandler {
 			if (file.createNewFile()) {
 				System.out.println("File created: " + file.getName());
 			} else {
-				System.out.println("File already exists.");
+				System.err.println("File already exists.");
 			}
 		} catch (IOException e) {
-			System.out.println("ERROR CREATING FILE: " + path);
+			System.err.println("ERROR CREATING FILE: " + path);
 		}
 	}
 

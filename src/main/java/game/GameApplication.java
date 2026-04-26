@@ -8,6 +8,7 @@ import engine.objects.entities.EntityBuilder;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
+import game.battle.BattleGenerator;
 import game.objects.npcs.TalkerTemplate;
 import game.player.Player;
 import game.setup.InputSetup;
@@ -20,7 +21,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class GameApplication implements GameImplementation {
   public static Camera camera = new Camera();
   public static final Player player = new Player();
-  private static GameState state = GameState.OVERWORLD;
+  private static GameState state;
 
   @Override
   public void init() {
@@ -38,6 +39,8 @@ public class GameApplication implements GameImplementation {
 
     UIManager.getInstance().setUI(new OverworldUI());
 
+    changeState(GameState.OVERWORLD);
+
     player.addToInventory(new Potion());
     player.addToInventory(new Potion());
   }
@@ -52,9 +55,12 @@ public class GameApplication implements GameImplementation {
 
     InputManager.getInstance().update(dt);
 
-    if (GameApplication.state == GameState.OVERWORLD) {
-      player.getEntity().update();
-      SceneManager.getInstance().updateScene();
+    switch (state) {
+      case OVERWORLD -> {
+        player.getEntity().update();
+        SceneManager.getInstance().updateScene();
+      }
+      case BATTLE -> {}
     }
   }
 
@@ -78,6 +84,7 @@ public class GameApplication implements GameImplementation {
       case OVERWORLD -> {
         UIManager.getInstance().setUI(new OverworldUI());
         InputManager.getInstance().enableControlls();
+        new BattleGenerator();
       }
       case BATTLE -> UIManager.getInstance().getUI().toggle();
     }

@@ -24,6 +24,7 @@ public class Scene {
 	private final String name;
   private final Vector2i sceneSize;
 	private final ArrayList<Entity> entities;
+  private boolean hasEnemies = false;
 	private Tile[][] tiles = new Tile[0][0];
 
 	public Scene(String name) {
@@ -161,6 +162,8 @@ public class Scene {
       this.spawn.x = spawn.getInt(0);
       this.spawn.y = spawn.getInt(1);
     }
+
+    this.hasEnemies = config.has("enemies");
 	}
 
 	private void loadTrigger(JSONObject[] triggerArray) {
@@ -201,25 +204,6 @@ public class Scene {
 
   // endregion
 
-	public Vector2i getSpawn() {
-		return this.spawn;
-	}
-
-	public Tile getTile(float x, float y) {
-		int tileIndexX = (Math.round(x) / Tile.TILE_SIZE);
-		int tileIndexY = this.sceneSize.y - (Math.round(y) / Tile.TILE_SIZE);
-
-    return this.tiles[tileIndexY][tileIndexX];
-	}
-
-	public Entity[] getEntities() {
-		return this.entities.toArray(new Entity[0]);
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
 	public boolean isInScene(float xPos, float yPos) {
 		int tileIndexX = (Math.round(xPos) / Tile.TILE_SIZE);
 		int tileIndexY = (Math.round(yPos) / Tile.TILE_SIZE) - 1;
@@ -242,4 +226,30 @@ public class Scene {
 			}
 		}
 	}
+
+  // region GETTER AND SETTER
+
+  public Vector2i getSpawn() {
+    return this.spawn;
+  }
+
+  public Tile getTile(float x, float y) {
+    int tileIndexX = (Math.round(x) / Tile.TILE_SIZE);
+    int tileIndexY = this.sceneSize.y - (Math.round(y) / Tile.TILE_SIZE);
+    return this.tiles[tileIndexY][tileIndexX];
+  }
+
+  public Entity[] getEntities() {
+    return this.entities.toArray(new Entity[0]);
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public boolean canSpawnEnemies() {
+    return this.hasEnemies;
+  }
+
+  // endregion
 }

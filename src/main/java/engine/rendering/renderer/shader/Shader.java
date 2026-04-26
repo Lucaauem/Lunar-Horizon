@@ -91,7 +91,7 @@ public class Shader {
 			int length = glGetShaderi(id, GL_INFO_LOG_LENGTH);
 			String msg = glGetShaderInfoLog(id, length);
 
-			System.out.println("FAILED TO COMPILE SHADER");
+			System.err.println("FAILED TO COMPILE SHADER");
 			System.err.println(msg);
 
 			glDeleteShader(id);
