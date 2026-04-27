@@ -4,7 +4,10 @@ import engine.core.GameWindow;
 import engine.input.KeyListener;
 import engine.objects.core.GameObject;
 import engine.rendering.renderer.Renderer;
+import engine.scenes.SceneManager;
 import org.joml.*;
+import java.lang.Math;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 
@@ -40,17 +43,21 @@ public class Camera {
 	public void update(){
     Vector2f objectPosition = this.fixObj.getTransform().getPosition();
 
-		Matrix4f matrix = new Matrix4f().identity();
-		Vector2f fullOffset = new Vector2f(
-				GameObject.DEFAULT_TILE_SIZE + this.offset.x + objectPosition.x,
-				GameObject.DEFAULT_TILE_SIZE + this.offset.y + objectPosition.y
-		);
+    float targetX = 2 * GameObject.DEFAULT_TILE_SIZE + this.offset.x + objectPosition.x;
+    float targetY = 2 * GameObject.DEFAULT_TILE_SIZE + this.offset.y + objectPosition.y;
+    float halfW = (GameWindow.RESOLUTION.x / zoom) / 2f;
+    float halfH = (GameWindow.RESOLUTION.y / zoom) / 2f;
+    float sceneWidth = SceneManager.getInstance().getCurrentScene().getSize().x * GameObject.DEFAULT_TILE_SIZE;
+    float sceneHeight = SceneManager.getInstance().getCurrentScene().getSize().y * GameObject.DEFAULT_TILE_SIZE;
+    float clampedX = Math.max(halfW + GameObject.DEFAULT_TILE_SIZE, Math.min(targetX, sceneWidth - halfW));
+    float clampedY = Math.max(halfH + 2 * GameObject.DEFAULT_TILE_SIZE, Math.min(targetY, sceneHeight - halfH));
 
-		matrix.translate(GameWindow.RESOLUTION.x / 2.0f, GameWindow.RESOLUTION.y / 2.0f, 0);
-		matrix.scale(this.zoom, this.zoom, 1.0f);
-		matrix.translate(-fullOffset.x, -fullOffset.y, 0);
+    Matrix4f matrix = new Matrix4f().identity();
+    matrix.translate(GameWindow.RESOLUTION.x / 2.0f, GameWindow.RESOLUTION.y / 2.0f, 0);
+    matrix.scale(this.zoom, this.zoom, 1.0f);
+    matrix.translate(-clampedX, -clampedY, 0);
 
-		this.matrix.set(matrix);
+    this.matrix.set(matrix);
 	}
 
 	public void setZoom(float zoom) {

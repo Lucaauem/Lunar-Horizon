@@ -239,6 +239,10 @@ public class Scene {
     return this.tiles[tileIndexY][tileIndexX];
   }
 
+  public Vector2i getSize() {
+    return this.sceneSize;
+  }
+
   public Entity[] getEntities() {
     return this.entities.toArray(new Entity[0]);
   }
