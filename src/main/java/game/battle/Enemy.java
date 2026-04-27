@@ -10,6 +10,7 @@ public class Enemy {
 	private static final String MONSTER_DATA_PATH = "src/main/assets/data/enemies/";
 	private static final String MONSTER_TEXTURE_PATH = "enemies/";
 
+  private final String name;
 	private final Texture texture;
 	private final Model model = new Model(new float[] {
 			0.6f, 0.4f,  0, 1,
@@ -24,6 +25,7 @@ public class Enemy {
 		JSONObject data = FileHandler.readJSON(MONSTER_DATA_PATH + id + ".json");
 
 		this.texture = new Texture(MONSTER_TEXTURE_PATH + data.getString("texture") + ".png");
+    this.name = data.getString("name");
 		this.health = data.getInt("health");
 		this.damage = data.getInt("damage");
 	}
@@ -43,6 +45,10 @@ public class Enemy {
 	public Texture getTexture() {
 		return this.texture;
 	}
+
+  public String getName() {
+    return this.name;
+  }
 
 	public Model getModel() {
 		return this.model;

@@ -25,7 +25,7 @@ public class BattleGenerator {
     this.stepsToBattle--;
 
     if (stepsToBattle == 0) {
-      new BattleEngine().startBattle();
+      new BattleEngine("test").startBattle();
     }
 
     if (stepsToBattle <= 0) {

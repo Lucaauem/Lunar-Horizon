@@ -18,11 +18,11 @@ public class BattleEngine {
 	private boolean isPlayerTurn = false;
 
   // TODO: Define config for generation
-	public BattleEngine() {
+	public BattleEngine(String enemyId) {
 		super();
 
     this.ui = new BattleUI(this);
-		this.enemy = new Enemy("test");
+		this.enemy = new Enemy(enemyId);
 	}
 
   public void startBattle() {
@@ -31,7 +31,7 @@ public class BattleEngine {
     InputManager.getInstance().pushController(Controller.forUI(this.ui.getActionMenu()));
 
     UITextbox textbox = this.ui.getTextbox();
-    textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED");
+    textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_APPEARED", Map.of("NAME", this.enemy.getName()));
     textbox.setOnClose(this::nextTurn);
     textbox.open();
   }
@@ -60,7 +60,7 @@ public class BattleEngine {
 		} else {
 			// TODO: Generate move
       UITextbox textbox = this.ui.getTextbox();
-			textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_ATTACKED");
+			textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_ATTACKED", Map.of("NAME", this.enemy.getName()));
       textbox.setOnClose(() -> { this.enemy.attack(); this.ui.updatePlayerStats(); this.nextTurn(); });
 			textbox.open();
       InputManager.getInstance().enableControlls();
@@ -71,7 +71,7 @@ public class BattleEngine {
 	private void winBattle() {
     this.ui.getActionMenu().setVisibility(false);
     UITextbox textbox = this.ui.getTextbox();
-		textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED");
+		textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED", Map.of("NAME", this.enemy.getName()));
     textbox.setOnClose(this::endBattle);
 		textbox.open();
     InputManager.getInstance().enableControlls();
@@ -82,7 +82,7 @@ public class BattleEngine {
 		this.enemy.changeHealth(-1 * GameApplication.player.getAttack());
 
     UITextbox textbox = this.ui.getTextbox();
-		textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + GameApplication.player.getAttack()));
+		textbox.setTexts(BattleEngine.TEXT_SOURCE, "PLAYER_ATTACKED", Map.of("DMG", "" + GameApplication.player.getAttack(), "NAME", this.enemy.getName()));
     textbox.setOnClose(this::nextTurn);
 		textbox.open();
 	}
