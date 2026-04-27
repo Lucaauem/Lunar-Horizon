@@ -4,17 +4,15 @@ import engine.core.GameImplementation;
 import engine.core.GameState;
 import engine.input.InputManager;
 import engine.input.KeyListener;
-import engine.objects.entities.EntityBuilder;
 import engine.rendering.Camera;
 import engine.scenes.SceneManager;
 import engine.ui.UIManager;
 import game.battle.BattleGenerator;
-import game.objects.npcs.TalkerTemplate;
 import game.player.Player;
 import game.setup.InputSetup;
+import game.setup.TemplateSetup;
 import game.setup.TriggerSetup;
 import game.ui.screens.OverworldUI;
-import game.mechanics.items.Potion;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -31,18 +29,14 @@ public class GameApplication implements GameImplementation {
 
     new InputSetup(GameApplication.player.getEntity()).setup();
     new TriggerSetup().setup();
+    new TemplateSetup().setup();
 
-    EntityBuilder.addTemplate("TALKER", new TalkerTemplate());
-
-    SceneManager.getInstance().switchScene("overworld/main");
-    camera.fix(player.getEntity());
-
+    SceneManager.getInstance().switchScene("town/main");
     UIManager.getInstance().setUI(new OverworldUI());
 
-    changeState(GameState.OVERWORLD);
+    camera.fix(player.getEntity());
 
-    player.addToInventory(new Potion());
-    player.addToInventory(new Potion());
+    changeState(GameState.OVERWORLD);
   }
 
   @Override
