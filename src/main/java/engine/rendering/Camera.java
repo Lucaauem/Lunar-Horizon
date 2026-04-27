@@ -47,8 +47,8 @@ public class Camera {
     float targetY = 2 * GameObject.DEFAULT_TILE_SIZE + this.offset.y + objectPosition.y;
     float halfW = (GameWindow.RESOLUTION.x / zoom) / 2f;
     float halfH = (GameWindow.RESOLUTION.y / zoom) / 2f;
-    float sceneWidth = SceneManager.getInstance().getCurrentScene().getSize().x * GameObject.DEFAULT_TILE_SIZE;
-    float sceneHeight = SceneManager.getInstance().getCurrentScene().getSize().y * GameObject.DEFAULT_TILE_SIZE;
+    float sceneWidth = (SceneManager.getInstance().getCurrentScene().getSize().x + 1) * GameObject.DEFAULT_TILE_SIZE;
+    float sceneHeight = (SceneManager.getInstance().getCurrentScene().getSize().y + 2) * GameObject.DEFAULT_TILE_SIZE;
     float clampedX = Math.max(halfW + GameObject.DEFAULT_TILE_SIZE, Math.min(targetX, sceneWidth - halfW));
     float clampedY = Math.max(halfH + 2 * GameObject.DEFAULT_TILE_SIZE, Math.min(targetY, sceneHeight - halfH));
 
