@@ -1,5 +1,6 @@
 {
   "DEFAULT" : ["Hello Traveler!"],
   "GUARDHOUSE_INTRO_0" : ["Good morning!"],
-  "GUARDHOUSE_INTRO_1" : ["Good morning!", "X is waiting outside."]
+  "GUARDHOUSE_INTRO_1" : ["Good morning!", "X is waiting outside."],
+  "TUTOR_FIGHT" : ["Battle start!"]
 }

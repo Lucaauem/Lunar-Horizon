@@ -62,6 +62,7 @@ public class BattleEngine {
       UITextbox textbox = this.ui.getTextbox();
 			textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_ATTACKED", Map.of("NAME", this.enemy.getName()));
       textbox.setOnClose(() -> { this.enemy.attack(); this.ui.updatePlayerStats(); this.nextTurn(); });
+      System.out.println("B");
 			textbox.open();
       InputManager.getInstance().enableControlls();
 		}

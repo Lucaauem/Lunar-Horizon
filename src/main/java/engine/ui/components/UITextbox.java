@@ -59,11 +59,11 @@ public class UITextbox extends UIElement {
       this.setVisibility(false);
     }
 
+    InputManager.getInstance().popController();
+
     if(this.onClose != null) {
       this.onClose.run();
     }
-
-    InputManager.getInstance().popController();
   }
 
   public void setOnClose(Runnable action) {
