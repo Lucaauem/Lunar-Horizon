@@ -6,6 +6,7 @@ import engine.objects.entities.Entity;
 import engine.objects.trigger.SceneChangeTrigger;
 import engine.objects.trigger.Trigger;
 import game.GameApplication;
+import game.events.SceneChangeEvent;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class SceneManager {
     }
 
     GameApplication.player.getEntity().getTransform().setPosition(newPosition);
-    EventManager.getInstance().publish("SCENE_CHANGE");
+    EventManager.getInstance().publish(new SceneChangeEvent(this.currentScene));
 	}
 
   public void updateScene() {

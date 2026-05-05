@@ -8,6 +8,7 @@ import engine.objects.components.RenderComponent;
 import engine.objects.components.interaction.InteractionComponent;
 import engine.objects.entities.Entity;
 import engine.scenes.SceneManager;
+import game.events.PlayerMoveEvent;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
@@ -65,6 +66,6 @@ public class PlayerEntity extends Entity implements PlayerControllable {
     this.getComponent(RenderComponent.class).changeTexture(newTexture);
 
     movementComponent.move(direction);
-    EventManager.getInstance().publish("PLAYER_MOVE");
+    EventManager.getInstance().publish(new PlayerMoveEvent());
   }
 }

@@ -2,6 +2,9 @@ package game.battle;
 
 import engine.events.EventManager;
 import engine.scenes.SceneManager;
+import game.events.PlayerMoveEvent;
+import game.events.SceneChangeEvent;
+
 import java.util.Random;
 
 public class BattleGenerator {
@@ -14,8 +17,8 @@ public class BattleGenerator {
   private int stepsToBattle = -1;
 
   private BattleGenerator() {
-    EventManager.getInstance().subscribe("PLAYER_MOVE", this::step);
-    EventManager.getInstance().subscribe("SCENE_CHANGE", () -> this.active = SceneManager.getInstance().getCurrentScene().canSpawnEnemies());
+    EventManager.getInstance().subscribe(PlayerMoveEvent.class, event -> this.step());
+    EventManager.getInstance().subscribe(SceneChangeEvent.class, event -> this.active = event.getNewScene().canSpawnEnemies());
     this.update();
   }
 
