@@ -8,13 +8,26 @@ public class BattleGenerator {
   private static final int MIN_STEPS_TO_BATTLE = 10;
   private static final int MAX_STEPS_TO_BATTLE = 50;
 
+  private static BattleGenerator instance;
+
   private boolean active;
   private int stepsToBattle = -1;
 
-  public BattleGenerator() {
+  private BattleGenerator() {
     EventManager.getInstance().subscribe("PLAYER_MOVE", this::step);
-    this.active = SceneManager.getInstance().getCurrentScene().canSpawnEnemies();
     EventManager.getInstance().subscribe("SCENE_CHANGE", () -> this.active = SceneManager.getInstance().getCurrentScene().canSpawnEnemies());
+    this.update();
+  }
+
+  public void update() {
+    this.active = SceneManager.getInstance().getCurrentScene().canSpawnEnemies();
+  }
+
+  public static BattleGenerator getInstance() {
+    if (instance == null) {
+      instance = new BattleGenerator();
+    }
+    return instance;
   }
 
   public void step() {
@@ -34,6 +47,6 @@ public class BattleGenerator {
   }
 
   public void resetSteps() {
-    this.stepsToBattle = new Random().nextInt(MAX_STEPS_TO_BATTLE - MIN_STEPS_TO_BATTLE + 1);
+    this.stepsToBattle = new Random().nextInt(MAX_STEPS_TO_BATTLE - MIN_STEPS_TO_BATTLE + 1) + MIN_STEPS_TO_BATTLE;
   }
 }

@@ -78,7 +78,7 @@ public class GameApplication implements GameImplementation {
       case OVERWORLD -> {
         UIManager.getInstance().setUI(new OverworldUI());
         InputManager.getInstance().enableControlls();
-        new BattleGenerator();
+        BattleGenerator.getInstance().update();
       }
       case BATTLE -> UIManager.getInstance().getUI().toggle();
     }
