@@ -89,7 +89,7 @@
     { "pos":  [25, 20], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT" } },
     { "pos":  [24, 22], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT" } },
     { "pos":  [25, 22], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT" } },
-    { "pos":  [22, 18], "type": "FIGHT_TRIGGER", "texture": "guard", "parameters": { "text": "TUTOR_FIGHT" } },
+    { "pos":  [22, 18], "type": "FIGHT_TRIGGER", "texture": "guard", "parameters": { "text": "TUTOR_FIGHT", "fightId": "tutor" } },
     { "pos":  [22, 16], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT" } },
     { "pos":  [21, 16], "type": "TALKER", "texture": "guard", "parameters": { "text": "DEFAULT" } }
   ],

@@ -14,7 +14,7 @@ public class FightTriggerTemplate implements EntityTemplate {
   @Override
   public Entity build(EntityFactory entity, JSONObject parameters) {
     DialogueInteraction interaction = new DialogueInteraction(TEXT_SOURCE, parameters.getString("text"));
-    interaction.setOnTextboxClose(() -> new BattleEngine("test").startBattle());
+    interaction.setOnTextboxClose(() -> new BattleEngine(parameters.getString("fightId")).startBattle());
 
     entity.add(new InteractionComponent(interaction));
 
