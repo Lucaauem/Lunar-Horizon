@@ -15,6 +15,7 @@ public class BattleEngine {
 
   private final BattleUI ui;
 	private final Enemy enemy;
+  private Runnable onFightEnd = () -> {};
 	private boolean isPlayerTurn = false;
 
   // TODO: Define config for generation
@@ -39,6 +40,7 @@ public class BattleEngine {
   private void endBattle() {
     InputManager.getInstance().popController();
     GameApplication.changeState(GameState.OVERWORLD);
+    this.onFightEnd.run();
   }
 
 	public void nextTurn() {
@@ -105,4 +107,8 @@ public class BattleEngine {
     textbox.setOnClose(this::endBattle);
     textbox.open();
 	}
+
+  public void setOnFightEnd(Runnable action) {
+    this.onFightEnd = action;
+  }
 }

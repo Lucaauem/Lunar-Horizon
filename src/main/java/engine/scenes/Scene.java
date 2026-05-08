@@ -196,8 +196,7 @@ public class Scene {
       Vector2f position = new Vector2f(entityData.getJSONArray("pos").getInt(0), entityData.getJSONArray("pos").getInt(1));
       position.add(0, 1);
 
-      this.entities.add(new EntityBuilder().create(
-              entityData.getString("type"), entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getJSONObject("parameters")
+      this.entities.add(new EntityBuilder().create(entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getJSONArray("interaction")
       ));
     }
 	}

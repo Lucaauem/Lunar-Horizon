@@ -10,7 +10,6 @@ import engine.ui.UIManager;
 import game.battle.BattleGenerator;
 import game.player.Player;
 import game.setup.InputSetup;
-import game.setup.TemplateSetup;
 import game.setup.TriggerSetup;
 import game.ui.screens.OverworldUI;
 
@@ -29,7 +28,6 @@ public class GameApplication implements GameImplementation {
 
     new InputSetup(GameApplication.player.getEntity()).setup();
     new TriggerSetup().setup();
-    new TemplateSetup().setup();
 
     SceneManager.getInstance().switchScene("town/main");
     UIManager.getInstance().setUI(new OverworldUI());
