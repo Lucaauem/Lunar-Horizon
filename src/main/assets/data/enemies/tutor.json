@@ -2,5 +2,6 @@
     "name" : "Tutor",
     "texture" : "debug",
     "health" : 8,
-    "damage" : 1
+    "damage" : 1,
+    "forbidFlee" :  true
 }

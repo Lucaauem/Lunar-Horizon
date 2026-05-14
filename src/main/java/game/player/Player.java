@@ -14,6 +14,7 @@ public class Player {
   private int experience = 0;
   private int money = 100;
   private final ArrayList<Item> inventory = new ArrayList<>();
+  private final String[] spells = new String[0]; // TODO
 
   public void addToInventory(Item item) {
     this.inventory.add(item);
@@ -54,6 +55,8 @@ public class Player {
   public int getMagic() { return this.magic; }
 
   public int getMaxMagic() { return this.magic; }
+
+  public String[] getSpells() { return this.spells; }
 
   public int getExperience() { return this.experience; }
 

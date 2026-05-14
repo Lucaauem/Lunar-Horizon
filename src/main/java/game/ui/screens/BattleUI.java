@@ -23,10 +23,12 @@ public class BattleUI extends UIScreen {
   private UIText playerHealth;
   private UIText playerMana;
   private final BattleEngine battle;
+  private final boolean canFlee;
 
-  public BattleUI(BattleEngine battle) {
+  public BattleUI(BattleEngine battle, boolean canFlee) {
     super();
     this.battle = battle;
+    this.canFlee = canFlee;
     this.init();
   }
 
@@ -61,11 +63,11 @@ public class BattleUI extends UIScreen {
     this.actionMenu = new UIMenuGrid(2, 3);
     this.actionMenu.setElements(new UIListElement[]{
             new UIListElement("ATTACK", this.battle::attackEnemy),
-            new UIListElement("MAGIC",  () -> { /* TODO */ }),
+            new UIListElement("MAGIC",  () -> { /* TODO */ }, GameApplication.player.getSpells().length > 0),
             new UIListElement("ITEMS",  () -> { /* TODO */ }),
             new UIListElement("STATUS", () -> { /* TODO */ }),
             new UIListElement("BLOCK",  () -> { /* TODO */ }),
-            new UIListElement("FLEE",   this.battle::flee)
+            new UIListElement("FLEE",   this.battle::flee, this.canFlee)
     });
     this.actionMenu.setParent(menuBackground);
     this.actionMenu.setAnchor(0.10f, 0.1f, 0.9f, 0.9f);

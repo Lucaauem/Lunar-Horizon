@@ -9,11 +9,17 @@ import engine.ui.text.UIText;
 public class UIListElement extends UIElement implements Clickable {
   private final UIText label;
   private final Runnable action;
+  private final Boolean enabled;
 
   public UIListElement(String label, Runnable action) {
+    this(label, action, true);
+  }
+
+  public UIListElement(String label, Runnable action, Boolean enabled) {
     this.label = new UIText(label, this);
     this.anchor = new Anchor(0.0f, 1.0f - (float) UIText.CHARACTER_HEIGHT / GameWindow.RESOLUTION.y, 1.0f, 1.0f);
     this.action = action;
+    this.enabled = enabled;
   }
 
   public UIText getLabel() {
@@ -22,7 +28,9 @@ public class UIListElement extends UIElement implements Clickable {
 
   @Override
   public void click() {
-    this.action.run();
+    if (this.enabled) {
+      this.action.run();
+    }
   }
 
   @Override

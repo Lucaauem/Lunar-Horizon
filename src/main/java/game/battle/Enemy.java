@@ -19,7 +19,8 @@ public class Enemy {
 			0.6f, 0.74f, 0, 0
 	});
 	private int health;
-	private int damage;
+	private final int damage;
+  private final boolean forbidsFlee;
 
 	public Enemy(String id) {
 		JSONObject data = FileHandler.readJSON(MONSTER_DATA_PATH + id + ".json");
@@ -28,6 +29,7 @@ public class Enemy {
     this.name = data.getString("name");
 		this.health = data.getInt("health");
 		this.damage = data.getInt("damage");
+    this.forbidsFlee = data.has("forbidFlee") && !data.getBoolean("forbidFlee");
 	}
 
 	public void attack() {
@@ -41,6 +43,10 @@ public class Enemy {
 	public void changeHealth(int ammount) {
 		this.health += ammount;
 	}
+
+  public boolean canFleeFrom() {
+    return this.forbidsFlee;
+  }
 
 	public Texture getTexture() {
 		return this.texture;

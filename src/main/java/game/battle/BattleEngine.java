@@ -22,8 +22,8 @@ public class BattleEngine {
 	public BattleEngine(String enemyId) {
 		super();
 
-    this.ui = new BattleUI(this);
 		this.enemy = new Enemy(enemyId);
+    this.ui = new BattleUI(this, this.enemy.canFleeFrom());
 	}
 
   public void startBattle() {
