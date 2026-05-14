@@ -20,6 +20,7 @@ public class UIListElement extends UIElement implements Clickable {
     this.anchor = new Anchor(0.0f, 1.0f - (float) UIText.CHARACTER_HEIGHT / GameWindow.RESOLUTION.y, 1.0f, 1.0f);
     this.action = action;
     this.enabled = enabled;
+    this.setOpacity(this.enabled ? 1.0f : 0.25f);
   }
 
   public UIText getLabel() {

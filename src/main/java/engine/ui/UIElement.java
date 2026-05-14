@@ -16,6 +16,7 @@ public abstract class UIElement {
   private final ArrayList<UIElement> children;
   private UIElement parent = null;
   private boolean visible = true;
+  private float opacity = 1.0f;
 
   public UIElement(float x0, float y0, float x1, float y1) {
     this.anchor = new Anchor(x0, y0, x1, y1);
@@ -37,6 +38,20 @@ public abstract class UIElement {
     }
 
     this.parent = parent;
+  }
+
+  public void setOpacity(float opacity) {
+    this.opacity = opacity;
+  }
+
+  public float getOpacity() {
+    float opacity = this.opacity;
+
+    if (this.parent != null) {
+      opacity *= this.parent.getOpacity();
+    }
+
+    return opacity;
   }
 
   public void setVisibility(boolean visible) {
@@ -145,7 +160,7 @@ public abstract class UIElement {
             0.0f, 1.0f, 0, 0
     });
 
-    this.renderElement(position, size, new Vector4f(0, 0, 0, 0), texture, model);
+    this.renderElement(position, size, new Vector4f(0, 0, 0, 1.0f), texture, model);
   }
 
   private void renderElement(Vector2f position, Vector2f size, Vector4f color, Texture texture, Model model) {
@@ -156,6 +171,7 @@ public abstract class UIElement {
     Matrix4f mvp = new Matrix4f(Renderer.PROJECTION_MATRIX).mul(modelMatrix);
     Renderer.getShader().setUniformMat4f("u_MVP", mvp);
     Renderer.getShader().setUniform4f("u_Color", color);
+    Renderer.getShader().setUniform1f("u_Opacity", this.getOpacity());
 
     if (texture != null) {
       texture.bind();

@@ -24,6 +24,7 @@ in vec2 v_TexCoord;
 uniform vec4 u_Color;
 uniform sampler2D u_Texture;
 uniform bool u_UseTexture;
+uniform float u_Opacity;
 
 void main()
 {
@@ -36,4 +37,6 @@ void main()
     {
         color = u_Color;
     }
+
+    color.a *= u_Opacity;
 }

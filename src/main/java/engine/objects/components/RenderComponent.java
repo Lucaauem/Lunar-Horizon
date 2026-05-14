@@ -40,6 +40,7 @@ public class RenderComponent extends Component {
     Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
     Renderer.getShader().setUniformMat4f("u_MVP", mvp);
     Renderer.getShader().setUniform1i("u_UseTexture", 1);
+    Renderer.getShader().setUniform1f("u_Opacity", 1.0f);
 
     Renderer.draw(this.model.getVertexArray(), this.model.getIndexBuffer());
   }
