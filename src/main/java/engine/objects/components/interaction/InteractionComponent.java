@@ -3,6 +3,7 @@ package engine.objects.components.interaction;
 import engine.objects.components.interaction.interactions.DialogueInteraction;
 import engine.objects.components.interaction.interactions.FightInteraction;
 import engine.objects.components.interaction.interactions.Interaction;
+import engine.objects.components.interaction.interactions.StoryFlagInteraction;
 import engine.objects.core.Component;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ public class InteractionComponent extends Component {
     return switch (interaction.getString("type")) {
       case "dialogue" -> new DialogueInteraction(DIALOGUE_SOURCE, parameters.getString("text"));
       case "fight" -> new FightInteraction(parameters.getString("fightId"));
+      case "storyFlag" -> new StoryFlagInteraction(parameters.getString("flag"));
       default -> null;
     };
   }

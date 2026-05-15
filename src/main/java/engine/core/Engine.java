@@ -1,5 +1,6 @@
 package engine.core;
 
+import engine.core.global.Global;
 import engine.input.KeyListener;
 import engine.rendering.renderer.Renderer;
 import static org.lwjgl.glfw.GLFW.*;
@@ -14,6 +15,7 @@ public class Engine {
 		this.window = window;
     this.game = game;
 		Renderer.getShader().bind();
+    Global.init();
 	}
 
 	public void start() {

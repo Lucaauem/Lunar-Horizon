@@ -1,5 +1,6 @@
 {
   "DEFAULT" : ["Hello Traveler!"],
+  "REMINDER_FIGHT_TUTOR" : ["X WAITS FOR YOU"],
   "GUARDHOUSE_INTRO_0" : ["Good morning!"],
   "GUARDHOUSE_INTRO_1" : ["Good morning!", "X is waiting outside."],
   "TUTOR_FIGHT" : ["Battle start!"],

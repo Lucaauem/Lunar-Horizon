@@ -1,5 +1,6 @@
 package engine.scenes;
 
+import engine.core.global.Global;
 import engine.objects.entities.Entity;
 import engine.objects.Tile;
 import engine.objects.entities.EntityBuilder;
@@ -24,6 +25,8 @@ public class Scene {
 	private final String name;
   private final Vector2i sceneSize;
 	private final ArrayList<Entity> entities;
+  private final ArrayList<JSONObject> entityData;
+  private final ArrayList<JSONObject> triggerData;
   private boolean hasEnemies = false;
 	private Tile[][] tiles = new Tile[0][0];
 
@@ -31,6 +34,8 @@ public class Scene {
 		this.name = name;
     this.sceneSize = new Vector2i(0, 0);
     this.entities = new ArrayList<>();
+    this.entityData = new ArrayList<>();
+    this.triggerData = new ArrayList<>();
 
 		JSONObject sceneData = FileHandler.readJSON(SCENE_BASE_PATH + this.name + ".json");
     JSONObject sceneConfig = sceneData.getJSONObject("config");
@@ -38,8 +43,6 @@ public class Scene {
 
     this.loadConfig(sceneConfig);
 
-    ArrayList<JSONObject> entityData = new ArrayList<>();
-    ArrayList<JSONObject> triggerData = new ArrayList<>();
     JSONObject[][] areas;
 
     if (usesAreas) {
@@ -50,10 +53,19 @@ public class Scene {
       this.sceneSize.set(areaTiles.getJSONArray(0).length(), areaTiles.length());
     }
 
-    this.createScene(entityData, triggerData, areas);
-    this.loadEntities(entityData.toArray(new JSONObject[0]));
-    this.loadTrigger(triggerData.toArray(new JSONObject[0]));
+    this.createScene(this.entityData, this.triggerData, areas);
+    this.loadSceneObjects();
 	}
+
+  private void loadSceneObjects() {
+    this.loadEntities(this.entityData.toArray(new JSONObject[0]));
+    this.loadTrigger(this.triggerData.toArray(new JSONObject[0])); // TODO: Use preqs for trigger
+  }
+
+  public void reload() {
+    this.entities.clear();
+    this.loadSceneObjects();
+  }
 
   // region SCENE CREATION
 
@@ -196,10 +208,25 @@ public class Scene {
       Vector2f position = new Vector2f(entityData.getJSONArray("pos").getInt(0), entityData.getJSONArray("pos").getInt(1));
       position.add(0, 1);
 
-      this.entities.add(new EntityBuilder().create(entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getJSONArray("interaction")
-      ));
+      if (!entityData.has("preqFlags") || this.checkPreq(entityData.getJSONObject("preqFlags"))) {
+        this.entities.add(new EntityBuilder().create(entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getJSONArray("interaction")));
+      }
     }
 	}
+
+  private boolean checkPreq(JSONObject preqs) {
+    JSONArray trueFlags = preqs.has("true") ? preqs.getJSONArray("true") : new JSONArray();
+    JSONArray falseFlags = preqs.has("false") ? preqs.getJSONArray("false") : new JSONArray();
+
+    for (Object flag : trueFlags) {
+      if (!Global.getStoryFlag((String) flag)) return false;
+    }
+    for (Object flag : falseFlags) {
+      if (Global.getStoryFlag((String) flag)) return false;
+    }
+
+    return true;
+  }
 
   // endregion
 
