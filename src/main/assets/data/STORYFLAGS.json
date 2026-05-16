@@ -1,7 +1,8 @@
 {
   "flags":
   [
-    "FOUGHT_TUTOR"
+    "FOUGHT_TUTOR",
+    "TALKED_TO_KING_AFTER_TUTOR"
   ],
   "debug_set":
   [

@@ -5,5 +5,6 @@
   "GUARDHOUSE_INTRO_1" : ["Good morning!", "X is waiting outside."],
   "TUTOR_FIGHT" : ["Battle start!"],
   "TUTOR_FIGHT_END" : ["Good job!"],
-  "TUTOR_FIGHT_DONE" : ["Good job!", "Go to castle."]
+  "TUTOR_FIGHT_DONE" : ["Good job!", "Go to castle."],
+  "KING_AFTER_TUTOR_FIGHT" : ["Go east and find Y.", "Hurry."]
 }

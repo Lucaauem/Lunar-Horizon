@@ -73,8 +73,11 @@
     ]
   },
   "entities" : [
-    { "pos":  [14,  6], "texture": "guard" ,"interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
-    { "pos":  [18,  6], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
+    { "pos":  [14,  6], "texture": "guard", "preqFlags" : { "true" : ["TALKED_TO_KING_AFTER_TUTOR"] }, "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
+    { "pos":  [18,  6], "texture": "guard", "preqFlags" : { "true" : ["TALKED_TO_KING_AFTER_TUTOR"] }, "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
+    { "pos":  [15,  5], "texture": "guard", "preqFlags" : { "false" : ["TALKED_TO_KING_AFTER_TUTOR"] }, "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
+    { "pos":  [16,  5], "texture": "guard", "preqFlags" : { "false" : ["TALKED_TO_KING_AFTER_TUTOR"] }, "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
+    { "pos":  [17,  5], "texture": "guard", "preqFlags" : { "false" : ["TALKED_TO_KING_AFTER_TUTOR"] }, "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
     { "pos":  [0,   9], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
     { "pos":  [0,   8], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
     { "pos":  [14, 25], "texture": "guard", "preqFlags" : { "true" : ["FOUGHT_TUTOR"] },  "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
@@ -115,6 +118,9 @@
     { "pos":  [10, 19], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/guardhouse", "spawn":  [9, 2] } },
     { "pos":  [15,  0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } },
     { "pos":  [16,  0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } },
-    { "pos":  [17,  0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } }
+    { "pos":  [17,  0], "type": "SCENE_CHANGE", "parameters": { "scene":  "overworld/main", "spawn":  [8, 24] } },
+    { "pos":  [15,  26], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/castle", "spawn":  [8, 3] } },
+    { "pos":  [16,  26], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/castle", "spawn":  [8, 3] } },
+    { "pos":  [17,  26], "type": "SCENE_CHANGE", "parameters": { "scene":  "town/castle", "spawn":  [8, 3] } }
   ]
 }
