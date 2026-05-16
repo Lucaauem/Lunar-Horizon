@@ -13,8 +13,8 @@ public class Global {
   public static void init() {
     JSONObject flags = FileHandler.readJSON(FLAG_FILE_PATH);
 
-    for (String key : flags.keySet()) {
-      storyFlags.put(key, flags.getBoolean(key));
+    for (Object flag : flags.getJSONArray("flags")) {
+      storyFlags.put((String) flag, false);
     }
   }
 

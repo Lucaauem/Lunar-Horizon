@@ -1,3 +1,6 @@
 {
-  "FOUGHT_TUTOR" : false
+  "flags":
+  [
+    "FOUGHT_TUTOR"
+  ]
 }
