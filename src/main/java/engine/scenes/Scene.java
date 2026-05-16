@@ -208,25 +208,11 @@ public class Scene {
       Vector2f position = new Vector2f(entityData.getJSONArray("pos").getInt(0), entityData.getJSONArray("pos").getInt(1));
       position.add(0, 1);
 
-      if (!entityData.has("preqFlags") || this.checkPreq(entityData.getJSONObject("preqFlags"))) {
+      if (!entityData.has("preqFlags") || Global.checkPreq(entityData.getJSONObject("preqFlags"))) {
         this.entities.add(new EntityBuilder().create(entityData.getString("texture"), position.mul(DEFAULT_TILE_SIZE), entityData.getJSONArray("interaction")));
       }
     }
 	}
-
-  private boolean checkPreq(JSONObject preqs) {
-    JSONArray trueFlags = preqs.has("true") ? preqs.getJSONArray("true") : new JSONArray();
-    JSONArray falseFlags = preqs.has("false") ? preqs.getJSONArray("false") : new JSONArray();
-
-    for (Object flag : trueFlags) {
-      if (!Global.getStoryFlag((String) flag)) return false;
-    }
-    for (Object flag : falseFlags) {
-      if (Global.getStoryFlag((String) flag)) return false;
-    }
-
-    return true;
-  }
 
   // endregion
 

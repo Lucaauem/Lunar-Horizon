@@ -1,5 +1,6 @@
 package engine.core.global;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import util.FileHandler;
 import java.util.HashMap;
@@ -23,7 +24,21 @@ public class Global {
     }
   }
 
-  public static boolean getStoryFlag(String flag) {
+  private static boolean getStoryFlag(String flag) {
     return storyFlags.containsKey(flag) && storyFlags.get(flag);
+  }
+
+  public static boolean checkPreq(JSONObject preqs) {
+    JSONArray trueFlags = preqs.has("true") ? preqs.getJSONArray("true") : new JSONArray();
+    JSONArray falseFlags = preqs.has("false") ? preqs.getJSONArray("false") : new JSONArray();
+
+    for (Object flag : trueFlags) {
+      if (!Global.getStoryFlag((String) flag)) return false;
+    }
+    for (Object flag : falseFlags) {
+      if (Global.getStoryFlag((String) flag)) return false;
+    }
+
+    return true;
   }
 }

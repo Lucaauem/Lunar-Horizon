@@ -1,5 +1,6 @@
 package engine.objects.components.interaction;
 
+import engine.core.global.Global;
 import engine.objects.components.interaction.interactions.DialogueInteraction;
 import engine.objects.components.interaction.interactions.FightInteraction;
 import engine.objects.components.interaction.interactions.Interaction;
@@ -17,26 +18,34 @@ public class InteractionComponent extends Component {
     this.sequence = new InteractionSequence();
 
     for (Object interaction : interactionSequence) {
-      Interaction interactionInstance = createInteraction((JSONObject) interaction);
+      JSONObject jsonObject = (JSONObject) interaction;
 
-      if (interactionInstance == null) {
-        System.err.println("WRONG INTERACTION TYPE: \"" + ((JSONObject) interaction).getString("type") + "\"");
-        continue;
+      if (!jsonObject.has("preqFlags")) {
+        Interaction interactionInstance = createInteraction(jsonObject);
+
+        this.sequence.addInteraction(interactionInstance);
+      } else if (Global.checkPreq(jsonObject.getJSONObject("preqFlags"))) {
+        for (Object sequenceContent : jsonObject.getJSONArray("sequence")) {
+          Interaction interactionInstance = createInteraction((JSONObject) sequenceContent);
+
+          this.sequence.addInteraction(interactionInstance);
+        }
       }
-
-      this.sequence.addInteraction(interactionInstance);
     }
   }
 
-  private static Interaction createInteraction(JSONObject interaction) {
-    JSONObject parameters = interaction.getJSONObject("parameters");
+  private static Interaction createInteraction(JSONObject interactionData) {
+    JSONObject parameters = interactionData.getJSONObject("parameters");
 
-    return switch (interaction.getString("type")) {
+    Interaction interaction =  switch (interactionData.getString("type")) {
       case "dialogue" -> new DialogueInteraction(DIALOGUE_SOURCE, parameters.getString("text"));
       case "fight" -> new FightInteraction(parameters.getString("fightId"));
       case "storyFlag" -> new StoryFlagInteraction(parameters.getString("flag"));
       default -> null;
     };
+
+    assert interaction != null;
+    return interaction;
   }
 
   public void onInteract() {

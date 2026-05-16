@@ -93,10 +93,19 @@
     { "pos":  [24, 22], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
     { "pos":  [25, 22], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
     { "pos":  [22, 18], "texture": "guard", "interaction" : [
-      { "type": "dialogue",  "parameters": { "text": "TUTOR_FIGHT"      } },
-      { "type": "fight",     "parameters": { "fightId": "tutor"         } },
-      { "type": "storyFlag", "parameters": { "flag": "FOUGHT_TUTOR"     } },
-      { "type": "dialogue",  "parameters": { "text": "TUTOR_FIGHT_END"  } }
+      {
+        "preqFlags" : { "false" :  ["FOUGHT_TUTOR"] },
+        "sequence" : [
+          { "type": "dialogue",  "parameters": { "text": "TUTOR_FIGHT"      } },
+          { "type": "fight",     "parameters": { "fightId": "tutor"         } },
+          { "type": "storyFlag", "parameters": { "flag": "FOUGHT_TUTOR"     } },
+          { "type": "dialogue",  "parameters": { "text": "TUTOR_FIGHT_END"  } }
+        ]
+      },
+      {
+        "preqFlags" : { "true" :  ["FOUGHT_TUTOR"] },
+        "sequence" : [ { "type": "dialogue",  "parameters": { "text": "TUTOR_FIGHT_DONE" } } ]
+      }
     ]},
     { "pos":  [22, 16], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] },
     { "pos":  [21, 16], "texture": "guard", "interaction": [{ "type": "dialogue", "parameters": { "text": "DEFAULT" } }] }
