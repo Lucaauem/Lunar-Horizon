@@ -4,5 +4,6 @@
     "MONSTER_ATTACKED" : ["{{ NAME }} attacks!"],
     "MONSTER_DEFEATED" : ["You defeated {{ NAME }}!"],
     "PLAYER_ATTACKED" : ["You attack!", "{{ NAME }} took {{ DMG }} damage!"],
-    "PLAYER_USED_ITEM" : ["You use \"{{ ITEM }}\"!"]
+    "PLAYER_USED_ITEM" : ["You use \"{{ ITEM }}\"!"],
+    "EXP_GAIN" : ["You gained {{ EXP }} EXP!"]
 }

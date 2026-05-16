@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class InteractionComponent extends Component {
-  private static final String DIALOGUE_SOURCE = "npc/talker";
+  private static final String DIALOGUE_SOURCE = "npc";
 
   private final InteractionSequence sequence;
 

@@ -74,7 +74,13 @@ public class BattleEngine {
     this.ui.getActionMenu().setVisibility(false);
     UITextbox textbox = this.ui.getTextbox();
 		textbox.setTexts(BattleEngine.TEXT_SOURCE, "MONSTER_DEFEATED", Map.of("NAME", this.enemy.getName()));
-    textbox.setOnClose(this::endBattle);
+
+    textbox.setOnClose(() -> {
+      textbox.setTexts(BattleEngine.TEXT_SOURCE, "EXP_GAIN", Map.of("EXP", "" + this.enemy.getExpReward()));
+      textbox.setOnClose(this::endBattle);
+      textbox.open();
+      GameApplication.player.addExp(this.enemy.getExpReward());
+    });
 		textbox.open();
     InputManager.getInstance().enableControlls();
 	}

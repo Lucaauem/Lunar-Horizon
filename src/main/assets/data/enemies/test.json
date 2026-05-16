@@ -2,5 +2,6 @@
     "name" : "Test",
     "texture" : "debug",
     "health" : 10,
+    "baseExp" : 10,
     "damage" : 2
 }

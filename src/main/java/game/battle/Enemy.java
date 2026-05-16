@@ -20,6 +20,7 @@ public class Enemy {
 	});
 	private int health;
 	private final int damage;
+  private final int expReward;
   private final boolean forbidsFlee;
 
 	public Enemy(String id) {
@@ -29,6 +30,7 @@ public class Enemy {
     this.name = data.getString("name");
 		this.health = data.getInt("health");
 		this.damage = data.getInt("damage");
+    this.expReward = data.getInt("baseExp"); // TODO: Add randomness
     this.forbidsFlee = data.has("forbidFlee") && data.getBoolean("forbidFlee");
 	}
 
@@ -54,6 +56,10 @@ public class Enemy {
 
   public String getName() {
     return this.name;
+  }
+
+  public int getExpReward() {
+    return this.expReward;
   }
 
 	public Model getModel() {
