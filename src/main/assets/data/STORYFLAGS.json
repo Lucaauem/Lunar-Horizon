@@ -2,5 +2,9 @@
   "flags":
   [
     "FOUGHT_TUTOR"
+  ],
+  "debug_set":
+  [
+    "FOUGHT_TUTOR"
   ]
 }

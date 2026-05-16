@@ -16,6 +16,11 @@ public class Global {
     for (Object flag : flags.getJSONArray("flags")) {
       storyFlags.put((String) flag, false);
     }
+
+    // Debug: Set flags in init
+    for (Object debugFlag : flags.getJSONArray("debug_set")) {
+      storyFlags.put((String) debugFlag, true);
+    }
   }
 
   public static void setStoryFlag(String flag) {
