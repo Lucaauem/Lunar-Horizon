@@ -29,7 +29,7 @@ public class Enemy {
     this.name = data.getString("name");
 		this.health = data.getInt("health");
 		this.damage = data.getInt("damage");
-    this.forbidsFlee = data.has("forbidFlee") && !data.getBoolean("forbidFlee");
+    this.forbidsFlee = data.has("forbidFlee") && data.getBoolean("forbidFlee");
 	}
 
 	public void attack() {
@@ -45,7 +45,7 @@ public class Enemy {
 	}
 
   public boolean canFleeFrom() {
-    return this.forbidsFlee;
+    return !this.forbidsFlee;
   }
 
 	public Texture getTexture() {
