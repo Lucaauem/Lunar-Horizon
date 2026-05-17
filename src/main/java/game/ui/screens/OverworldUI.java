@@ -10,8 +10,10 @@ import engine.ui.components.UITextbox;
 import engine.ui.components.list.UIList;
 import engine.ui.components.list.UIListElement;
 import engine.ui.UIScreen;
+import engine.ui.text.UIText;
 import game.GameApplication;
 import game.mechanics.items.Item;
+import game.player.Player;
 
 import java.util.Map;
 
@@ -35,9 +37,45 @@ public class OverworldUI extends UIScreen {
     menuList.setParent(menuPanel);
 
     menuList.addContent(new UIListElement("INVENTORY", this::openInventory));
+    menuList.addContent(new UIListElement("STATUS", this::openStatus));
 
     this.menu = menuList;
     this.layers.add(new UILayer(0, new UIElement[]{menuPanel}));
+  }
+
+  private void openStatus() {
+    Player player = GameApplication.player;
+
+    UIPanel statusPanel = new UIPanel(0.05f, 0.05f, 0.95f, 0.95f);
+
+    UIText playerName = new UIText(player.getName(), statusPanel);
+    playerName.setAnchor(0.1f, 0.85f, 0.3f, 0.95f);
+    UIText playerMoney = new UIText("MNY " + player.getMoney(), statusPanel);
+    playerMoney.setAnchor(0.1f, 0.15f, 0.3f, 0.25f);
+    UIText playerLevel = new UIText("LVL " + player.getLevel(), statusPanel);
+    playerLevel.setAnchor(0.45f, 0.85f, 0.65f, 0.95f);
+    UIText playerEXP = new UIText("EXP " + player.getExperience(), statusPanel);
+    playerEXP.setAnchor(0.45f, 0.75f, 0.65f, 0.85f);
+    UIText playerHP = new UIText("HP " + player.getHealth() + "'" + player.getMaxHealth(), statusPanel);
+    playerHP.setAnchor(0.45f, 0.6f, 0.65f, 0.7f);
+    UIText playerMP = new UIText("MP " + player.getMagic() + "'" + player.getMaxMagic(), statusPanel);
+    playerMP.setAnchor(0.45f, 0.5f, 0.65f, 0.6f);
+    UIText playerATK = new UIText("ATK " + player.getAttack(), statusPanel);
+    playerATK.setAnchor(0.45f, 0.4f, 0.65f, 0.5f);
+    UIText playerDEF = new UIText("DEF " + player.getDefence(), statusPanel);
+    playerDEF.setAnchor(0.45f, 0.3f, 0.65f, 0.4f);
+
+    UIList closeBtn = new UIList();
+    closeBtn.setParent(statusPanel);
+    closeBtn.setAnchor(0.75f, 0.1f, 0.85f, 0.15f);
+
+    closeBtn.addContent(new UIListElement("CLOSE", () -> {
+      UIManager.getInstance().removeElement(statusPanel);
+      InputManager.getInstance().popController();
+    }));
+
+    InputManager.getInstance().pushController(Controller.forUI(closeBtn));
+    UIManager.getInstance().addElement(statusPanel);
   }
 
   private void openInventory() {

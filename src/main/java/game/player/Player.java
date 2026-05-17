@@ -10,6 +10,7 @@ public class Player {
   private int maxHealth = 10;
   private int health = maxHealth;
   private int attack = 2;
+  private int defence = 1; // TODO: Use defence on dmg computation
   private int maxMagic = 15;
   private int magic = maxMagic;
   private int experience = 0;
@@ -50,6 +51,7 @@ public class Player {
     this.maxHealth += (new Random()).nextInt(1, 5);
     this.maxMagic += (new Random()).nextInt(1, 4);
     this.attack += (new Random()).nextInt(1, 2);
+    this.defence += (new Random()).nextInt(1, 2);
 
     this.fullRestore();
   }
@@ -76,9 +78,9 @@ public class Player {
 
   // region GETTER AND SETTER
 
-  public PlayerEntity getEntity() {
-    return this.entity;
-  }
+  public PlayerEntity getEntity() { return this.entity; }
+
+  public String getName() { return "PLAYER"; }
 
   public int getLevel() { return this.level; }
 
@@ -87,6 +89,8 @@ public class Player {
   public int getMaxHealth() { return this.maxHealth; }
 
   public int getAttack() { return this.attack; }
+
+  public int getDefence() { return this.defence; }
 
   public int getMagic() { return this.magic; }
 
